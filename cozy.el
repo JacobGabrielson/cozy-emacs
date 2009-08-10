@@ -1,11 +1,11 @@
 ;; To use this file, add this to your ~/.emacs file:
 ;;
-;;   (add-to-list 'load-path "/Path/to/trunk/Cozi/Tools/Emacs") ; or wherever it's checked out to
+;;   (add-to-list 'load-path "/Path/to/cozi-emacs") ; or wherever it's checked out to
 ;;   (load "cozi")
 ;;
 ;; What it does:
 ;;
-;;   * Sets some basic Cozi standard formatting configuration (e.g., 4
+;;   * Sets some basic standard formatting configuration (e.g., 4
 ;;     spaces, no tabs).
 ;;
 ;;   * Enhances JavaScript editing mode significantly (using js2.el).
@@ -15,8 +15,6 @@
 ;;   * Enhances Erlang editing mode significantly.
 ;;
 ;;   * Enhances Subversion support (using psvn.el).
-;;
-;;   * Enhances XML editing (using nxml-mode).
 ;;
 ;;   * Sets a bunch of no-brainer customizations that you definitely
 ;;     want.
@@ -28,8 +26,6 @@
 ;;   * Works much better (for Erlang) if you've installed distel:
 ;;     http://code.google.com/p/distel/
 ;;
-;;   * See http://www.socialtext.net/cozi/index.cgi?erlang for help on
-;;     setting up distel.
 
 (require 'cl)
 
@@ -43,67 +39,28 @@ evaluate BODY.
 
 ;; BUFFER-FILE-NAME in case we're doing EVAL- type stuff instead of
 ;; LOAD.
-(defvar cozi/*load-directory* (file-name-directory (or load-file-name
+(defvar cozy/*load-directory* (file-name-directory (or load-file-name
                                                        buffer-file-name)))
 
-(defvar cozi/*third-party-directory* (file-name-directory (concat cozi/*load-directory* "third-party/"))
-  "Some useful utilities that aren't part of the standard Emacs
-  distribution (yet).")
-
-(defvar cozi/*nxml-mode-directory* (file-name-directory (concat cozi/*third-party-directory* "nxml-mode/"))
-  "A better XML mode.")
-
-(when (file-directory-p cozi/*third-party-directory*)
-  (if (>= emacs-major-version 23)
-      ;; Emacs 23 appears to have newer python mode so don't override
-      (add-to-list 'load-path cozi/*third-party-directory* t)
-    ;; Emacs 22 python mode kind of sucks, so override
-    (pushnew cozi/*third-party-directory* load-path))
-
-  ;; nxml should work everywhere
-  (pushnew cozi/*nxml-mode-directory* load-path)
-
-  (when (file-writable-p cozi/*third-party-directory*)
-    ;; Won't do anything if the .elc's are up-to-date.  js2.el *must*
-    ;; be byte-compiled so let's try to make things 'just work' for
-    ;; everyone.
-    ;;
-    ;; Note: this handles all subdirectories automatically.
-    (byte-recompile-directory cozi/*third-party-directory* 0)
-    (delete-windows-on "*Compile-Log*"))
-
-  (load "rng-auto")                     ; for nxml-mode
-  (setq auto-mode-alist
-        (cons '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\|csproj\\|wdproj\\)\\'$" . nxml-mode)
-	      auto-mode-alist))
-
-  ;; Make sure our patched emacs.py gets picked up.
-  (let ((path (getenv "PYTHONPATH")))
-    (setenv "PYTHONPATH"
-            (if path
-                (concat cozi/*third-party-directory* path-separator path)
-              cozi/*third-party-directory*))))
-
-
-(defun cozi/script-path (script)
-  (let ((full-path (concat cozi/*load-directory* script)))
+(defun cozy/script-path (script)
+  (let ((full-path (concat cozy/*load-directory* script)))
     (unless (file-executable-p full-path)
-      (error "cozi.el: %s does not exist, or is not executable" full-path))
+      (error "cozy.el: %s does not exist, or is not executable" full-path))
     full-path))
 
-(defun cozi/first-executable (&rest file-list)
+(defun cozy/first-executable (&rest file-list)
   (find-if #'file-executable-p (mapcar #'expand-file-name file-list)))
 
-(defun cozi/first-directory (&rest file-list)
+(defun cozy/first-directory (&rest file-list)
   (find-if #'file-directory-p (mapcar #'expand-file-name file-list)))
 
-(defun cozi/directories-that-exist (&rest dirs)
+(defun cozy/directories-that-exist (&rest dirs)
   (remove-if-not #'file-directory-p dirs))
 
 (mapc #'(lambda (path)
           (pushnew path load-path))
       (nreverse                  ; to get them in same order as listed
-       (cozi/directories-that-exist
+       (cozy/directories-that-exist
         "/opt/erlang-R12B-3/lib/erlang/lib/tools-2.6.1/emacs"
         "/usr/local/lib/erlang/lib/tools-2.6.1/emacs"
         "/usr/lib/erlang/lib/tools-2.6.1/emacs"
@@ -118,13 +75,13 @@ evaluate BODY.
 (eval-after-load "erlang"
   '(progn
      (require 'flymake)
-     (setq erlang-root-dir (cozi/first-directory
+     (setq erlang-root-dir (cozy/first-directory
                             "/opt/erlang-R12B-3"
                             "/usr/local/lib/erlang"
                             "/usr/lib/erlang"
                             "c:/progra~1/erl5.6.1"))
 
-     (when-let (erlang-bin (cozi/first-directory
+     (when-let (erlang-bin (cozy/first-directory
                             "/opt/erlang-R12B-3/bin"
                             "/usr/local/lib/erlang/bin"
                             "/usr/lib/erlang/bin"
@@ -218,7 +175,7 @@ evaluate BODY.
                     (local-file (file-relative-name
                                  temp-file
                                  local-directory)))
-               (list (cozi/script-path "flyalyzer") (list local-file)))
+               (list (cozy/script-path "flyalyzer") (list local-file)))
            (list "cat" (list "/dev/null")))))
 
      (defun flymake-pylint-init ()
@@ -230,7 +187,7 @@ evaluate BODY.
                     (local-file (file-relative-name
                                  temp-file
                                  local-directory)))
-               (list (cozi/script-path "epylint") (list local-file)))
+               (list (cozy/script-path "epylint") (list local-file)))
            (list "cat" (list "/dev/null")))))
 
      (when (executable-find "gmcs")
@@ -271,7 +228,7 @@ evaluate BODY.
      (when (< emacs-major-version 23)
        (define-key python-mode-map (kbd "C-c C-d h") 'python-describe-symbol)
        (define-key python-mode-map (kbd "C-c C-d C-h") 'python-describe-symbol))
-     (setq python-python-command (or (cozi/first-executable
+     (setq python-python-command (or (cozy/first-executable
                                       "/usr/local/bin/python"
                                       "g:/Python25/python.exe")
                                      python-python-command))
@@ -319,7 +276,6 @@ evaluate BODY.
 
 (eval-after-load "sql"
   '(progn
-     ;; We use MySQL at Cozi so save you the step of doing it
      (sql-set-product 'mysql)
      (setq sql-mysql-options '("-C" "-t" "-f" "-n"))
      ))
@@ -454,6 +410,6 @@ list, if it's not already there."
           (forward-line -1)
           (insert (format "\n__all__ = [\'%s\']\n" thing)))))))
 
-(provide 'cozi)
+(provide 'cozy)
 
 
