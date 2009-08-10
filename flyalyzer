@@ -1,0 +1,34 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+
+%% Erlang helper script for Emacs' flymake mode (needs to munge output
+%% and trap errors, for flymake's benefit).
+
+-export([main/1]).
+
+print_dialyzer_messages([{_ErrorType, {FileName, LineNumber}, Message}|MoreMessages]) ->
+    io:format("~s:~B: Warning: dialyzer: ~s", [FileName, LineNumber, Message]), % already has \n
+    print_dialyzer_messages(MoreMessages);
+print_dialyzer_messages(_EverythingElse) ->
+    ok.
+
+main([FileName]) ->
+    compile:file(FileName, [warn_obsolete_guard, 
+                            warn_unused_import,
+                            warn_shadow_vars, 
+                            warn_export_vars, 
+                            strong_validation, 
+                            report]),
+    %% Without the catch flymake.el barfs if dialyzer throws (which
+    %% prevents one from seeing compile:file's output).
+    case catch dialyzer:run([{files, [FileName]}, {from, src_code}]) of
+        {ok, Warnings} ->
+            print_dialyzer_messages(Warnings);
+        {error, Warnings, _Errors} ->
+            %% Not 100% sure these Warnings are like those in the 'ok'
+            %% case, but it can't hurt to try to grovel them anyway
+            %% this is just for flymake anyway.
+            print_dialyzer_messages(Warnings);
+        _ ->
+            'Ignoring errors'
+    end.
