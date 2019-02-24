@@ -25,10 +25,6 @@ There are two things you can do about this warning:
 (use-package magit :ensure t)
 (use-package intero :ensure t)
 
-
-
-
-
 (setq require-final-newline t)
 (setq visible-bell t)
 (setq require-final-newline t)
@@ -42,6 +38,9 @@ There are two things you can do about this warning:
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(load-theme 'whiteboard)
 
 (setq-default display-line-numbers t)
 (display-time)
