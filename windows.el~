@@ -1,7 +1,3 @@
-(setq require-final-newline t)
-(setq visible-bell t)
-(setq require-final-newline t)
-
 (require 'cl)
 
 ;;; Begin from https://melpa.org/#/getting-started
@@ -28,50 +24,24 @@ There are two things you can do about this warning:
 
 (use-package magit :ensure t)
 (use-package intero :ensure t)
-(use-package hindent :ensure t)
 
+
+
+
+
+(setq require-final-newline t)
+(setq visible-bell t)
+(setq require-final-newline t)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
 
-(defun smarter-move-beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.
 
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-point reaches the beginning or end of the buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-;; remap C-a to `smarter-move-beginning-of-line'
-(global-set-key [remap move-beginning-of-line]
-                'smarter-move-beginning-of-line)
 
 (ido-mode t)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode -1)
-(show-paren-mode 1)
-
-
-
-
-(load-theme 'whiteboard)
 
 (setq-default display-line-numbers t)
 (display-time)
