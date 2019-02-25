@@ -26,6 +26,48 @@
 (setq create-lockfiles nil)
 (with-current-buffer "*scratch*"
   (emacs-lock-mode 'kill))
+(setq-default indicate-empty-lines t)
+(setq diff-default-read-only t)
+(global-auto-revert-mode t)
+(setq suggest-key-bindings t)
+(setq bookmark-save-flag 1)
+(setq compilation-scroll-output t)
+(setq dabbrev-case-replace nil)
+(setq dired-auto-revert-buffer t)
+(setq dired-dwim-target t)
+(setq dired-no-confirm '(create-top-dir))
+(setq display-time-24hr-format t)
+(setq display-time-interval (* 5 1))
+(setq ediff-keep-variants nil)
+(setq enable-recursive-minibuffers t)
+(setq find-file-existing-other-name t)
+(setq find-file-suppress-same-file-warnings t)
+(setq font-lock-maximum-decoration t)
+(setq next-line-add-newlines nil)
+(require 'windmove)
+(windmove-default-keybindings)
+(setq windmove-wrap-around t)
+(setq tab-always-indent 'complete)
+
+
+
+;; From http://www.emacswiki.org/cgi-bin/wiki/%C3%9Cbersicht/RecentChanges/CopyAndPaste
+(global-set-key "\C-w" 'clipboard-kill-region)
+(global-set-key "\M-w" 'clipboard-kill-ring-save)
+(global-set-key "\C-y" 'clipboard-yank)
+(column-number-mode 1)
+(global-font-lock-mode 1)
+(global-subword-mode 1)
+(blink-cursor-mode -1)
+(require 'uniquify)
+(setq
+ uniquify-buffer-name-style 'forward
+ uniquify-separator "/")
+(add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
+(add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
+
+
+
 
 ;;; Everything after this point depends on stuff that isn't just built
 ;;; in to Emacs.
@@ -52,6 +94,7 @@ There are two things you can do about this warning:
 ;;; End from https://melpa.org/#/getting-started
 
 (use-package magit :ensure t)
+(use-package paredit :ensure t)
 (use-package intero
   :ensure t
   :config (progn
