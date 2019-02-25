@@ -1,5 +1,6 @@
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -12,7 +13,7 @@
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
-(load-theme 'whiteboard)
+(load-theme 'manoj-dark)
 (display-time)
 (setq-default display-line-numbers t)
 (setq require-final-newline t)
@@ -25,6 +26,9 @@
 (setq create-lockfiles nil)
 (with-current-buffer "*scratch*"
   (emacs-lock-mode 'kill))
+
+;;; Everything after this point depends on stuff that isn't just built
+;;; in to Emacs.
 
 ;;; Begin from https://melpa.org/#/getting-started
 (require 'package)
@@ -50,9 +54,12 @@ There are two things you can do about this warning:
 (use-package magit :ensure t)
 (use-package intero
   :ensure t
-  :config (intero-global-mode 1))
+  :config (progn
+	    (intero-global-mode 1)
+	    ))
 (use-package hindent :ensure t)
 (use-package company :ensure t)
+
 (use-package smex :ensure t
   :config (progn
 	    (smex-initialize)
