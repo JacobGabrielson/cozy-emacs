@@ -89,12 +89,5 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
-
-
-
-
-
-
-
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file)
