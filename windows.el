@@ -1,8 +1,27 @@
+;;; Extremely basic customizations. These don't need anything outside
+;;; of the standard library to be loaded.
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(ido-mode t)
+(show-paren-mode 1)
+(desktop-save-mode 1)
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+(add-hook 'ielm-mode-hook 'eldoc-mode)
+(load-theme 'whiteboard)
+(display-time)
+(setq-default display-line-numbers t)
 (setq require-final-newline t)
 (setq visible-bell t)
 (setq require-final-newline t)
-
 (require 'cl)
+(require 'dired-x)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+(with-current-buffer "*scratch*"
+  (emacs-lock-mode 'kill))
 
 ;;; Begin from https://melpa.org/#/getting-started
 (require 'package)
@@ -25,14 +44,12 @@ There are two things you can do about this warning:
 (package-initialize)
 ;;; End from https://melpa.org/#/getting-started
 
-
 (use-package magit :ensure t)
-(use-package intero :ensure t)
+(use-package intero
+  :ensure t
+  :config (intero-global-mode 1))
 (use-package hindent :ensure t)
-
-(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
-(add-hook 'ielm-mode-hook 'eldoc-mode)
+(use-package company :ensure t)
 
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -61,20 +78,10 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
-(ido-mode t)
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(show-paren-mode 1)
 
 
 
 
-(load-theme 'whiteboard)
-
-(setq-default display-line-numbers t)
-(display-time)
 
 
 
