@@ -3,7 +3,10 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(ido-mode t)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(setq ido-create-new-buffer 'always)
+(ido-mode 1)
 (show-paren-mode 1)
 (desktop-save-mode 1)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
@@ -50,6 +53,14 @@ There are two things you can do about this warning:
   :config (intero-global-mode 1))
 (use-package hindent :ensure t)
 (use-package company :ensure t)
+(use-package smex :ensure t
+  :config (progn
+	    (smex-initialize)
+	    (global-set-key (kbd "M-x") 'smex)
+	    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+	    ;; This is your old M-x.
+	    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
+
 
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
