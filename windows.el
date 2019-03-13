@@ -93,6 +93,12 @@ There are two things you can do about this warning:
 (package-initialize)
 ;;; End from https://melpa.org/#/getting-started
 
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+
 (use-package magit :ensure t)
 (use-package paredit :ensure t)
 (use-package intero
