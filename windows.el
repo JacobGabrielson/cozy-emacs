@@ -146,4 +146,5 @@ point reaches the beginning or end of the buffer, stop there."
                 'smarter-move-beginning-of-line)
 
 (setq custom-file "~/.emacs-custom.el")
-(load custom-file)
+(when (file-readable-p custom-file)
+  (load custom-file))
