@@ -2,14 +2,16 @@
 ;;; of the standard library to be loaded.
 
 (menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-create-new-buffer 'always)
 (ido-mode 1)
 (show-paren-mode 1)
-(desktop-save-mode 1)
+
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
