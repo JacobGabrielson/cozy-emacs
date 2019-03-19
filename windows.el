@@ -133,6 +133,7 @@ There are two things you can do about this warning:
            ("C-c p" . 'magit-find-file-completing-read)
            ("C-x g" . magit-status)))
 
+(use-package wgrep :ensure t :init (require 'wgrep))
 
 (use-package paredit :ensure t)
 (use-package intero
@@ -142,6 +143,10 @@ There are two things you can do about this warning:
 	    ))
 (use-package hindent :ensure t)
 (use-package company :ensure t)
+(use-package yaml-mode :ensure t)
+(use-package rust-mode :ensure t)
+
+(use-package markdown-mode :ensure t)
 
 (use-package smex :ensure t
   :config (progn
