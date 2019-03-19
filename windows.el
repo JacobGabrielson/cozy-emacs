@@ -125,30 +125,29 @@ There are two things you can do about this warning:
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
-
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 (use-package magit
-  :ensure t
   :bind   (
            ("C-c p" . 'magit-find-file-completing-read)
            ("C-x g" . magit-status)))
 
-(use-package wgrep :ensure t :init (require 'wgrep))
+(use-package wgrep :init (require 'wgrep))
 
-(use-package paredit :ensure t)
+(use-package paredit)
 (use-package intero
-  :ensure t
   :config (progn
 	    (intero-global-mode 1)
 	    ))
-(use-package hindent :ensure t)
-(use-package company :ensure t)
-(use-package yaml-mode :ensure t)
-(use-package rust-mode :ensure t)
+(use-package hindent)
+(use-package company)
+(use-package yaml-mode)
+(use-package rust-mode)
 
-(use-package markdown-mode :ensure t)
+(use-package markdown-mode)
 
-(use-package smex :ensure t
+(use-package smex
   :config (progn
 	    (smex-initialize)
 	    (global-set-key (kbd "M-x") 'smex)
