@@ -6,70 +6,86 @@
   (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-create-new-buffer 'always)
+(column-number-mode 1)
+(global-font-lock-mode 1)
+(global-subword-mode 1)
+(blink-cursor-mode -1)
+(global-auto-revert-mode t)
 (ido-mode 1)
 (show-paren-mode 1)
-
+(load-theme 'manoj-dark)
+(display-time)
+(require 'windmove)
+(windmove-default-keybindings)
+(require 'cl)
+(require 'dired-x)
+(with-current-buffer "*scratch*"
+  (emacs-lock-mode 'kill))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
-(load-theme 'manoj-dark)
-(display-time)
-(setq-default display-line-numbers t)
-(setq require-final-newline t)
-(setq visible-bell t)
-(setq require-final-newline t)
-(require 'cl)
-(require 'dired-x)
-(setq make-backup-files nil)
+;; Die Apple key, die!
+(when (boundp 'mac-command-modifier)
+  (setq mac-command-modifier 'meta))	; back to meta
+;; ctrl-c left/right
+(winner-mode 1)
+
+(setq auto-revert-verbose nil)
 (setq auto-save-default nil)
-(setq create-lockfiles nil)
-(with-current-buffer "*scratch*"
-  (emacs-lock-mode 'kill))
-(setq-default indicate-empty-lines t)
-(setq diff-default-read-only t)
-(global-auto-revert-mode t)
-(setq suggest-key-bindings t)
 (setq bookmark-save-flag 1)
 (setq compilation-scroll-output t)
+(setq create-lockfiles nil)
 (setq dabbrev-case-replace nil)
+(setq diff-default-read-only t)
 (setq dired-auto-revert-buffer t)
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
 (setq display-time-24hr-format t)
+(setq inhibit-local-variables nil)
+(setq inhibit-startup-message t)
+(setq kill-whole-line t)
 (setq display-time-interval (* 5 1))
+(setq make-backup-files nil)
 (setq ediff-keep-variants nil)
 (setq enable-recursive-minibuffers t)
 (setq find-file-existing-other-name t)
 (setq find-file-suppress-same-file-warnings t)
 (setq font-lock-maximum-decoration t)
+(setq ido-create-new-buffer 'always)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(setq make-backup-files nil)
 (setq next-line-add-newlines nil)
-(require 'windmove)
-(windmove-default-keybindings)
-(setq windmove-wrap-around t)
+(setq require-final-newline t)
+(setq require-final-newline t)
+(setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
+(setq visible-bell t)
+(setq windmove-wrap-around t)
+(setq woman-use-own-frame nil)
+(setq-default display-line-numbers t)
+(setq-default indicate-empty-lines t)
 
+(add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
+(setq-default comint-input-ignoredups t)
 
+(global-set-key "\C-r" 'isearch-backward-regexp)
+(global-set-key "\C-s" 'isearch-forward-regexp)
+(global-set-key "\C-xc" 'compile)
+(global-set-key "\C-xv-" 'ediff-revision)
+
+(define-key global-map (kbd "<C-tab>") 'other-frame)
 
 ;; From http://www.emacswiki.org/cgi-bin/wiki/%C3%9Cbersicht/RecentChanges/CopyAndPaste
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
-(column-number-mode 1)
-(global-font-lock-mode 1)
-(global-subword-mode 1)
-(blink-cursor-mode -1)
 (require 'uniquify)
 (setq
  uniquify-buffer-name-style 'forward
  uniquify-separator "/")
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
-
-
-
 
 ;;; Everything after this point depends on stuff that isn't just built
 ;;; in to Emacs.
