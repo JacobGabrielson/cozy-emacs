@@ -29,6 +29,8 @@
   (setq mac-command-modifier 'meta))	; back to meta
 ;; ctrl-c left/right
 (winner-mode 1)
+(toggle-uniquify-buffer-names)
+
 
 (setq auto-revert-verbose nil)
 (setq auto-save-default nil)
@@ -41,11 +43,7 @@
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
 (setq display-time-24hr-format t)
-(setq inhibit-local-variables nil)
-(setq inhibit-startup-message t)
-(setq kill-whole-line t)
 (setq display-time-interval (* 5 1))
-(setq make-backup-files nil)
 (setq ediff-keep-variants nil)
 (setq enable-recursive-minibuffers t)
 (setq find-file-existing-other-name t)
@@ -54,6 +52,10 @@
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
+(setq inhibit-local-variables nil)
+(setq inhibit-startup-message t)
+(setq kill-whole-line t)
+(setq make-backup-files nil)
 (setq make-backup-files nil)
 (setq next-line-add-newlines nil)
 (setq require-final-newline t)
@@ -63,23 +65,23 @@
 (setq visible-bell t)
 (setq windmove-wrap-around t)
 (setq woman-use-own-frame nil)
+(setq-default comint-input-ignoredups t)
 (setq-default display-line-numbers t)
 (setq-default indicate-empty-lines t)
 
 (add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
-(setq-default comint-input-ignoredups t)
 
 (global-set-key "\C-r" 'isearch-backward-regexp)
 (global-set-key "\C-s" 'isearch-forward-regexp)
 (global-set-key "\C-xc" 'compile)
 (global-set-key "\C-xv-" 'ediff-revision)
-
 (define-key global-map (kbd "<C-tab>") 'other-frame)
 
 ;; From http://www.emacswiki.org/cgi-bin/wiki/%C3%9Cbersicht/RecentChanges/CopyAndPaste
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
+
 (require 'uniquify)
 (setq
  uniquify-buffer-name-style 'forward
