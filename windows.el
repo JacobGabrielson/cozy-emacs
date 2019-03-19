@@ -129,31 +129,26 @@ There are two things you can do about this warning:
 (setq use-package-always-ensure t)
 
 (use-package magit
-  :bind   (
-           ("C-c p" . 'magit-find-file-completing-read)
-           ("C-x g" . magit-status)))
+    :bind ("C-x g" . magit-status))
 
 (use-package wgrep :init (require 'wgrep))
 
 (use-package paredit)
 (use-package intero
-  :config (progn
-	    (intero-global-mode 1)
-	    ))
+    :config (intero-global-mode 1))
 (use-package hindent)
 (use-package company)
 (use-package yaml-mode)
 (use-package rust-mode)
-
 (use-package markdown-mode)
 
 (use-package smex
-  :config (progn
-	    (smex-initialize)
-	    (global-set-key (kbd "M-x") 'smex)
-	    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-	    ;; This is your old M-x.
-	    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
+    :config (progn
+	      (smex-initialize)
+	      (global-set-key (kbd "M-x") 'smex)
+	      (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+	      ;; This is your old M-x.
+	      (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
 
 
 (defun smarter-move-beginning-of-line (arg)
