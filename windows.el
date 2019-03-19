@@ -82,6 +82,14 @@
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
 
+(defun shellcd ()
+  (interactive)
+  (let ((shell-dir default-directory))
+    (shell) ;; start new one or use existing
+    (end-of-buffer) ;; make sure you are at command prompt
+    (insert (concat "cd " shell-dir))
+    (comint-send-input)))
+
 (require 'uniquify)
 (setq
  uniquify-buffer-name-style 'forward
