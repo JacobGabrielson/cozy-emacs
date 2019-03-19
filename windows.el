@@ -127,7 +127,13 @@ There are two things you can do about this warning:
 (require 'use-package)
 
 
-(use-package magit :ensure t)
+(use-package magit
+  :ensure t
+  :bind   (
+           ("C-c p" . 'magit-find-file-completing-read)
+           ("C-x g" . magit-status)))
+
+
 (use-package paredit :ensure t)
 (use-package intero
   :ensure t
