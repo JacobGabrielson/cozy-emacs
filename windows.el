@@ -58,7 +58,6 @@
 (setq make-backup-files nil)
 (setq next-line-add-newlines nil)
 (setq require-final-newline t)
-(setq require-final-newline t)
 (setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
 (setq visible-bell t)
