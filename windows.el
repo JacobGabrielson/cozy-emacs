@@ -66,7 +66,7 @@
 (setq windmove-wrap-around t)
 (setq woman-use-own-frame nil)
 (setq-default comint-input-ignoredups t)
-(setq-default display-line-numbers t)
+(setq-default display-line-numbers 'relative)
 (setq-default indicate-empty-lines t)
 
 (add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
