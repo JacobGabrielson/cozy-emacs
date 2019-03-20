@@ -56,7 +56,6 @@
 (setq inhibit-startup-message t)
 (setq kill-whole-line t)
 (setq make-backup-files nil)
-(setq make-backup-files nil)
 (setq next-line-add-newlines nil)
 (setq require-final-newline t)
 (setq require-final-newline t)
