@@ -139,6 +139,8 @@ There are two things you can do about this warning:
 (use-package yaml-mode)
 (use-package rust-mode)
 (use-package markdown-mode)
+(use-package elm-mode)
+
 
 (use-package smex
     :config (progn
