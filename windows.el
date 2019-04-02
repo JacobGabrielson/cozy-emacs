@@ -31,8 +31,13 @@
 (winner-mode 1)
 (toggle-uniquify-buffer-names)
 
-
+(setq vc-follow-symlinks t
+      inhibit-startup-screen t
+      initial-scratch-message nil
+      ispell-silently-savep t)
+(setq eshell-save-history-on-exit t)
 (setq auto-revert-verbose nil)
+(setq sentence-end-double-space nil)
 (setq auto-save-default nil)
 (setq bookmark-save-flag 1)
 (setq compilation-scroll-output t)
@@ -43,6 +48,7 @@
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
 (setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
 (setq display-time-interval (* 5 1))
 (setq ediff-keep-variants nil)
 (setq enable-recursive-minibuffers t)
@@ -53,7 +59,6 @@
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq inhibit-local-variables nil)
-(setq inhibit-startup-message t)
 (setq kill-whole-line t)
 (setq make-backup-files nil)
 (setq next-line-add-newlines nil)
@@ -66,6 +71,14 @@
 (setq-default comint-input-ignoredups t)
 (setq-default display-line-numbers nil)
 (setq-default indicate-empty-lines t)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(when (member system-type '(gnu/linux darwin))
+  (setq dired-listing-switches "-alhF")) ; .h files before .cpp files
+
+(add-hook 'latex-mode-hook '(lambda () (turn-on-reftex)))
+
 
 (add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
 
@@ -94,6 +107,14 @@
  uniquify-separator "/")
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
+
+(setenv "GIT_PAGER" "cat")
+(setenv "PAGER" "cat")
+
+(setq custom-file "~/.emacs-custom.el")
+(when (file-readable-p custom-file)
+  (load custom-file))
+
 
 ;;; Everything after this point depends on stuff that isn't just built
 ;;; in to Emacs.
@@ -137,13 +158,6 @@ There are two things you can do about this warning:
 (use-package hindent)
 (use-package company)
 (use-package yaml-mode)
-(use-package rust-mode)
-(use-package racer :config (add-hook 'rust-mode-hook 'racer-mode))
-(use-package company-racer :config
-  (progn
-    (add-hook 'rust-mode-hook 'company-mode)
-    (add-hook 'rust-mode-hook 'company-racer-mode)))
-
               
              
 (use-package cargo :config (add-hook 'rust-mode-hook 'cargo-minor-mode))
@@ -154,6 +168,20 @@ There are two things you can do about this warning:
 (use-package markdown-mode)
 (use-package elm-mode)
     
+(use-package racer)
+(use-package rust-mode
+  :config
+  (progn
+    (add-hook 'rust-mode-hook #'racer-mode)
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode)
+    (define-key rust-mode-map (kbd "C-c C-d") #'racer-describe)
+    (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+    (setq company-tooltip-align-annotations t)))
+(use-package markdown-mode)
+(use-package elm-mode)
+(use-package cider)
+(use-package irony)
 
 (use-package smex
     :config (progn)
@@ -191,6 +219,21 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
-(setq custom-file "~/.emacs-custom.el")
-(when (file-readable-p custom-file)
-  (load custom-file))
+
+(defun my-end ()
+  "If not at end of current line, goes to end of line.
+Otherwise, if not at bottom of current window, goes to bottom of
+window.  Otherwise, goes to end of buffer."
+  (interactive)
+  (setq oldpoint (point))               ; save original point
+  (if (not (eolp))                      ; if not at end of line,
+      (end-of-line)                     ;    go to end of line
+    ;; else
+    (move-to-window-line -1)            ; otherwise, goto end of window
+    (end-of-line)
+    (if (eq oldpoint (point))           ; if still at original point,
+        (goto-char (point-max)))))      ;    goto end of buffer
+
+(global-set-key "\C-e" 'my-end)
+
+
