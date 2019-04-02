@@ -138,17 +138,30 @@ There are two things you can do about this warning:
 (use-package company)
 (use-package yaml-mode)
 (use-package rust-mode)
+(use-package racer :config (add-hook 'rust-mode-hook 'racer-mode))
+(use-package company-racer :config
+  (progn
+    (add-hook 'rust-mode-hook 'company-mode)
+    (add-hook 'rust-mode-hook 'company-racer-mode)))
+
+              
+             
+(use-package cargo :config (add-hook 'rust-mode-hook 'cargo-minor-mode))
+
+
+(use-package parinfer)
+(use-package flymake-rust)
 (use-package markdown-mode)
 (use-package elm-mode)
-
+    
 
 (use-package smex
-    :config (progn
-	      (smex-initialize)
-	      (global-set-key (kbd "M-x") 'smex)
-	      (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-	      ;; This is your old M-x.
-	      (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
+    :config (progn)
+        (smex-initialize)
+        (global-set-key (kbd "M-x") 'smex)
+        (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+        ;; This is your old M-x.
+        (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
 
 (defun smarter-move-beginning-of-line (arg)
