@@ -170,20 +170,23 @@ There are two things you can do about this warning:
 (use-package rust-mode
   :config
   (progn
+    (setq rust-format-on-save t)
     (add-hook 'rust-mode-hook #'racer-mode)
     (add-hook 'racer-mode-hook #'eldoc-mode)
     (add-hook 'racer-mode-hook #'company-mode)
     (define-key rust-mode-map (kbd "C-c C-d") #'racer-describe)
     (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+    (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
     (setq company-tooltip-align-annotations t)))
-
-(use-package flymake-rust)
+(use-package flymake-rust :config (progn
+				    (setq flymake-rust-use-cargo 1)
+				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
+(use-package cargo :config (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
 (use-package markdown-mode)
 (use-package elm-mode)
 (use-package cider)
 (use-package irony)
-(use-package cargo)
 
 (use-package smex
     :config (progn)
