@@ -160,11 +160,9 @@ There are two things you can do about this warning:
 (use-package yaml-mode)
               
              
-(use-package cargo :config (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
 
 (use-package parinfer)
-(use-package flymake-rust)
 (use-package markdown-mode)
 (use-package elm-mode)
     
@@ -178,10 +176,14 @@ There are two things you can do about this warning:
     (define-key rust-mode-map (kbd "C-c C-d") #'racer-describe)
     (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
     (setq company-tooltip-align-annotations t)))
+
+(use-package flymake-rust)
+
 (use-package markdown-mode)
 (use-package elm-mode)
 (use-package cider)
 (use-package irony)
+(use-package cargo)
 
 (use-package smex
     :config (progn)
