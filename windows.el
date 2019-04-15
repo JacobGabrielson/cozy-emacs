@@ -179,9 +179,11 @@ There are two things you can do about this warning:
     (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
     (setq company-tooltip-align-annotations t)))
 (use-package flymake-rust :config (progn
-				    (setq flymake-rust-use-cargo 1)
 				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
 (use-package cargo :config (add-hook 'rust-mode-hook 'cargo-minor-mode))
+
+(use-package flycheck-rust
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (use-package markdown-mode)
 (use-package elm-mode)
