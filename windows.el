@@ -159,9 +159,6 @@ There are two things you can do about this warning:
 (use-package company)
 (use-package yaml-mode)
               
-             
-
-
 (use-package parinfer)
 (use-package markdown-mode)
 (use-package elm-mode)
@@ -222,10 +219,8 @@ point reaches the beginning or end of the buffer, stop there."
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
-;; remap C-a to `smarter-move-beginning-of-line'
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
-
 
 (defun my-end ()
   "If not at end of current line, goes to end of line.
@@ -243,4 +238,6 @@ window.  Otherwise, goes to end of buffer."
 
 (global-set-key "\C-e" 'my-end)
 
-
+(when window-system
+  ;; Prevent annoying minimizing
+  (global-unset-key "\C-z"))
