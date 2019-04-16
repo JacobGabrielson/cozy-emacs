@@ -105,8 +105,14 @@
 (setq
  uniquify-buffer-name-style 'forward
  uniquify-separator "/")
+
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
+;; http://stackoverflow.com/a/3072831/68127
+(defun colorize-compilation-buffer ()
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 (setenv "GIT_PAGER" "cat")
 (setenv "PAGER" "cat")
@@ -173,7 +179,6 @@ There are two things you can do about this warning:
     (add-hook 'racer-mode-hook #'company-mode)
     (define-key rust-mode-map (kbd "C-c C-d") #'racer-describe)
     (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-    (add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
     (setq company-tooltip-align-annotations t)))
 (use-package flymake-rust :config (progn
 				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
