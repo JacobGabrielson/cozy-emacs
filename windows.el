@@ -1,5 +1,7 @@
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
+(require 'cl)
+(require 'dired-x)
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
@@ -15,10 +17,7 @@
 (show-paren-mode 1)
 (load-theme 'manoj-dark)
 (display-time)
-(require 'windmove)
 (windmove-default-keybindings)
-(require 'cl)
-(require 'dired-x)
 (with-current-buffer "*scratch*"
   (emacs-lock-mode 'kill))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
@@ -227,21 +226,27 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
-(defun my-end ()
+(defun smarter-move-end-of-line (arg)
   "If not at end of current line, goes to end of line.
 Otherwise, if not at bottom of current window, goes to bottom of
 window.  Otherwise, goes to end of buffer."
-  (interactive)
-  (setq oldpoint (point))               ; save original point
-  (if (not (eolp))                      ; if not at end of line,
-      (end-of-line)                     ;    go to end of line
-    ;; else
-    (move-to-window-line -1)            ; otherwise, goto end of window
-    (end-of-line)
-    (if (eq oldpoint (point))           ; if still at original point,
-        (goto-char (point-max)))))      ;    goto end of buffer
+  (interactive "^p")
+  (setq arg (or arg 1))
 
-(global-set-key "\C-e" 'my-end)
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (backward-line (1- arg))))
+  
+  (let ((old-point (point)))
+    (if (not (eolp))
+	(end-of-line)
+      (move-to-window-line -1)
+      (move-end-of-line 1)
+      (if (eq old-point (point))
+          (goto-char (point-max))))))
+
+(global-set-key [remap move-end-of-line] 'smarter-move-end-of-line)
 
 (when window-system
   ;; Prevent annoying minimizing
