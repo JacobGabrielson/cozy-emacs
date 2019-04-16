@@ -15,11 +15,8 @@
 (global-auto-revert-mode t)
 (ido-mode 1)
 (show-paren-mode 1)
-(load-theme 'manoj-dark)
 (display-time)
 (windmove-default-keybindings)
-(with-current-buffer "*scratch*"
-  (emacs-lock-mode 'kill))
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
@@ -251,3 +248,6 @@ window.  Otherwise, goes to end of buffer."
 (when window-system
   ;; Prevent annoying minimizing
   (global-unset-key "\C-z"))
+
+(with-current-buffer "*scratch*"
+  (emacs-lock-mode 'kill))
