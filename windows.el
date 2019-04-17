@@ -104,9 +104,8 @@
     (comint-send-input)))
 
 (require 'uniquify)
-(setq
- uniquify-buffer-name-style 'forward
- uniquify-separator "/")
+(setq uniquify-buffer-name-style 'forward)
+(setq uniquify-separator "/")
 
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
@@ -159,6 +158,14 @@ There are two things you can do about this warning:
     :bind ("C-x g" . magit-status))
 
 (use-package wgrep :init (require 'wgrep))
+
+(use-package ace-window
+  :config
+  (progn
+    (global-set-key [remap other-window] 'ace-window)
+    (setq aw-ignore-current t)
+    ;; use home row
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
 
 (use-package paredit)
 (use-package intero
@@ -257,3 +264,7 @@ window.  Otherwise, goes to end of buffer."
 
 (with-current-buffer "*scratch*"
   (emacs-lock-mode 'kill))
+
+(let ((local-emacs "~/.emacs.local.el"))
+  (when (file-readable-p local-emacs)
+    (load-file local-emacs)))
