@@ -159,6 +159,8 @@ There are two things you can do about this warning:
 
 (use-package wgrep :init (require 'wgrep))
 
+;; Note if it seems like ace-window is acting weird, probably because
+;; you also connected via emacsclient
 (use-package ace-window
   :config
   (progn
