@@ -1,8 +1,10 @@
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
+
 (require 'cl)
 (require 'dired-x)
 (require 'em-smart)
+(require 'uniquify)
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
@@ -29,6 +31,7 @@
 (toggle-uniquify-buffer-names)
 
 (setq auto-revert-verbose nil)
+(setq auto-revert-interval 1)
 (setq auto-save-default nil)
 (setq compilation-scroll-output t)
 (setq create-lockfiles nil)
@@ -40,6 +43,7 @@
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (setq display-time-interval (* 5 1))
+(setq echo-keystrokes 0.1)
 (setq ediff-keep-variants nil)
 (setq enable-recursive-minibuffers t)
 (setq eshell-save-history-on-exit t)
@@ -79,6 +83,9 @@
 (setq-default display-line-numbers nil)
 (setq-default indicate-empty-lines t)
 
+(set-language-environment "UTF-8")
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (when (member system-type '(gnu/linux darwin))
@@ -93,7 +100,7 @@
 (global-set-key "\C-s" 'isearch-forward-regexp)
 (global-set-key "\C-xc" 'compile)
 (global-set-key "\C-xv-" 'ediff-revision)
-(define-key global-map (kbd "<C-tab>") 'other-frame)
+(global-set-key [remap just-one-space] 'cycle-spacing)
 (define-key global-map '[insert] nil)
 
 ;; From http://www.emacswiki.org/cgi-bin/wiki/%C3%9Cbersicht/RecentChanges/CopyAndPaste
@@ -109,7 +116,6 @@
     (insert (concat "cd " shell-dir))
     (comint-send-input)))
 
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
 
@@ -190,14 +196,23 @@ There are two things you can do about this warning:
     ;; use home row
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
 
-
-
-
 (use-package paredit)
+
 (use-package intero
     :config (intero-global-mode 1))
+
 (use-package hindent)
-(use-package company)
+
+(use-package company
+  :config
+  (setq company-idle-delay 0
+	company-echo-delay 0
+	company-dabbrev-downcase nil
+	company-minimum-prefix-length 2
+	company-selection-wrap-around t
+	company-transformers '(company-sort-by-occurrence
+                               company-sort-by-backend-importance)))
+
 (use-package yaml-mode)
               
 (use-package parinfer)
@@ -226,6 +241,16 @@ There are two things you can do about this warning:
 (use-package elm-mode)
 (use-package cider)
 (use-package irony)
+
+(use-package git-gutter-fringe
+  :config
+  (progn
+    (dolist (p '((git-gutter:added    . "#0c0")
+		 (git-gutter:deleted  . "#c00")
+		 (git-gutter:modified . "#c0c")))
+      (set-face-foreground (car p) (cdr p))
+      (set-face-background (car p) (cdr p)))
+    (global-git-gutter-mode t)))
 
 (use-package smex
     :config (progn)
