@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
 
@@ -113,6 +115,35 @@
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
+
+(global-set-key [remap suspend-frame] 'ignore)
+
+(lexical-let ((last-shell ""))
+  (defun toggle-shell ()
+    (interactive)
+    (cond ((string-match-p "^\\*shell<[1-9][0-9]*>\\*$" (buffer-name))
+           (goto-non-shell-buffer))
+          ((get-buffer last-shell) (switch-to-buffer last-shell))
+          (t (shell (setq last-shell "*shell<1>*")))))
+
+  (defun switch-shell (n)
+    (let ((buffer-name (format "*shell<%d>*" n)))
+      (setq last-shell buffer-name)
+      (cond ((get-buffer buffer-name)
+             (switch-to-buffer buffer-name))
+            (t (shell buffer-name)
+               (rename-buffer buffer-name)))))
+
+  (defun goto-non-shell-buffer ()
+    (let* ((r "^\\*shell<[1-9][0-9]*>\\*$")
+           (shell-buffer-p (lambda (b) (string-match-p r (buffer-name b))))
+           (non-shells (cl-remove-if shell-buffer-p (buffer-list))))
+      (when non-shells
+        (switch-to-buffer (first non-shells))))))
+
+(dolist (n (number-sequence 1 9))
+  (global-set-key (kbd (concat "M-" (int-to-string n)))
+                  (lambda () (interactive) (switch-shell n))))
 
 (defun shellcd ()
   (interactive)
@@ -300,9 +331,7 @@ window.  Otherwise, goes to end of buffer."
 
 (global-set-key [remap move-end-of-line] 'smarter-move-end-of-line)
 
-(when window-system
-  ;; Prevent annoying minimizing
-  (global-unset-key "\C-z"))
+
 
 (with-current-buffer "*scratch*"
   (emacs-lock-mode 'kill))
