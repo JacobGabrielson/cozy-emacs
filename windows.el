@@ -1,31 +1,34 @@
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
 
+;;; Requires
 (require 'cl)
 (require 'dired-x)
 (require 'em-smart)
 (require 'uniquify)
 
+;;; Turn off bad modes
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
+(blink-cursor-mode -1)
+
+
+;; Turn on good modes
 (column-number-mode 1)
 (global-font-lock-mode 1)
 (global-subword-mode 1)
-(blink-cursor-mode -1)
 (global-auto-revert-mode t)
 (ido-mode 1)
 (show-paren-mode 1)
 (display-time)
 (windmove-default-keybindings)
+
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
-;; Die Apple key, die!
-(when (boundp 'mac-command-modifier)
-  (setq mac-command-modifier 'meta))	; back to meta
 ;; ctrl-c left/right
 (winner-mode 1)
 (toggle-uniquify-buffer-names)
@@ -96,6 +99,9 @@
 
 (add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
 
+;; Die Apple key, die!
+(when (boundp 'mac-command-modifier)
+  (setq mac-command-modifier 'meta))	; back to meta
 (global-set-key "\C-r" 'isearch-backward-regexp)
 (global-set-key "\C-s" 'isearch-forward-regexp)
 (global-set-key "\C-xc" 'compile)
@@ -142,26 +148,11 @@
 ;;; Everything after this point depends on stuff that isn't just built
 ;;; in to Emacs.
 
-;;; Begin from https://melpa.org/#/getting-started
 (require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (when no-ssl
-    (warn "\
-Your version of Emacs does not support SSL connections,
-which is unsafe because it allows man-in-the-middle attacks.
-There are two things you can do about this warning:
-1. Install an Emacs version that does support SSL and be safe.
-2. Remove this warning from your init file so you won't see it again."))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
-;;; End from https://melpa.org/#/getting-started
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -171,18 +162,18 @@ There are two things you can do about this warning:
 (setq use-package-always-ensure t)
 
 
-(use-package xterm-color)
-
-(setq comint-output-filter-functions
-      (remove 'ansi-color-process-output comint-output-filter-functions))
-
-(add-hook 'shell-mode-hook
-	  ;; ensures it’s always the first one in any buffer, which is
-	  ;; important for reasons
-          (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))
+(use-package xterm-color
+  :config
+  (progn
+    (setq comint-output-filter-functions
+	(remove 'ansi-color-process-output comint-output-filter-functions))
+    (add-hook 'shell-mode-hook
+	      ;; ensures it’s always the first one in any buffer, which is
+	      ;; important for reasons
+              (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
 (use-package magit
-    :bind ("C-x g" . magit-status))
+  :bind ("C-x g" . magit-status))
 
 (use-package wgrep :init (require 'wgrep))
 
@@ -199,7 +190,7 @@ There are two things you can do about this warning:
 (use-package paredit)
 
 (use-package intero
-    :config (intero-global-mode 1))
+  :config (intero-global-mode 1))
 
 (use-package hindent)
 
@@ -214,11 +205,11 @@ There are two things you can do about this warning:
                                company-sort-by-backend-importance)))
 
 (use-package yaml-mode)
-              
+
 (use-package parinfer)
 (use-package markdown-mode)
 (use-package elm-mode)
-    
+
 (use-package racer)
 (use-package rust-mode
   :config
@@ -253,12 +244,12 @@ There are two things you can do about this warning:
     (global-git-gutter-mode t)))
 
 (use-package smex
-    :config (progn)
-        (smex-initialize)
-        (global-set-key (kbd "M-x") 'smex)
-        (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-        ;; This is your old M-x.
-        (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+  :config (progn)
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  ;; This is your old M-x.
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
 
 (defun smarter-move-beginning-of-line (arg)
