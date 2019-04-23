@@ -55,6 +55,7 @@
 (setq eshell-where-to-jump 'begin)
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
+(setq eshell-prefer-lisp-functions t)
 (setq eww-search-prefix "https://google.com/search?q=")
 (setq find-file-existing-other-name t)
 (setq find-file-suppress-same-file-warnings t)
@@ -87,6 +88,8 @@
 (setq-default comint-input-ignoredups t)
 (setq-default display-line-numbers nil)
 (setq-default indicate-empty-lines t)
+(setq-default split-width-threshold 160 ; vertical by default
+              split-height-threshold nil)
 
 (set-language-environment "UTF-8")
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
@@ -121,21 +124,21 @@
 (lexical-let ((last-shell ""))
   (defun toggle-shell ()
     (interactive)
-    (cond ((string-match-p "^\\*shell<[1-9][0-9]*>\\*$" (buffer-name))
+    (cond ((string-match-p "^\\*eshell<[1-9][0-9]*>\\*$" (buffer-name))
            (goto-non-shell-buffer))
           ((get-buffer last-shell) (switch-to-buffer last-shell))
-          (t (shell (setq last-shell "*shell<1>*")))))
+          (t (shell (setq last-shell "*eshell<1>*")))))
 
   (defun switch-shell (n)
-    (let ((buffer-name (format "*shell<%d>*" n)))
+    (let ((buffer-name (format "*eshell<%d>*" n)))
       (setq last-shell buffer-name)
       (cond ((get-buffer buffer-name)
              (switch-to-buffer buffer-name))
-            (t (shell buffer-name)
+            (t (eshell buffer-name)
                (rename-buffer buffer-name)))))
 
   (defun goto-non-shell-buffer ()
-    (let* ((r "^\\*shell<[1-9][0-9]*>\\*$")
+    (let* ((r "^\\*eshell<[1-9][0-9]*>\\*$")
            (shell-buffer-p (lambda (b) (string-match-p r (buffer-name b))))
            (non-shells (cl-remove-if shell-buffer-p (buffer-list))))
       (when non-shells
