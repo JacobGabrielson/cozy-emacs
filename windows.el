@@ -2,6 +2,7 @@
 ;;; of the standard library to be loaded.
 (require 'cl)
 (require 'dired-x)
+(require 'em-smart)
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
@@ -42,6 +43,10 @@
 (setq ediff-keep-variants nil)
 (setq enable-recursive-minibuffers t)
 (setq eshell-save-history-on-exit t)
+(setq eshell-where-to-jump 'begin)
+(setq eshell-review-quick-commands nil)
+(setq eshell-smart-space-goes-to-end t)
+(setq eww-search-prefix "https://google.com/search?q=")
 (setq find-file-existing-other-name t)
 (setq find-file-suppress-same-file-warnings t)
 (setq font-lock-maximum-decoration t)
@@ -64,6 +69,7 @@
 (setq sentence-end-double-space nil)
 (setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
+(setq truncate-partial-width-windows nil)
 (setq vc-follow-symlinks t)
 (setq visible-bell t)
 (setq windmove-wrap-around t)
@@ -109,6 +115,10 @@
 
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
+
 ;; http://stackoverflow.com/a/3072831/68127
 (defun colorize-compilation-buffer ()
   (let ((inhibit-read-only t))
@@ -154,6 +164,17 @@ There are two things you can do about this warning:
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+
+(use-package xterm-color)
+
+(setq comint-output-filter-functions
+      (remove 'ansi-color-process-output comint-output-filter-functions))
+
+(add-hook 'shell-mode-hook
+	  ;; ensures it’s always the first one in any buffer, which is
+	  ;; important for reasons
+          (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))
+
 (use-package magit
     :bind ("C-x g" . magit-status))
 
@@ -168,6 +189,9 @@ There are two things you can do about this warning:
     (setq aw-ignore-current t)
     ;; use home row
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
+
+
+
 
 (use-package paredit)
 (use-package intero
