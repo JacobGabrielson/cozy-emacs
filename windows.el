@@ -93,6 +93,8 @@
 
 (set-language-environment "UTF-8")
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+(setq comint-buffer-maximum-size 4096)
+(add-hook 'compilation-filter-hook 'comint-truncate-buffer)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -100,7 +102,6 @@
   (setq dired-listing-switches "-alhF")) ; .h files before .cpp files
 
 (add-hook 'latex-mode-hook '(lambda () (turn-on-reftex)))
-
 
 (add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
 
@@ -124,21 +125,21 @@
 (lexical-let ((last-shell ""))
   (defun toggle-shell ()
     (interactive)
-    (cond ((string-match-p "^\\*eshell<[1-9][0-9]*>\\*$" (buffer-name))
+    (cond ((string-match-p "^\\*shell<[1-9][0-9]*>\\*$" (buffer-name))
            (goto-non-shell-buffer))
           ((get-buffer last-shell) (switch-to-buffer last-shell))
-          (t (shell (setq last-shell "*eshell<1>*")))))
+          (t (shell (setq last-shell "*shell<1>*")))))
 
   (defun switch-shell (n)
-    (let ((buffer-name (format "*eshell<%d>*" n)))
+    (let ((buffer-name (format "*shell<%d>*" n)))
       (setq last-shell buffer-name)
       (cond ((get-buffer buffer-name)
              (switch-to-buffer buffer-name))
-            (t (eshell buffer-name)
+            (t (shell buffer-name)
                (rename-buffer buffer-name)))))
 
   (defun goto-non-shell-buffer ()
-    (let* ((r "^\\*eshell<[1-9][0-9]*>\\*$")
+    (let* ((r "^\\*shell<[1-9][0-9]*>\\*$")
            (shell-buffer-p (lambda (b) (string-match-p r (buffer-name b))))
            (non-shells (cl-remove-if shell-buffer-p (buffer-list))))
       (when non-shells
@@ -163,7 +164,6 @@
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
-
 
 ;; http://stackoverflow.com/a/3072831/68127
 (defun colorize-compilation-buffer ()
@@ -195,6 +195,7 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+(use-package go-mode)
 
 (use-package xterm-color
   :config
@@ -334,11 +335,17 @@ window.  Otherwise, goes to end of buffer."
 
 (global-set-key [remap move-end-of-line] 'smarter-move-end-of-line)
 
-
-
 (with-current-buffer "*scratch*"
   (emacs-lock-mode 'kill))
 
 (let ((local-emacs "~/.emacs.local.el"))
   (when (file-readable-p local-emacs)
     (load-file local-emacs)))
+
+;; Setting this in custom.el doesn't work, because that gets loaded
+;; _after_ comint gets loaded
+(progn
+  (setq password-word-equivalents
+        '("PIN" "password" "passcode" "passphrase" "pass phrase"))
+
+  (custom-reevaluate-setting 'comint-password-prompt-regexp))
