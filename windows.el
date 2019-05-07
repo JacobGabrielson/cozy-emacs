@@ -197,6 +197,8 @@
 
 (use-package go-mode)
 
+(use-package excorporate)
+
 (use-package xterm-color
   :config
   (progn
