@@ -79,7 +79,7 @@
 (setq sentence-end-double-space nil)
 (setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
-(setq truncate-partial-width-windows nil)
+(setq truncate-partial-width-windows t)
 (setq vc-follow-symlinks t)
 (setq visible-bell t)
 (setq windmove-wrap-around t)
@@ -268,7 +268,21 @@
 (use-package markdown-mode)
 (use-package elm-mode)
 (use-package cider)
-(use-package irony)
+
+;; C/C++
+(use-package irony
+  :config (progn
+	    (add-hook 'c++-mode-hook 'irony-mode)
+	    (add-hook 'c-mode-hook 'irony-mode)
+	    (add-hook 'objc-mode-hook 'irony-mode)
+	    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
+(use-package company-irony
+  :config
+  (eval-after-load 'company
+    '(add-to-list 'company-backends 'company-irony)))
+
+(use-package flycheck-irony)
+(use-package irony-eldoc)
 
 (use-package git-gutter-fringe
   :config
