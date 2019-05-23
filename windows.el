@@ -79,11 +79,13 @@
 (setq sentence-end-double-space nil)
 (setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
-(setq truncate-partial-width-windows t)
 (setq vc-follow-symlinks t)
 (setq visible-bell t)
 (setq windmove-wrap-around t)
 (setq woman-use-own-frame nil)
+
+(setq truncate-partial-width-windows nil)
+(set-default 'truncate-lines nil)
 
 (setq-default comint-input-ignoredups t)
 (setq-default display-line-numbers nil)
@@ -186,7 +188,10 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+(add-to-list 'package-pinned-packages '(org . "org") t)
+(add-to-list 'package-pinned-packages '(org-plus-contrib . "org") t)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -260,7 +265,11 @@
     (setq company-tooltip-align-annotations t)))
 (use-package flymake-rust :config (progn
 				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
-(use-package cargo :config (add-hook 'rust-mode-hook 'cargo-minor-mode))
+(use-package cargo :config
+  (progn
+    (add-hook 'rust-mode-hook 'cargo-minor-mode)
+    (add-hook 'cargo-process-mode-hook (lambda ()
+					 (visual-line-mode)))))
 
 (use-package flycheck-rust
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
@@ -301,6 +310,8 @@
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+
+(use-package org)
 
 
 (defun smarter-move-beginning-of-line (arg)
@@ -358,6 +369,7 @@ window.  Otherwise, goes to end of buffer."
   (when (file-readable-p local-emacs)
     (load-file local-emacs)))
 
+
 ;; Setting this in custom.el doesn't work, because that gets loaded
 ;; _after_ comint gets loaded
 (progn
@@ -365,3 +377,19 @@ window.  Otherwise, goes to end of buffer."
         '("PIN" "password" "passcode" "passphrase" "pass phrase"))
 
   (custom-reevaluate-setting 'comint-password-prompt-regexp))
+
+(dolist (hook '(
+		rust-mode-hook
+		lisp-interaction-mode-hook
+		haskell-mode-hook
+		go-mode-hook
+		))
+  (add-hook hook (lambda ()
+		   (set-variable 'display-line-numbers t t))))
+
+
+(org-babel-do-load-languages 'org-babel-load-languages
+    '(
+        (shell . t)
+    )
+)
