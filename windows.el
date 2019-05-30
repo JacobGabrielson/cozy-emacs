@@ -9,6 +9,7 @@
 (require 'em-smart)
 (require 'uniquify)
 
+
 ;;; Turn off bad modes
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
@@ -23,6 +24,14 @@
 (global-font-lock-mode 1)
 (global-subword-mode 1)
 (global-auto-revert-mode t)
+(global-hl-line-mode 1)
+(size-indication-mode t)
+
+(save-place-mode 1)
+(savehist-mode 1)
+
+
+
 (ido-mode 1)
 (show-paren-mode 1)
 (display-time)
@@ -35,10 +44,18 @@
 (winner-mode 1)
 (toggle-uniquify-buffer-names)
 
+(setq savehist-additional-variables '(search-ring regexp-search-ring))
+(setq savehist-autosave-interval 60)
+(setq hl-line-sticky-flag nil)
 (setq auto-revert-verbose nil)
 (setq auto-revert-interval 1)
 (setq auto-save-default nil)
-(setq compilation-scroll-output t)
+(setq compilation-ask-about-save nil  ; Just save before compiling
+      compilation-always-kill t       ; Just kill old compile processes before
+                                        ; starting the new one
+      compilation-scroll-output 'first-error ; Automatically scroll to first
+                                        ; error
+      )
 (setq create-lockfiles nil)
 (setq dabbrev-case-replace nil)
 (setq diff-default-read-only t)
@@ -161,6 +178,8 @@
 
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
+(setq uniquify-after-kill-buffer-p t)    ; rename after killing uniquified
+(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
@@ -203,6 +222,7 @@
 (use-package go-mode)
 
 (use-package excorporate)
+
 
 (use-package xterm-color
   :config
@@ -263,8 +283,13 @@
     (define-key rust-mode-map (kbd "C-c C-d") #'racer-describe)
     (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
     (setq company-tooltip-align-annotations t)))
-(use-package flymake-rust :config (progn
-				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
+
+
+;; seems to be creating files
+;;(use-package flymake-rust :config (progn
+;;				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
+
+
 (use-package cargo :config
   (progn
     (add-hook 'rust-mode-hook 'cargo-minor-mode)
@@ -277,6 +302,11 @@
 (use-package markdown-mode)
 (use-package elm-mode)
 (use-package cider)
+
+(use-package auto-highlight-symbol
+  :config (progn
+	    (global-auto-highlight-symbol-mode t)))
+
 
 ;; C/C++
 (use-package irony
@@ -386,6 +416,8 @@ window.  Otherwise, goes to end of buffer."
 		))
   (add-hook hook (lambda ()
 		   (set-variable 'display-line-numbers t t))))
+
+
 
 
 (org-babel-do-load-languages 'org-babel-load-languages
