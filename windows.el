@@ -44,7 +44,7 @@
 (winner-mode 1)
 (toggle-uniquify-buffer-names)
 
-(setq savehist-additional-variables '(search-ring regexp-search-ring))
+(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq savehist-autosave-interval 60)
 (setq hl-line-sticky-flag nil)
 (setq auto-revert-verbose nil)
@@ -65,7 +65,13 @@
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (setq display-time-interval (* 5 1))
-(setq echo-keystrokes 0.1)
+(setq echo-keystrokes 0.02)
+
+(setq
+ scroll-preserve-screen-position t
+ scroll-margin 0
+ scroll-conservatively 101)
+
 (setq ediff-keep-variants nil)
 (setq enable-recursive-minibuffers t)
 (setq eshell-save-history-on-exit t)
@@ -78,6 +84,7 @@
 (setq find-file-suppress-same-file-warnings t)
 (setq font-lock-maximum-decoration t)
 (setq global-mark-ring-max 64)
+(setq history-length 1000)
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -86,6 +93,15 @@
 (setq initial-scratch-message nil)
 (setq ispell-silently-savep t)
 (setq kill-whole-line t)
+(setq kill-do-not-save-duplicates t)
+
+(setq confirm-kill-processes nil)
+
+(setq  global-auto-revert-non-file-buffers t)
+
+
+(setq  save-interprogram-paste-before-kill t)
+
 (setq make-backup-files nil)
 (setq next-line-add-newlines nil)
 (setq nxml-slash-auto-complete-flag t)
@@ -97,6 +113,7 @@
 (setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
 (setq vc-follow-symlinks t)
+(setq ffap-machine-p-known 'reject)
 (setq visible-bell t)
 (setq windmove-wrap-around t)
 (setq woman-use-own-frame nil)
@@ -106,16 +123,29 @@
 
 (setq-default comint-input-ignoredups t)
 (setq-default display-line-numbers nil)
+
+
+
 (setq-default indicate-empty-lines t)
 (setq-default split-width-threshold 160 ; vertical by default
               split-height-threshold nil)
 
 (set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+
+ 
+
+
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (setq comint-buffer-maximum-size 4096)
 (add-hook 'compilation-filter-hook 'comint-truncate-buffer)
 
 (fset 'yes-or-no-p 'y-or-n-p)
+(defalias #'view-hello-file #'ignore)
 
 (when (member system-type '(gnu/linux darwin))
   (setq dired-listing-switches "-alhF")) ; .h files before .cpp files
@@ -343,6 +373,10 @@
 
 (use-package org)
 
+(use-package direnv
+ :config
+ (direnv-mode))
+
 
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -425,3 +459,10 @@ window.  Otherwise, goes to end of buffer."
         (shell . t)
     )
 )
+
+;; Theme and font settings
+(when window-system
+  (defun text-scale-default () (interactive) (text-scale-set 0))
+  (bind-key "s-=" 'text-scale-increase)
+  (bind-key "s--" 'text-scale-decrease)
+  (bind-key "s-0" 'text-scale-default))
