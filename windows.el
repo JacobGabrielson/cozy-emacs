@@ -164,6 +164,9 @@
 (global-set-key [remap just-one-space] 'cycle-spacing)
 (define-key global-map '[insert] nil)
 
+(define-key emacs-lisp-mode-map (kbd "C-c C-z") 'ielm)
+(define-key emacs-lisp-mode-map (kbd "C-c C-l") 'eval-buffer)
+
 ;; From http://www.emacswiki.org/cgi-bin/wiki/%C3%9Cbersicht/RecentChanges/CopyAndPaste
 (global-set-key "\C-w" 'clipboard-kill-region)
 (global-set-key "\M-w" 'clipboard-kill-ring-save)
@@ -263,6 +266,9 @@
 	      ;; ensures it’s always the first one in any buffer, which is
 	      ;; important for reasons
               (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
+
+
+(use-package dockerfile-mode)
 
 (use-package magit
   :bind ("C-x g" . magit-status))
