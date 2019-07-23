@@ -22,4 +22,8 @@ shopt -s histverify
 shopt -s histreedit
 shopt -s nocaseglob
 
-
+export HISTTIMEFORMAT="%h %d %H:%M:%S "
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+PROMPT_COMMAND='history -a'
+export HISTIGNORE="ls:ps:history"
