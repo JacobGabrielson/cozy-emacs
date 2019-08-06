@@ -3,6 +3,8 @@
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
 
+(setq custom-file "~/.emacs-custom.el")
+
 (require 'cl)
 (require 'dired-x)
 (require 'em-smart)
@@ -277,12 +279,11 @@ window.  Otherwise, goes to end of buffer."
 ;; Theme and font settings
 (when window-system
   (defun text-scale-default () (interactive) (text-scale-set 0))
-  (bind-key "s-=" 'text-scale-increase)
-  (bind-key "s--" 'text-scale-decrease)
-  (bind-key "s-0" 'text-scale-default))
+  (global-set-key (kbd "s-=") 'text-scale-increase)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+  (global-set-key (kbd "s-0") 'text-scale-default))
 
 
-(setq custom-file "~/.emacs-custom.el")
 (when (file-readable-p custom-file)
   (load custom-file))
 
