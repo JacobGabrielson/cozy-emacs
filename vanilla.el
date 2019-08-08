@@ -32,6 +32,7 @@
 (ido-mode 1)
 (show-paren-mode 1)
 (display-time)
+;(global-display-line-numbers-mode 1)
 (windmove-default-keybindings)
 
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
