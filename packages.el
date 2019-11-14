@@ -144,12 +144,6 @@
 
 (use-package org)
 
-(use-package direnv
- :config
- (direnv-mode))
-
-
-
 (let ((local-emacs "~/.emacs.local.el"))
   (when (file-readable-p local-emacs)
     (load-file local-emacs)))
