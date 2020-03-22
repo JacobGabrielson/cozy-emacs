@@ -30,3 +30,4 @@ RUN apt-get install -y --no-install-recommends libgconf2-dev
 # RUN make -j 16 bootstrap
 RUN ./autogen.sh
 RUN ./configure --prefix=/home/jacob/.local
+RUN make -j $(expr $(cat /proc/cpuinfo | grep ^processor | cut -d: -f2 | tail -1) + 1)
