@@ -17,13 +17,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN useradd -ms /bin/bash jacob
 WORKDIR /home/jacob
+USER jacob
 
 RUN curl -L https://github.com/emacs-mirror/emacs/archive/emacs-27.0.90.tar.gz --output emacs-src.tar.gz
 RUN zcat emacs-src.tar.gz | tar xf -
 WORKDIR /home/jacob/emacs-emacs-27.0.90
 
-USER jacob
-
 RUN ./autogen.sh
 RUN ./configure --prefix=/home/jacob/.local
 RUN make -j $(expr $(cat /proc/cpuinfo | grep ^processor | cut -d: -f2 | tail -1) + 1)
+RUN make install
