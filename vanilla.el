@@ -42,6 +42,10 @@
 (winner-mode 1)
 (toggle-uniquify-buffer-names)
 
+;; makes things like lsp-mode performant
+(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold 100000000)
+
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq savehist-autosave-interval 60)
 (setq hl-line-sticky-flag nil)
