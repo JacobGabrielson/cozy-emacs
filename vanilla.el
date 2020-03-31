@@ -299,3 +299,7 @@ window.  Otherwise, goes to end of buffer."
 (when (file-readable-p custom-file)
   (load custom-file))
 
+;; For now setting this on a machine by machine basis
+;;(setq desktop-save-mode t)
+;;(desktop-save-mode 1)
+;;(savehist-mode 1)

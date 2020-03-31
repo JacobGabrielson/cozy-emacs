@@ -35,5 +35,7 @@ if [[ -n $TMUX ]]; then
     export $(tmux show-environment | grep "^DISPLAY")
   }
 else                                                                                                  
-  function refresh { }
+  function refresh { :;  }
 fi
+
+
