@@ -19,7 +19,7 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(use-package go-mode)
+;;(use-package go-mode)
 
 (use-package excorporate)
 
