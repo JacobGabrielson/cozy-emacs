@@ -3,6 +3,9 @@
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
 
+;;; Helpful notes:
+;;;  - To tell if you've gotten 24 bit color, do (display-color-cells)
+
 (setq custom-file "~/.emacs-custom.el")
 
 (require 'cl)
