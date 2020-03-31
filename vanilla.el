@@ -5,6 +5,8 @@
 
 ;;; Helpful notes:
 ;;;  - To tell if you've gotten 24 bit color, do (display-color-cells)
+;;;  - The only Windows terminal that I can find that supports 24-bit
+;;;    color and italic fonts and doesn't swallow keys is Kitty
 
 (setq custom-file "~/.emacs-custom.el")
 
