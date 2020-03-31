@@ -27,3 +27,13 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 PROMPT_COMMAND='history -a'
 export HISTIGNORE="ls:ps:history"
+
+# From https://babushk.in/posts/renew-environment-tmux.html
+if [[ -n $TMUX ]]; then                                                                               
+  function refresh {                                                                                
+    export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
+    export $(tmux show-environment | grep "^DISPLAY")
+  }
+else                                                                                                  
+  function refresh { }
+fi
