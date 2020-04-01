@@ -28,18 +28,35 @@
 
 
 ;; Turn on good modes
-(column-number-mode 1)
 (global-font-lock-mode 1)
 (global-subword-mode 1)
 (global-auto-revert-mode t)
-(global-hl-line-mode 1)
-(size-indication-mode t)
+(when window-system
+  ;; Too slow over some slower connections
+  (global-hl-line-mode 1)
+  (column-number-mode 1)
+  (display-time)
+  (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t)
+  (setq display-time-interval (* 5 1))
+  (setq suggest-key-bindings t)
+  (setq font-lock-maximum-decoration t)
+  (size-indication-mode t)
+  ;;(global-display-line-numbers-mode 1)
+  )
+
+(unless window-system
+  (global-hl-line-mode 0)
+  (setq mode-line-format
+	'("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " (vc-mode vc-mode) "  " mode-line-modes mode-line-end-spaces)
+  ))
+
+
+
 (save-place-mode 1)
 (savehist-mode 1)
 (ido-mode 1)
 (show-paren-mode 1)
-(display-time)
-;(global-display-line-numbers-mode 1)
 (windmove-default-keybindings)
 
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
@@ -71,9 +88,6 @@
 (setq dired-auto-revert-buffer t)
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
-(setq display-time-24hr-format t)
-(setq display-time-day-and-date t)
-(setq display-time-interval (* 5 1))
 (setq echo-keystrokes 0.02)
 
 (setq
@@ -91,7 +105,6 @@
 (setq eww-search-prefix "https://google.com/search?q=")
 (setq find-file-existing-other-name t)
 (setq find-file-suppress-same-file-warnings t)
-(setq font-lock-maximum-decoration t)
 (setq global-mark-ring-max 64)
 (setq history-length 1000)
 (setq ido-create-new-buffer 'always)
@@ -119,7 +132,6 @@
 (setq reftex-use-multiple-selection-buffers t)
 (setq require-final-newline t)
 (setq sentence-end-double-space nil)
-(setq suggest-key-bindings t)
 (setq tab-always-indent 'complete)
 (setq vc-follow-symlinks t)
 (setq ffap-machine-p-known 'reject)
@@ -294,6 +306,9 @@ window.  Otherwise, goes to end of buffer."
   (global-set-key (kbd "s-=") 'text-scale-increase)
   (global-set-key (kbd "s--") 'text-scale-decrease)
   (global-set-key (kbd "s-0") 'text-scale-default))
+
+
+
 
 
 (when (file-readable-p custom-file)
