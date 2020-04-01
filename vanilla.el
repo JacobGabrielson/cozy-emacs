@@ -47,7 +47,7 @@
 
 (unless window-system
   (global-hl-line-mode 0)
-  (setq mode-line-format
+  (setq-default mode-line-format
 	'("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " (vc-mode vc-mode) "  " mode-line-modes mode-line-end-spaces)
   ))
 
@@ -157,6 +157,7 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment 'utf-8)
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
  
 
