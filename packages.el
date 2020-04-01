@@ -47,6 +47,9 @@
   (progn
     (global-set-key [remap other-window] 'ace-window)
     (setq aw-ignore-current t)
+    (unless window-system
+      ;; This is proving too slow over slower links
+      (setq aw-background nil))
     ;; use home row
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
 
