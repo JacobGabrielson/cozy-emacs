@@ -83,15 +83,16 @@
 
 ;; C/C++
 
-(use-package git-gutter-fringe
-  :config
-  (progn
-    (dolist (p '((git-gutter:added    . "#0c0")
-		 (git-gutter:deleted  . "#c00")
-		 (git-gutter:modified . "#c0c")))
-      (set-face-foreground (car p) (cdr p))
-      (set-face-background (car p) (cdr p)))
-    (global-git-gutter-mode t)))
+(when window-system
+  (use-package git-gutter-fringe
+    :config
+    (progn
+      (dolist (p '((git-gutter:added    . "#0c0")
+		   (git-gutter:deleted  . "#c00")
+		   (git-gutter:modified . "#c0c")))
+	(set-face-foreground (car p) (cdr p))
+	(set-face-background (car p) (cdr p)))
+      (global-git-gutter-mode t))))
 
 (use-package smex
   :config (progn)
