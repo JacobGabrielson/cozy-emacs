@@ -66,6 +66,9 @@
 (winner-mode 1)
 (toggle-uniquify-buffer-names)
 
+(setq use-file-dialog nil)
+(setq use-dialog-box nil)
+
 ;; makes things like lsp-mode performant
 (setq read-process-output-max (* 1024 1024))
 (setq gc-cons-threshold 100000000)
@@ -151,16 +154,15 @@
 (setq-default split-width-threshold 160 ; vertical by default
               split-height-threshold nil)
 
-(set-language-environment "UTF-8")
+
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-
- 
-
+(setq-default buffer-file-coding-system 'utf-8-unix)
 
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (setq comint-buffer-maximum-size 4096)
