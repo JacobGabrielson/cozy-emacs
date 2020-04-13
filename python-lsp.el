@@ -12,9 +12,6 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-					; we also should make sure we have flycheck installed
-(use-package flycheck
-  :ensure t)
 
 ; Let's set up company! perhaps not necessary but this is what i like to use
 (use-package company

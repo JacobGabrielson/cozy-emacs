@@ -128,3 +128,9 @@
     )
 )
 
+					; we also should make sure we have flycheck installed
+(use-package flycheck
+  :ensure t)
+
+;; Note: make sure shellcheck pkg is installed w/ apt or whatnot
+(add-hook 'sh-mode-hook 'flycheck-mode)
