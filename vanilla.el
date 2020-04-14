@@ -252,6 +252,9 @@
 (setenv "GIT_PAGER" "cat")
 (setenv "PAGER" "cat")
 
+;; Works on both Windows and Unix
+(setq grep-find-command "grep -r")
+
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
 
