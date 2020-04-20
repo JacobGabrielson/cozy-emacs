@@ -21,6 +21,8 @@
 
 (use-package go-mode)
 
+(use-package ripgrep)
+
 (use-package excorporate)
 
 (use-package xterm-color
