@@ -56,15 +56,14 @@
 
 
 (use-package projectile
-  :bind ("C-x c" . projectile-compile-project))
-
-
-
+  :config
+  (progn
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-x c") 'projectile-compile-project)
+    (projectile-mode +1)))
 
 (use-package markdown-mode)
-
-
-
 
 ;; seems to be creating files
 ;;(use-package flymake-rust :config (progn
