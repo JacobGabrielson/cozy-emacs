@@ -55,7 +55,8 @@
 
 
 
-
+(use-package projectile
+  :bind ("C-x c" . projectile-compile-project))
 
 
 
