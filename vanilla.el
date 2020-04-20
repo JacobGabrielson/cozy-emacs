@@ -125,7 +125,7 @@
 (setq  global-auto-revert-non-file-buffers t)
 
 
-(setq  save-interprogram-paste-before-kill t)
+(setq save-interprogram-paste-before-kill t)
 
 (setq make-backup-files nil)
 (setq next-line-add-newlines nil)

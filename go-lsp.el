@@ -64,7 +64,7 @@
   (setq compile-command "echo Building... && go build -v && echo Testing... && go test -v && echo Linter... && golint")  
   (setq compilation-read-command nil)
   (add-hook 'go-mode-hook 'custom-go-mode)
-  :bind (("M-," . compile)
+  :bind (("M-," . compile)a
 	 ("M-." . godef-jump)))
 
 (setq compilation-window-height 14)
