@@ -19,8 +19,6 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(use-package go-mode)
-
 (use-package excorporate)
 
 (use-package xterm-color
@@ -40,20 +38,12 @@
 
 (use-package wgrep :init (require 'wgrep))
 
-;; Note if it seems like ace-window is acting weird, probably because
-;; you also connected via emacsclient
-(use-package ace-window
+(use-package flx-ido
   :config
   (progn
-    (global-set-key [remap other-window] 'ace-window)
-    (setq aw-ignore-current t)
-    (unless window-system
-      ;; This is proving too slow over slower links
-      (setq aw-background nil))
-    ;; use home row
-    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))))
+    (flx-ido-mode 1)))
 
-
+(use-package ggtags)
 
 (use-package projectile
   :config
@@ -64,22 +54,6 @@
     (projectile-mode +1)))
 
 (use-package markdown-mode)
-
-;; seems to be creating files
-;;(use-package flymake-rust :config (progn
-;;				    (add-hook 'rust-mode-hook 'flymake-rust-load)))
-
-
-
-
-
-
-(use-package markdown-mode)
-
-
-
-
-
 
 ;; C/C++
 
@@ -102,12 +76,6 @@
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
-(use-package org)
-
-(let ((local-emacs "~/.emacs.local.el"))
-  (when (file-readable-p local-emacs)
-    (load-file local-emacs)))
-
 
 ;; Setting this in custom.el doesn't work, because that gets loaded
 ;; _after_ comint gets loaded
@@ -118,9 +86,7 @@
   (custom-reevaluate-setting 'comint-password-prompt-regexp))
 
 
-
-
-
+(use-package org)
 
 (org-babel-do-load-languages 'org-babel-load-languages
     '(
@@ -128,7 +94,6 @@
     )
 )
 
-					; we also should make sure we have flycheck installed
 (use-package flycheck
   :ensure t)
 
