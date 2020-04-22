@@ -19,6 +19,8 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+(use-package ripgrep)
+
 (use-package excorporate)
 
 (use-package xterm-color
