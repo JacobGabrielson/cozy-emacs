@@ -56,6 +56,11 @@
 (save-place-mode 1)
 (savehist-mode 1)
 (ido-mode 1)
+(ido-everywhere 1)
+(setq ido-create-new-buffer 'always)
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
 (show-paren-mode 1)
 (windmove-default-keybindings)
 
@@ -71,7 +76,7 @@
 
 ;; makes things like lsp-mode performant
 (setq read-process-output-max (* 1024 1024))
-(setq gc-cons-threshold 100000000)
+(setq gc-cons-threshold 500000000)
 
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq savehist-autosave-interval 60)
@@ -110,9 +115,6 @@
 (setq find-file-suppress-same-file-warnings t)
 (setq global-mark-ring-max 64)
 (setq history-length 1000)
-(setq ido-create-new-buffer 'always)
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
 (setq inhibit-local-variables nil)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
