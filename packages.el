@@ -33,6 +33,8 @@
 	      ;; important for reasons
               (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
 
+(use-package systemd)
+
 (use-package dockerfile-mode)
 
 (use-package magit

@@ -1,5 +1,7 @@
 ;; From
 ;; https://arenzana.org/2019/12/emacs-go-mode-revisited/
+;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
+;; https://lupan.pl/dotemacs/
 
 (use-package lsp-mode
   :ensure t
@@ -64,7 +66,7 @@
   (setq compile-command "echo Building... && go build -v && echo Testing... && go test -v && echo Linter... && golint")  
   (setq compilation-read-command nil)
   (add-hook 'go-mode-hook 'custom-go-mode)
-  :bind (("M-," . compile)a
+  :bind (
 	 ("M-." . godef-jump)))
 
 (setq compilation-window-height 14)
