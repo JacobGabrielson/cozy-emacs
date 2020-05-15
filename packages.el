@@ -103,3 +103,6 @@
 
 ;; Note: make sure shellcheck pkg is installed w/ apt or whatnot
 (add-hook 'sh-mode-hook 'flycheck-mode)
+
+
+(use-package yaml-mode)

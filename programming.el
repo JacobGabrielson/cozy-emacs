@@ -15,7 +15,6 @@
 	company-transformers '(company-sort-by-occurrence
                                company-sort-by-backend-importance)))
 
-(use-package yaml-mode)
 
 (use-package parinfer)
 (use-package racer)
@@ -31,12 +30,6 @@
     (setq company-tooltip-align-annotations t)))
 (use-package flycheck-rust
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-(when window-system
-    (use-package auto-highlight-symbol
-      :config (progn
-		(global-auto-highlight-symbol-mode t))))
-
 
 (use-package elm-mode)
 (use-package cargo :config

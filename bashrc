@@ -30,8 +30,8 @@ export HISTIGNORE="ls:ps:history"
 
 export PATH=$HOME/.local/bin:$PATH
 
+export PATH="$HOME/.pyenv/bin:$PATH"
 if hash pyenv 2>/dev/null; then 
-    export PATH="$HOME/.pyenv/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
