@@ -49,25 +49,21 @@
 ;;I'll change it if I want it back
 
 
-(setq lsp-ui-doc-enable nil
-      lsp-ui-peek-enable t
-      lsp-ui-sideline-enable t
-      lsp-ui-imenu-enable t
-      lsp-ui-flycheck-enable t)
 
 (defun custom-go-mode ()
   (display-line-numbers-mode 1))
 
 (use-package go-mode
-  :defer t
   :ensure t
   :mode ("\\.go\\'" . go-mode)
   :init
   (setq compile-command "echo Building... && go build -v && echo Testing... && go test -v && echo Linter... && golint")  
-  (setq compilation-read-command nil)
+  (setq compilation-read-command t)
   (add-hook 'go-mode-hook 'custom-go-mode)
   :bind (
 	 ("M-." . godef-jump)))
+
+(use-package go-eldoc)
 
 (setq compilation-window-height 14)
 (defun my-compilation-hook ()
@@ -82,3 +78,12 @@
 (add-hook 'compilation-mode-hook 'my-compilation-hook)
 
 (setq compilation-scroll-output t)
+
+(setq lsp-ui-doc-enable t
+      lsp-ui-peek-enable t
+      lsp-ui-sideline-enable t
+      lsp-ui-imenu-enable t
+      lsp-ui-flycheck-enable t
+      lsp-gopls-staticcheck t
+      lsp-eldoc-render-all t
+      lsp-gopls-complete-unimported t)
