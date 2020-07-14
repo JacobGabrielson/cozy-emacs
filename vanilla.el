@@ -93,7 +93,8 @@
 (setq create-lockfiles nil)
 (setq dabbrev-case-replace nil)
 (setq diff-default-read-only t)
-(setq dired-auto-revert-buffer t)
+;; Changing to nil for now due to errors 
+(setq dired-auto-revert-buffer nil)
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
 (setq echo-keystrokes 0.02)
@@ -128,6 +129,8 @@
 
 
 (setq save-interprogram-paste-before-kill t)
+
+
 
 (setq make-backup-files nil)
 (setq next-line-add-newlines nil)
