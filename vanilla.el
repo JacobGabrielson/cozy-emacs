@@ -45,11 +45,7 @@
   ;;(global-display-line-numbers-mode 1)
   )
 
-(unless window-system
-  (global-hl-line-mode 0)
-  (setq-default mode-line-format
-	'("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " (vc-mode vc-mode) "  " mode-line-modes mode-line-end-spaces)
-  ))
+
 
 
 
