@@ -13,5 +13,5 @@ for tool in  "github.com/mdempsky/gocode" \
     go get -u $tool
 done
 
- 
- 
+GO111MODULE=on go get golang.org/x/tools/gopls@latest
+exit
