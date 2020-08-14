@@ -23,16 +23,6 @@
 
 (use-package excorporate)
 
-(use-package xterm-color
-  :config
-  (progn
-    (setq comint-output-filter-functions
-	(remove 'ansi-color-process-output comint-output-filter-functions))
-    (add-hook 'shell-mode-hook
-	      ;; ensures it’s always the first one in any buffer, which is
-	      ;; important for reasons
-              (lambda () (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter nil t)))))
-
 (use-package systemd)
 
 (use-package dockerfile-mode)
