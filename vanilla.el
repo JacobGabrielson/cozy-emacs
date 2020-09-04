@@ -51,11 +51,12 @@
 
 (save-place-mode 1)
 (savehist-mode 1)
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-create-new-buffer 'always)
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+(when nil				; trying helm, again...
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (setq ido-create-new-buffer 'always)
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil))
 
 (show-paren-mode 1)
 (windmove-default-keybindings)
@@ -73,6 +74,7 @@
 ;; makes things like lsp-mode performant
 (setq read-process-output-max (* 1024 1024))
 (setq gc-cons-threshold 500000000)
+(add-hook 'focus-out-hook 'garbage-collect)
 
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq savehist-autosave-interval 60)
@@ -239,10 +241,12 @@
 (setq uniquify-after-kill-buffer-p t)    ; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
-(add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
+
+;; not sure these are needed anymore?
+;;(add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m) ; remove ctrl-m from shell output
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; truncate shell buffer to comint-buffer-maximum-size
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+;;(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;;(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
 ;; http://stackoverflow.com/a/3072831/68127
 (defun colorize-compilation-buffer ()
@@ -312,7 +316,9 @@ window.  Otherwise, goes to end of buffer."
   (global-set-key (kbd "s-0") 'text-scale-default))
 
 
-
+(defun pushnew-exec-path ()
+  (interactive)
+  (pushnew default-directory exec-path))
 
 
 (when (file-readable-p custom-file)
