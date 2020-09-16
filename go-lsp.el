@@ -16,7 +16,6 @@
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   ;;(add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
 ;;Optional - provides fancier overlays.
 
@@ -51,21 +50,29 @@
 ;;I'll change it if I want it back
 
 
+(use-package lsp-treemacs)
 
 (defun custom-go-mode ()
+  (lsp-go-install-save-hooks)
   (display-line-numbers-mode 1))
 
 (use-package go-mode
   :ensure t
   :mode ("\\.go\\'" . go-mode)
   :init
-  (setq compile-command "echo Building... && go build -v && echo Testing... && go test -v && echo Linter... && golint")  
   (setq compilation-read-command t)
   (add-hook 'go-mode-hook 'custom-go-mode)
   :bind (
 	 ("M-." . godef-jump)))
 
-(use-package go-eldoc)
+(use-package go-playground
+  :ensure t)
+
+;;(use-package helm-lsp :ensure t)
+
+
+;; hasn't been updated since 2017...
+;;(use-package go-eldoc)
 
 (setq compilation-window-height 14)
 (defun my-compilation-hook ()
