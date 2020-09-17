@@ -59,6 +59,8 @@
   (setq ido-use-faces nil))
 
 (show-paren-mode 1)
+
+(defalias 'list-buffers 'ibuffer) ; make ibuffer default
 (windmove-default-keybindings)
 
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)

@@ -39,6 +39,7 @@
   :ensure t
   :commands company-lsp)
 
+
 ;;Optional - provides snippet support.
 
 (use-package yasnippet
@@ -62,8 +63,7 @@
   :init
   (setq compilation-read-command t)
   (add-hook 'go-mode-hook 'custom-go-mode)
-  :bind (
-	 ("M-." . godef-jump)))
+  )
 
 (use-package go-playground
   :ensure t)

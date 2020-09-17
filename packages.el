@@ -107,7 +107,10 @@
     ;; from http://oremacs.com/swiper/#installation
     (setq ivy-use-virtual-buffers t)
     (setq ivy-count-format "(%d/%d) ")
-    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+    (setq ivy-re-builders-alist
+      '((swiper . ivy--regex-plus)
+        (t      . ivy--regex-fuzzy)))
+    
     (counsel-mode 1)
     (global-set-key (kbd "C-s") 'swiper-isearch)
     (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
@@ -121,6 +124,6 @@
     (global-set-key (kbd "C-c n") 'counsel-fzf)
     (global-set-key (kbd "C-x l") 'counsel-locate)
     (global-set-key (kbd "C-c J") 'counsel-file-jump)
-    
+    (setq projectile-completion-system 'ivy)
     ))
 
