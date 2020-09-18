@@ -3,10 +3,18 @@
 ;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
 ;; https://lupan.pl/dotemacs/
 
+;; otherwise it's Windows-L which is Lock Screen
+(setq lsp-keymap-prefix "s-z")
+
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
-  :hook (go-mode . lsp-deferred))
+  :hook (go-mode . lsp-deferred)
+  :init
+  )
+
+(use-package lsp-ivy)
+
 
 ;;Set up before-save hooks to format buffer and add/delete imports.
 ;;Make sure you don't have other gofmt/goimports hooks enabled.
@@ -35,9 +43,11 @@
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1))
 
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp)
+
+;; no longer supported, per 
+;;(use-package company-lsp
+;;  :ensure t
+;;  :commands company-lsp)
 
 
 ;;Optional - provides snippet support.
@@ -55,14 +65,17 @@
 
 (defun custom-go-mode ()
   (lsp-go-install-save-hooks)
-  (display-line-numbers-mode 1))
+  (display-line-numbers-mode 1)
+  (local-set-key (kbd "M-?") 'lsp-find-references)
+  )
 
 (use-package go-mode
   :ensure t
   :mode ("\\.go\\'" . go-mode)
   :init
-  (setq compilation-read-command t)
-  (add-hook 'go-mode-hook 'custom-go-mode)
+  (progn
+    (setq compilation-read-command t)
+    (add-hook 'go-mode-hook 'custom-go-mode))
   )
 
 (use-package go-playground
@@ -77,6 +90,8 @@
 (setq compilation-window-height 14)
 (defun my-compilation-hook ()
   (when (not (get-buffer-window "*compilation*"))
+
+    
     (save-selected-window
       (save-excursion
 	(let* ((w (split-window-vertically))
