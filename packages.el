@@ -104,6 +104,8 @@
 (use-package counsel
   :config
   (progn
+    ;; restore familiar behavior
+    (setq ivy-magic-tilde nil)
     ;; from http://oremacs.com/swiper/#installation
     (setq ivy-use-virtual-buffers t)
     (setq ivy-count-format "(%d/%d) ")
