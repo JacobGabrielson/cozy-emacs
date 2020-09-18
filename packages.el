@@ -19,18 +19,14 @@
 
 (use-package ripgrep)
 
-(use-package excorporate)
-
-(use-package systemd)
-
 (use-package dockerfile-mode)
+(use-package yaml-mode)
+(use-package markdown-mode)
 
 (use-package magit
   :bind ("C-x g" . magit-status))
 
 (use-package wgrep :init (require 'wgrep))
-
-(use-package ggtags)
 
 (use-package projectile
   :config
@@ -39,10 +35,6 @@
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-x c") 'projectile-compile-project)
     (projectile-mode +1)))
-
-(use-package markdown-mode)
-
-;; C/C++
 
 (when window-system
   (use-package git-gutter-fringe
@@ -55,15 +47,6 @@
 	(set-face-background (car p) (cdr p)))
       (global-git-gutter-mode t))))
 
-;; (use-package smex
-;;   :config (progn)
-;;   (smex-initialize)
-;;   (global-set-key (kbd "M-x") 'smex)
-;;   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;;   ;; This is your old M-x.
-;;   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
-
-
 ;; Setting this in custom.el doesn't work, because that gets loaded
 ;; _after_ comint gets loaded
 (progn
@@ -73,13 +56,13 @@
   (custom-reevaluate-setting 'comint-password-prompt-regexp))
 
 
-(use-package org)
-
-(org-babel-do-load-languages 'org-babel-load-languages
-			     '(
-			       (shell . t)
-			       )
-			     )
+(use-package org
+  :config
+  (progn
+    (org-babel-do-load-languages 'org-babel-load-languages
+				 '(
+				   (shell . t)
+				   ))))
 
 (use-package flycheck
   :ensure t)
@@ -88,8 +71,6 @@
 (add-hook 'sh-mode-hook 'flycheck-mode)
 
 (use-package highlight-indent-guides)
-
-(use-package yaml-mode)
 
 ;; (use-package helm
 ;;   :ensure t
