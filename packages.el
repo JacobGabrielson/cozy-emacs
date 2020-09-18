@@ -109,7 +109,7 @@
     (setq ivy-count-format "(%d/%d) ")
     (setq ivy-re-builders-alist
       '((swiper . ivy--regex-plus)
-        (t      . ivy--regex-fuzzy)))
+        (t      . ivy--regex-plus)))
     
     (counsel-mode 1)
     (global-set-key (kbd "C-s") 'swiper-isearch)
