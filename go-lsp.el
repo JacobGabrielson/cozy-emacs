@@ -77,6 +77,7 @@
   (lsp-headerline-breadcrumb-mode)
   (lsp-modeline-code-actions-mode)
   (display-line-numbers-mode 1)
+  (display-fill-column-indicator-mode 1)
   (local-set-key (kbd "M-?") 'lsp-find-references)
   )
 
