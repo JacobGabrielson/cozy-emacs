@@ -11,6 +11,9 @@
   :commands (lsp lsp-deferred)
   :hook (go-mode . lsp-deferred)
   :init
+  (progn
+
+     (setq lsp-modeline-diagnostics-scope :project)
   )
 
 (use-package lsp-ivy)
@@ -31,7 +34,12 @@
   :ensure t
   :commands lsp-ui-mode
   :init
-  )
+  (progn
+    (setq lsp-ui-sideline-show-diagnostics t
+
+	  lsp-ui-sideline-show-hover t
+	  lsp-ui-sideline-show-code-actions t
+	  )))
 
 ;;Company mode is a standard completion package that works well with lsp-mode.
 ;;company-lsp integrates company mode completion with lsp-mode.
@@ -65,6 +73,8 @@
 
 (defun custom-go-mode ()
   (lsp-go-install-save-hooks)
+  (lsp-headerline-breadcrumb-mode)
+  (lsp-modeline-code-actions-mode)
   (display-line-numbers-mode 1)
   (local-set-key (kbd "M-?") 'lsp-find-references)
   )
