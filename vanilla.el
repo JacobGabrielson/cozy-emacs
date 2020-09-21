@@ -51,7 +51,7 @@
 
 (save-place-mode 1)
 (savehist-mode 1)
-(when nil				; trying helm, again...
+(when nil ;; trying Ivy
   (ido-mode 1)
   (ido-everywhere 1)
   (setq ido-create-new-buffer 'always)
@@ -72,6 +72,9 @@
 
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
+
+(setq display-fill-column-indicator-column 80)
+
 
 ;; makes things like lsp-mode performant
 (setq read-process-output-max (* 1024 1024))

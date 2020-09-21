@@ -12,10 +12,8 @@
   :hook (go-mode . lsp-deferred)
   :init
   (progn
-    (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-    (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
      (setq lsp-modeline-diagnostics-scope :project)
-  )
+  ))
 
 (use-package lsp-ivy)
 
@@ -37,7 +35,6 @@
   :init
   (progn
     (setq lsp-ui-sideline-show-diagnostics t
-
 	  lsp-ui-sideline-show-hover t
 	  lsp-ui-sideline-show-code-actions t
 	  )))
@@ -87,31 +84,24 @@
   :init
   (progn
     (setq compilation-read-command t)
-    (add-hook 'go-mode-hook 'custom-go-mode))
-  )
+    (add-hook 'go-mode-hook 'custom-go-mode)))
 
 (use-package go-playground
   :ensure t)
 
-;;(use-package helm-lsp :ensure t)
-
-
-;; hasn't been updated since 2017...
-;;(use-package go-eldoc)
-
-(setq compilation-window-height 14)
-(defun my-compilation-hook ()
-  (when (not (get-buffer-window "*compilation*"))
+;; (setq compilation-window-height 14)
+;; (defun my-compilation-hook ()
+;;   (when (not (get-buffer-window "*compilation*"))
 
     
-    (save-selected-window
-      (save-excursion
-	(let* ((w (split-window-vertically))
-	       (h (window-height w)))
-	  (select-window w)
-	  (switch-to-buffer "*compilation*")
-	  (shrink-window (- h compilation-window-height)))))))
-(add-hook 'compilation-mode-hook 'my-compilation-hook)
+;;     (save-selected-window
+;;       (save-excursion
+;; 	(let* ((w (split-window-vertically))
+;; 	       (h (window-height w)))
+;; 	  (select-window w)
+;; 	  (switch-to-buffer "*compilation*")
+;; 	  (shrink-window (- h compilation-window-height)))))))
+;; (add-hook 'compilation-mode-hook 'my-compilation-hook)
 
 (setq compilation-scroll-output t)
 
@@ -122,4 +112,5 @@
       lsp-ui-flycheck-enable t
       lsp-gopls-staticcheck t
       lsp-eldoc-render-all t
+      lsp-ui-sideline-delay 2
       lsp-gopls-complete-unimported t)
