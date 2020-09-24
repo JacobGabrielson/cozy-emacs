@@ -87,11 +87,11 @@
 (setq auto-revert-verbose nil)
 (setq auto-revert-interval 1)
 (setq auto-save-default nil)
-(setq compilation-ask-about-save nil  ; Just save before compiling
-      compilation-always-kill t       ; Just kill old compile processes before
-                                        ; starting the new one
-      compilation-scroll-output 'first-error ; Automatically scroll to first
-                                        ; error
+(setq compilation-ask-about-save nil ; Just save before compiling
+      compilation-always-kill t	; Just kill old compile processes
+				; before starting the new one
+      compilation-scroll-output 'first-error ; Automatically scroll to
+					     ; first error
       )
 (setq create-lockfiles nil)
 (setq dabbrev-case-replace nil)

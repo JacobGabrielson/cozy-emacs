@@ -56,16 +56,11 @@
 ;;  :commands company-lsp)
 
 
-;;Optional - provides snippet support.
-
+;; Optional - provides snippet support.
 (use-package yasnippet
   :ensure t
   :commands yas-minor-mode
   :hook (go-mode . yas-minor-mode))
-
-;;lsp-ui-doc-enable is false because I don't like the popover that shows up on the right
-;;I'll change it if I want it back
-
 
 (use-package lsp-treemacs)
 
@@ -75,8 +70,7 @@
   (lsp-modeline-code-actions-mode)
   (display-line-numbers-mode 1)
   (display-fill-column-indicator-mode 1)
-  (local-set-key (kbd "M-?") 'lsp-find-references)
-  )
+  (local-set-key (kbd "M-?") 'lsp-find-references))
 
 (use-package go-mode
   :ensure t
@@ -89,22 +83,6 @@
 (use-package go-playground
   :ensure t)
 
-;; (setq compilation-window-height 14)
-;; (defun my-compilation-hook ()
-;;   (when (not (get-buffer-window "*compilation*"))
-
-    
-;;     (save-selected-window
-;;       (save-excursion
-;; 	(let* ((w (split-window-vertically))
-;; 	       (h (window-height w)))
-;; 	  (select-window w)
-;; 	  (switch-to-buffer "*compilation*")
-;; 	  (shrink-window (- h compilation-window-height)))))))
-;; (add-hook 'compilation-mode-hook 'my-compilation-hook)
-
-(setq compilation-scroll-output t)
-
 (setq lsp-ui-doc-enable t
       lsp-ui-peek-enable t
       lsp-ui-sideline-enable t
@@ -112,5 +90,5 @@
       lsp-ui-flycheck-enable t
       lsp-gopls-staticcheck t
       lsp-eldoc-render-all t
-      lsp-ui-sideline-delay 2
+      lsp-ui-sideline-delay 0.5
       lsp-gopls-complete-unimported t)
