@@ -100,6 +100,10 @@
 (setq dired-auto-revert-buffer nil)
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
+(setq display-time-load-average-threshold 0) ; always show load
+(setq display-time-mail-file t)		     ; go away!
+
+
 (setq echo-keystrokes 0.02)
 
 (setq
@@ -123,6 +127,8 @@
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 (setq ispell-silently-savep t)
+(setq kill-read-only-ok t)
+(setq kill-ring-max 256)
 (setq kill-whole-line t)
 (setq kill-do-not-save-duplicates t)
 
