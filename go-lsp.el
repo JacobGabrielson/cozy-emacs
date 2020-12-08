@@ -68,6 +68,8 @@
   (lsp-go-install-save-hooks)
   (lsp-headerline-breadcrumb-mode)
   (lsp-modeline-code-actions-mode)
+  (lsp-treemacs-sync-mode)
+
   (display-line-numbers-mode 1)
   (display-fill-column-indicator-mode 1)
   (local-set-key (kbd "M-?") 'lsp-find-references))
@@ -88,7 +90,6 @@
       lsp-ui-sideline-enable t
       lsp-ui-imenu-enable t
       lsp-ui-flycheck-enable t
-      lsp-gopls-staticcheck t
       lsp-eldoc-render-all t
-      lsp-ui-sideline-delay 0.5
-      lsp-gopls-complete-unimported t)
+      lsp-ui-sideline-delay 0.5)
+

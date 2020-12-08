@@ -59,6 +59,7 @@
 (use-package org
   :config
   (progn
+    (setq org-adapt-indentation nil)
     (org-babel-do-load-languages 'org-babel-load-languages
 				 '(
 				   (shell . t)
@@ -69,6 +70,10 @@
 
 ;; Note: make sure shellcheck pkg is installed w/ apt or whatnot
 (add-hook 'sh-mode-hook 'flycheck-mode)
+(add-hook 'markdown-mode-hook 'flycheck-mode)
+(add-hook 'markdown-mode-hook 'flyspell-buffer)
+(add-hook 'markdown-mode-hook 'flyspell-mode-on)
+
 
 (use-package highlight-indent-guides)
 

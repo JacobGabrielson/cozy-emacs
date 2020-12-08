@@ -133,6 +133,12 @@
 
 (setq save-interprogram-paste-before-kill t)
 
+(put 'narrow-to-page 'disabled nil)
+
+;; I'm hitting this key a lot on one of the laptops due to the funky
+;; positioning of Right-Alt on my logitech keyboard.  So make it do
+;; what I expect.
+(setq w32-apps-modifier 'meta)
 
 
 (setq make-backup-files nil)
