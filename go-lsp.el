@@ -12,8 +12,8 @@
   :hook (go-mode . lsp-deferred)
   :init
   (progn
-     (setq lsp-modeline-diagnostics-scope :project)
-  ))
+    (setq lsp-modeline-diagnostics-scope :project
+	  lsp-auto-guess-root t)))
 
 (use-package lsp-ivy)
 
@@ -89,7 +89,6 @@
       lsp-ui-peek-enable t
       lsp-ui-sideline-enable t
       lsp-ui-imenu-enable t
-      lsp-ui-flycheck-enable t
       lsp-eldoc-render-all t
       lsp-ui-sideline-delay 0.5)
 

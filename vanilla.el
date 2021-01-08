@@ -59,6 +59,8 @@
   (setq ido-use-faces nil))
 
 (show-paren-mode 1)
+(setq show-paren-style 'mixed)
+
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 (windmove-default-keybindings)

@@ -3,6 +3,7 @@
 ;;; Everything that depends on stuff that isn't just built in to
 ;;; Emacs.
 
+;; Make sure everything is vanilla for a while
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -17,11 +18,20 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
+(use-package diminish)
+
 (use-package ripgrep)
 
 (use-package dockerfile-mode)
 (use-package yaml-mode)
 (use-package markdown-mode)
+
+
+;; look into this at some point
+;;(use-package ample-theme
+;;  :if (not (display-graphic-p))
+;;  :config
+;;  (load-theme 'ample t))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
@@ -64,6 +74,8 @@
 				 '(
 				   (shell . t)
 				   ))))
+
+(use-package sudo-edit :ensure t)
 
 (use-package flycheck
   :ensure t)
@@ -115,3 +127,17 @@
     (setq projectile-completion-system 'ivy)
     ))
 
+
+
+
+(use-package neotree
+  :defer t
+  :init
+  (setq neo-smart-open t
+        neo-autorefresh t
+        neo-force-change-root t))
+
+(use-package bash-completion
+    :config
+  (progn
+    (bash-completion-setup)))
