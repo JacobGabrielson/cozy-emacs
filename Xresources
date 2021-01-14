@@ -1,0 +1,29 @@
+! Use a nice truetype font and size by default...
+xterm*termName: xterm-256color
+xterm*faceName: Inconsolata
+xterm*faceSize: 12
+xterm*renderFont: true
+
+! Every shell is a login shell by default (for inclusion of all necessary environment variables)
+xterm*loginShell: true
+
+! I like a LOT of scrollback...
+xterm*savelines: 16384
+
+
+! double-click to select whole URLs :D
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+
+
+XTerm.vt100.locale: false
+XTerm.vt100.utf8: true
+XTerm.vt100.metaSendsEscape: true
+
+xterm*VT100.Translations: #override \
+    Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V:    insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>C:    copy-selection(CLIPBOARD) \n\
+    Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+Xterm.selectToClipboard: true
