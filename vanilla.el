@@ -10,6 +10,17 @@
 ;;;    color and italic fonts and doesn't swallow keys like Control-Space
 ;;;    is Kitty (with Consolas font)
 
+(setq comp-deferred-compilation t)
+
+(if (and (fboundp 'native-comp-available-p)
+       (native-comp-available-p))
+  (message "Native compilation is available")
+  (message "Native complation is *not* available"))
+
+(if (functionp 'json-serialize)
+  (message "Native JSON is available")
+  (message "Native JSON is *not* available"))
+
 (setq custom-file "~/.emacs-custom.el")
 
 (require 'cl)
