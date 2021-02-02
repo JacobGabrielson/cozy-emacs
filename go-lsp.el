@@ -69,6 +69,7 @@
   (lsp-headerline-breadcrumb-mode)
   (lsp-modeline-code-actions-mode)
   (lsp-treemacs-sync-mode)
+  (indent-guide-mode)
 
   (display-line-numbers-mode 1)
   (display-fill-column-indicator-mode 1)
@@ -80,6 +81,7 @@
   :init
   (progn
     (setq compilation-read-command t)
+    
     (add-hook 'go-mode-hook 'custom-go-mode)))
 
 (use-package go-playground
