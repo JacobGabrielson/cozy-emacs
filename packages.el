@@ -141,3 +141,7 @@
     :config
   (progn
     (bash-completion-setup)))
+
+(use-package indent-guide)
+
+(use-package exec-path-from-shell)
