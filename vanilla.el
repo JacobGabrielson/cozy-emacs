@@ -147,7 +147,7 @@
 
 (setq confirm-kill-processes nil)
 
-(setq  global-auto-revert-non-file-buffers t)
+(setq global-auto-revert-non-file-buffers t)
 
 
 (setq save-interprogram-paste-before-kill t)
