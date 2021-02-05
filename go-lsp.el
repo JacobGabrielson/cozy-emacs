@@ -6,6 +6,20 @@
 ;; otherwise it's Windows-L which is Lock Screen
 (setq lsp-keymap-prefix "s-z")
 
+
+(defun custom-dap-stopped-hook (ignore)
+  (call-interactively #'dap-hydra))
+
+(use-package dap-mode
+  :config
+  (progn
+    (require 'dap-go)
+    ;; note, once ... manually call:
+    ;(dap-go-setup)
+    (add-hook 'dap-stopped-hook 'custom-dap-stopped-hook)))
+
+
+
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
@@ -75,6 +89,7 @@
   (display-fill-column-indicator-mode 1)
   (local-set-key (kbd "M-?") 'lsp-find-references))
 
+
 (use-package go-mode
   :ensure t
   :mode ("\\.go\\'" . go-mode)
@@ -83,6 +98,9 @@
     (setq compilation-read-command t)
     
     (add-hook 'go-mode-hook 'custom-go-mode)))
+
+
+
 
 (use-package go-playground
   :ensure t)

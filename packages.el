@@ -86,8 +86,16 @@
 (add-hook 'markdown-mode-hook 'flyspell-buffer)
 (add-hook 'markdown-mode-hook 'flyspell-mode-on)
 
+(defun custom-prog-modes-hook ()
+  (highlight-indent-guides-mode 1)
+  )
 
-(use-package highlight-indent-guides)
+
+(use-package highlight-indent-guides
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'custom-prog-modes-hook)
+  ))
 
 ;; (use-package helm
 ;;   :ensure t
