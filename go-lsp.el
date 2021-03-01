@@ -26,7 +26,8 @@
   :hook (go-mode . lsp-deferred)
   :init
   (progn
-    (setq lsp-modeline-diagnostics-scope :project
+    (setq lsp-enable-file-watchers nil ; too annoying/perf issues
+	  lsp-modeline-diagnostics-scope :project
 	  lsp-auto-guess-root t)))
 
 (use-package lsp-ivy)

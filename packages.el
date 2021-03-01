@@ -86,9 +86,6 @@
 (add-hook 'markdown-mode-hook 'flyspell-buffer)
 (add-hook 'markdown-mode-hook 'flyspell-mode-on)
 
-(defun custom-prog-modes-hook ()
-  (highlight-indent-guides-mode 1)
-  )
 
 
 (use-package highlight-indent-guides
@@ -153,3 +150,7 @@
 (use-package indent-guide)
 
 (use-package exec-path-from-shell)
+
+(defun custom-prog-modes-hook ()
+  (highlight-indent-guides-mode 1)
+  (indent-guide-mode 1))
