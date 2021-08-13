@@ -154,3 +154,4 @@
 (defun custom-prog-modes-hook ()
   (highlight-indent-guides-mode 1)
   (indent-guide-mode 1))
+
