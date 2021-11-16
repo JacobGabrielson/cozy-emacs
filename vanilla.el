@@ -358,3 +358,4 @@ window.  Otherwise, goes to end of buffer."
 ;;(setq desktop-save-mode t)
 ;;(desktop-save-mode 1)
 ;;(savehist-mode 1)
+

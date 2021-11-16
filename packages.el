@@ -24,6 +24,16 @@
 
 (use-package dockerfile-mode)
 (use-package yaml-mode)
+
+(defun custom-yaml-mode ()
+  (setq display-line-numbers t)
+  (highlight-indent-guides-mode)
+  (indent-guide-mode))
+
+(add-hook 'yaml-mode-hook 'custom-yaml-mode)
+
+
+
 (use-package markdown-mode)
 
 
@@ -82,9 +92,15 @@
 
 ;; Note: make sure shellcheck pkg is installed w/ apt or whatnot
 (add-hook 'sh-mode-hook 'flycheck-mode)
-(add-hook 'markdown-mode-hook 'flycheck-mode)
-(add-hook 'markdown-mode-hook 'flyspell-buffer)
-(add-hook 'markdown-mode-hook 'flyspell-mode-on)
+
+;; causes problems for large docs from oss projs (eg)
+;;(add-hook 'markdown-mode-hook 'flycheck-mode)
+;;(add-hook 'markdown-mode-hook 'flyspell-buffer)
+
+
+;;(add-hook 'markdown-mode-hook 'flyspell-mode-on)
+;;(remove-hook 'markdown-mode-hook 'flyspell-mode-on)
+
 
 
 

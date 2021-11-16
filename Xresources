@@ -1,18 +1,18 @@
 ! Use a nice truetype font and size by default...
-xterm*termName: xterm-256color
-xterm*faceName: Input
-xterm*faceSize: 12
-xterm*renderFont: true
+XTerm*termName: xterm-256color
+XTerm*faceName: Input
+XTerm*faceSize: 12
+XTerm*renderFont: true
 
 ! Every shell is a login shell by default (for inclusion of all necessary environment variables)
-xterm*loginShell: true
+XTerm*loginShell: true
 
 ! I like a LOT of scrollback...
-xterm*savelines: 16384
+XTerm*savelines: 16384
 
 
 ! double-click to select whole URLs :D
-xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 
 
@@ -20,32 +20,34 @@ XTerm.vt100.locale: false
 XTerm.vt100.utf8: true
 XTerm.vt100.metaSendsEscape: true
 
-xterm*VT100.Translations: #override \
+XTerm*VT100.Translations: #override \
     Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
     Ctrl Shift <Key>V:    insert-selection(CLIPBOARD) \n\
     Ctrl Shift <Key>C:    copy-selection(CLIPBOARD) \n\
     Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
 
-Xterm.selectToClipboard: true
+XTerm.selectToClipboard: true
 
 !Theme Nine from http://www.futurile.net/2016/06/15/xterm-256color-themes-molokai-terminal-theme/
-xterm*background: rgb:1a/1a/1a
-xterm*foreground: rgb:d6/d6/d6
-xterm*color0:     rgb:00/00/00
-xterm*color1:     rgb:9e/18/28
-xterm*color2:     rgb:00/88/00
-xterm*color3:     rgb:96/8a/38
-xterm*color4:     rgb:41/41/71
-xterm*color5:     rgb:96/3c/59
-xterm*color6:     rgb:41/81/79
-xterm*color7:     rgb:be/be/be
-xterm*color8:     rgb:66/66/66
-xterm*color9:     rgb:cf/61/71
-xterm*color10:     rgb:7c/bc/8c
-xterm*color11:     rgb:ff/f7/96
-xterm*color12:     rgb:41/86/be
-xterm*color13:     rgb:cf/9e/be
-xterm*color14:     rgb:71/be/be
-xterm*color15:    rgb:ff/ff/ff
+XTerm*background: rgb:1a/1a/1a
+XTerm*foreground: rgb:d6/d6/d6
+XTerm*color0:     rgb:00/00/00
+XTerm*color1:     rgb:9e/18/28
+XTerm*color2:     rgb:00/88/00
+XTerm*color3:     rgb:96/8a/38
+XTerm*color4:     rgb:41/41/71
+XTerm*color5:     rgb:96/3c/59
+XTerm*color6:     rgb:41/81/79
+XTerm*color7:     rgb:be/be/be
+XTerm*color8:     rgb:66/66/66
+XTerm*color9:     rgb:cf/61/71
+XTerm*color10:     rgb:7c/bc/8c
+XTerm*color11:     rgb:ff/f7/96
+XTerm*color12:     rgb:41/86/be
+XTerm*color13:     rgb:cf/9e/be
+XTerm*color14:     rgb:71/be/be
+XTerm*color15:    rgb:ff/ff/ff
 
-xterm*cursorColor: #d6d6d6
+XTerm*cursorColor: #d6d6d6
+
+XTerm*disallowedWindowOps: 20,21,SetXprop
