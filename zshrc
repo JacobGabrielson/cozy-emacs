@@ -16,3 +16,7 @@ setopt hist_verify
 setopt share_history
 setopt no_flow_control
 setopt interactive_comments
+setopt print_exit_value
+setopt short_loops
+setopt auto_continue
+bindkey -e
