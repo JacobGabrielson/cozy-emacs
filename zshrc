@@ -20,3 +20,11 @@ setopt print_exit_value
 setopt short_loops
 setopt auto_continue
 bindkey -e
+
+HISTFILE=$HOME/.zsh_history
+SAVEHIST=7000
+HISTSIZE=8000
+
+if [[ ! -z $INSIDE_EMACS ]]; then
+    
+fi
