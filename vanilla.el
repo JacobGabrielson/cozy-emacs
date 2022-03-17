@@ -56,10 +56,25 @@
   (setq font-lock-maximum-decoration t)
   (size-indication-mode t)
   ;;(global-display-line-numbers-mode 1)
+
+  ;; fix some weirdness on mac where colors aren't expansive enough in
+  ;; non-tty mode. Also note that sometimes background color gets pinned
+  ;; to white when the font is set, so the problem may be
+  ;; that a custom-set-faces happened - check for that.
+  ;; see https://unix.stackexchange.com/a/442173/4641
+  (when (featurep 'ns)
+    ;; This is just repeating how it was initialized in the first
+    ;; place, seems to work the second time around
+    (setq x-colors (ns-list-colors))
+    ;; I'm not sure if this is important, but it seems like it was
+    ;; returning the wrong thing
+    (defun x-display-visual-class (&optional terminal) 'true-color))
   )
 
 
 
+
+(setq confirm-kill-emacs 'y-or-n-p)
 
 
 (save-place-mode 1)

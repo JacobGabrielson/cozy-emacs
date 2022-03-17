@@ -28,3 +28,7 @@ HISTSIZE=8000
 if [[ ! -z $INSIDE_EMACS ]]; then
     
 fi
+
+if [[ $(uname) = 'Darwin' ]]; then
+  export HOMEBREW_VERBOSE=1
+fi

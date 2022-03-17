@@ -3,6 +3,12 @@
 ;;; Everything that depends on stuff that isn't just built in to
 ;;; Emacs.
 
+;; fyi
+
+;; FYI M-x disable-theme
+;;(load-theme 'dracula t)
+
+
 ;; Make sure everything is vanilla for a while
 (require 'package)
 
