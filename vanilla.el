@@ -71,11 +71,7 @@
     (defun x-display-visual-class (&optional terminal) 'true-color))
   )
 
-
-
-
 (setq confirm-kill-emacs 'y-or-n-p)
-
 
 (save-place-mode 1)
 (savehist-mode 1)

@@ -91,6 +91,13 @@
 				   (shell . t)
 				   ))))
 
+(require 'ox-odt)
+(setq org-odt-preferred-output-format "docx")
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((plantuml . t)))
+
+
 (use-package sudo-edit :ensure t)
 
 (use-package flycheck
@@ -102,12 +109,8 @@
 ;; causes problems for large docs from oss projs (eg)
 ;;(add-hook 'markdown-mode-hook 'flycheck-mode)
 ;;(add-hook 'markdown-mode-hook 'flyspell-buffer)
-
-
 ;;(add-hook 'markdown-mode-hook 'flyspell-mode-on)
 ;;(remove-hook 'markdown-mode-hook 'flyspell-mode-on)
-
-
 
 
 (use-package highlight-indent-guides
@@ -177,3 +180,19 @@
   (highlight-indent-guides-mode 1)
   (indent-guide-mode 1))
 
+(use-package dirvish)
+(dirvish-override-dired-mode)
+
+(use-package pdf-tools)
+(use-package all-the-icons)
+(use-package vscode-icon)
+
+(setq dirvish-attributes '(vc-state subtree-state all-the-icons collapse git-msg file-size))
+
+(dirvish-define-preview exa (file)
+  "Use `exa' to generate directory preview."
+  :require ("exa") ; tell Dirvish to check if we have the executable
+  (when (file-directory-p file) ; we only interest in directories here
+    `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the command output as preview
+
+(add-to-list 'dirvish-preview-dispatchers 'exa)
