@@ -37,9 +37,10 @@
   (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
+(when (fboundp 'tab-bar-mode)
+  (tab-bar-mode -1))
 (blink-cursor-mode -1)
-
-
+       
 ;; Turn on good modes
 (global-font-lock-mode 1)
 (global-subword-mode 1)
