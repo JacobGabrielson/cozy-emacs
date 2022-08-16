@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
 ;;; on Mac: https://github.com/jimeh/emacs-builds/
+;;;   brew install --cask emacs-app-good
 
 ;;; Extremely basic customizations. These don't need anything outside
 ;;; of the standard library to be loaded.
