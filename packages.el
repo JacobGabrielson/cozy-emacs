@@ -31,12 +31,12 @@
 (use-package dockerfile-mode)
 (use-package yaml-mode)
 
-(defun custom-yaml-mode ()
-  (setq display-line-numbers t)
-  (highlight-indent-guides-mode)
-  (indent-guide-mode))
+;;(defun custom-yaml-mode ()
+;;  (setq display-line-numbers t)
+;;  (highlight-indent-guides-mode)
+;;  (indent-guide-mode))
 
-(add-hook 'yaml-mode-hook 'custom-yaml-mode)
+;;(add-hook 'yaml-mode-hook 'custom-yaml-mode)
 
 
 
@@ -113,11 +113,11 @@
 ;;(remove-hook 'markdown-mode-hook 'flyspell-mode-on)
 
 
-(use-package highlight-indent-guides
-  :config
-  (progn
-    (add-hook 'prog-mode-hook 'custom-prog-modes-hook)
-  ))
+;;(use-package highlight-indent-guides
+;;  :config
+;;  (progn
+;;    (add-hook 'prog-mode-hook 'custom-prog-modes-hook)
+;;  ))
 
 ;; (use-package helm
 ;;   :ensure t
@@ -180,19 +180,19 @@
   (highlight-indent-guides-mode 1)
   (indent-guide-mode 1))
 
-(use-package dirvish)
-(dirvish-override-dired-mode)
+;;(use-package dirvish)
+;;(dirvish-override-dired-mode)
 
 (use-package pdf-tools)
 (use-package all-the-icons)
 (use-package vscode-icon)
 
-(setq dirvish-attributes '(vc-state subtree-state all-the-icons collapse git-msg file-size))
+;;(setq dirvish-attributes '(vc-state subtree-state all-the-icons collapse git-msg file-size))
 
-(dirvish-define-preview exa (file)
-  "Use `exa' to generate directory preview."
-  :require ("exa") ; tell Dirvish to check if we have the executable
-  (when (file-directory-p file) ; we only interest in directories here
-    `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the command output as preview
+;;(dirvish-define-preview exa (file)
+;;  "Use `exa' to generate directory preview."
+;;  :require ("exa") ; tell Dirvish to check if we have the executable
+;;  (when (file-directory-p file) ; we only interest in directories here
+;;    `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the command output as preview
 
-(add-to-list 'dirvish-preview-dispatchers 'exa)
+;;(add-to-list 'dirvish-preview-dispatchers 'exa)
