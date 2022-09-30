@@ -38,6 +38,8 @@
 
 ;;(add-hook 'yaml-mode-hook 'custom-yaml-mode)
 
+(use-package hcl-mode)
+(pushnew '("\\.tf$" . hcl-mode) auto-mode-alist)
 
 
 (use-package markdown-mode)

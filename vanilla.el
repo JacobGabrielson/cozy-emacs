@@ -383,3 +383,6 @@ window.  Otherwise, goes to end of buffer."
     (progn
       (setq bidi-inhibit-bpa t)
       (global-so-long-mode 1)))
+
+;; https://www.reddit.com/r/emacs/comments/l42oep/suppress_nativecomp_warnings_buffer/
+(setq warning-minimum-level :error)
