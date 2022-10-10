@@ -87,6 +87,8 @@
 (use-package org
   :config
   (progn
+    (setq org-todo-keywords
+      '((sequence "TODO" "DELAY" "|" "DONE" "DELEGATED" "CANCELED")))
     (setq org-adapt-indentation nil)
     (org-babel-do-load-languages 'org-babel-load-languages
 				 '(

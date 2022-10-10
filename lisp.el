@@ -5,10 +5,7 @@
 (setq inferior-lisp-program "sbcl")
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
-
 (add-to-list 'slime-contribs 'slime-repl)
-
-
 (add-to-list 'slime-contribs 'slime-autodoc)
 (add-to-list 'slime-contribs 'slime-c-p-c)
 (add-to-list 'slime-contribs 'slime-editing-commands)

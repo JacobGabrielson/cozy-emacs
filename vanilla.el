@@ -386,3 +386,7 @@ window.  Otherwise, goes to end of buffer."
 
 ;; https://www.reddit.com/r/emacs/comments/l42oep/suppress_nativecomp_warnings_buffer/
 (setq warning-minimum-level :error)
+
+;; This is too easy to do by mistake (esp. w/ "C-x 5 o" being a common
+;; chord). Can use "C-x 5 1" (delete-other-frames) instead
+(global-unset-key  (kbd "C-x 5 0"))
