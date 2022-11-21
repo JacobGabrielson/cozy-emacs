@@ -1,5 +1,9 @@
 # -*- shell-script -*-
 
+# Notes:
+#   See https://blog.bigoodyssey.com/how-to-manage-multiple-java-version-in-macos-e5421345f6d0
+
+
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt auto_list
