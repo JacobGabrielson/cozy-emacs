@@ -26,6 +26,11 @@
 
 (use-package diminish)
 
+(use-package xclip)
+
+;; allow copy/paste from terminal on Mac OS X etc
+(xclip-mode 1)
+
 (use-package ripgrep)
 
 (use-package dockerfile-mode)
