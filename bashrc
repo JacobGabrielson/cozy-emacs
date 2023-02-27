@@ -40,8 +40,6 @@ if hash direnv 2>/dev/null; then
     eval "$(direnv hook bash)"
 fi
 
-export PATH=$HOME/Documents/GitHub/chaws/bin:$PATH
-
 # https://github.com/akermu/emacs-libvterm/blob/master/README.md#shell-side-configuration
 function vterm_printf() {
     if [ -n "$TMUX" ]; then
