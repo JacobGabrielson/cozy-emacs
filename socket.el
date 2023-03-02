@@ -18,11 +18,12 @@
 				  :host (socket-host socket)
 				  :service (socket-port socket)))))
 
-
 (defun socket-send (socket string)
   (process-send-string (socket-process socket) string))
 
 (defun socket-recv (socket)
   (with-current-buffer (socket-buffer socket)
-    (prog1 (buffer-string)
-      (erase-buffer))))
+    (let ((beg (point-min))
+	  (end (point-max)))
+      (prog1 (buffer-substring beg end)
+	(delete-region beg end)))))
