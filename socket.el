@@ -1,4 +1,3 @@
-
 (defstruct socket host port (buffer nil) (process nil) (finalizer nil))
 
 (defun socket-close (socket)
