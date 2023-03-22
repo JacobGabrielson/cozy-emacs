@@ -390,3 +390,23 @@ window.  Otherwise, goes to end of buffer."
 ;; This is too easy to do by mistake (esp. w/ "C-x 5 o" being a common
 ;; chord). Can use "C-x 5 1" (delete-other-frames) instead
 (global-unset-key  (kbd "C-x 5 0"))
+
+;; Note: only for version < 29
+;; https://emacs-tree-sitter.github.io/installation/
+
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
+
+(when (member system-type '(darwin))
+  ;; set keys for Apple keyboard, for emacs in OS X
+  (setq mac-command-modifier 'super) ; make cmd key do Super
+  (setq mac-option-modifier 'meta) ; make opt key do Meta (because my kbd is swapped)
+  (setq mac-control-modifier 'control) ; make Control key do Control
+  (setq ns-function-modifier 'hyper))  ; make Fn key do Hyper
+
+;; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+;; Requires Emacs 27+
+(setq switch-to-buffer-obey-display-actions t)
+
+;; otherwise C-x 1 doesn't work on lsp-mode buffers?
+(setq ignore-window-parameters t)

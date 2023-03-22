@@ -68,6 +68,9 @@ if [[ -f $HOME/.cargo/env ]]; then
     . $HOME/.cargo/env
 fi
 
+# https://geeksocket.in/posts/emacs-lsp-go/
+export GOPATH="$(go env GOPATH)"
+export PATH="${PATH}:${GOPATH}/bin"
 
 # From https://babushk.in/posts/renew-environment-tmux.html
 if [[ -n $TMUX ]]; then                                                                               
