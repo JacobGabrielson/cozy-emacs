@@ -410,3 +410,9 @@ window.  Otherwise, goes to end of buffer."
 
 ;; otherwise C-x 1 doesn't work on lsp-mode buffers?
 (setq ignore-window-parameters t)
+
+(defun my-buffer-face-mode-variable ()
+   "Set font to a variable width (proportional) fonts in current buffer"
+   (interactive)
+   (setq buffer-face-mode-face '(:family "DejaVu Sans" :height 200 :width semi-condensed))
+   (buffer-face-mode))
