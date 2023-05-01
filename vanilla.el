@@ -411,6 +411,7 @@ window.  Otherwise, goes to end of buffer."
 ;; otherwise C-x 1 doesn't work on lsp-mode buffers?
 (setq ignore-window-parameters t)
 
+;; https://www.emacswiki.org/emacs/FacesPerBuffer
 (defun my-buffer-face-mode-variable ()
    "Set font to a variable width (proportional) fonts in current buffer"
    (interactive)
