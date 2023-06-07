@@ -417,3 +417,13 @@ window.  Otherwise, goes to end of buffer."
    (interactive)
    (setq buffer-face-mode-face '(:family "DejaVu Sans" :height 200 :width semi-condensed))
    (buffer-face-mode))
+
+(defun my-buffer-face-mode-fixed ()
+   "Set font to a fixed width fonts in current buffer"
+   (interactive)
+   (setq buffer-face-mode-face '(:family "PT Mono" :height 125 :width semi-condensed))
+   (buffer-face-mode))
+
+(setq org-image-actual-width nil)
+(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-enforce-todo-dependencies t)
