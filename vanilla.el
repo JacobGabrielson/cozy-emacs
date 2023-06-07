@@ -427,3 +427,5 @@ window.  Otherwise, goes to end of buffer."
 (setq org-image-actual-width nil)
 (setq org-enforce-todo-checkbox-dependencies t)
 (setq org-enforce-todo-dependencies t)
+(setq org-hierarchical-todo-statistics nil) ; recurse!
+(setq org-provide-todo-statistics t)
