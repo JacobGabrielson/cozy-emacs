@@ -394,8 +394,8 @@ window.  Otherwise, goes to end of buffer."
 ;; Note: only for version < 29
 ;; https://emacs-tree-sitter.github.io/installation/
 
-(require 'tree-sitter)
-(require 'tree-sitter-langs)
+;;(require 'tree-sitter)
+;;(require 'tree-sitter-langs)
 
 (when (member system-type '(darwin))
   ;; set keys for Apple keyboard, for emacs in OS X
@@ -421,11 +421,7 @@ window.  Otherwise, goes to end of buffer."
 (defun my-buffer-face-mode-fixed ()
    "Set font to a fixed width fonts in current buffer"
    (interactive)
-   (setq buffer-face-mode-face '(:family "PT Mono" :height 125 :width semi-condensed))
+   (setq buffer-face-mode-face '(:family "PT Mono" :height 150 :width semi-condensed))
    (buffer-face-mode))
 
-(setq org-image-actual-width nil)
-(setq org-enforce-todo-checkbox-dependencies t)
-(setq org-enforce-todo-dependencies t)
-(setq org-hierarchical-todo-statistics nil) ; recurse!
-(setq org-provide-todo-statistics t)
+

@@ -92,8 +92,16 @@
 (use-package org
   :config
   (progn
+    (setq org-priority-highest ?A)
+    (setq org-priority-lowest ?Z)
+    (setq org-image-actual-width nil)
+    (setq org-enforce-todo-checkbox-dependencies t)
+    (setq org-enforce-todo-dependencies t)
+    (setq org-hierarchical-todo-statistics nil) ; recurse!
+    (setq org-provide-todo-statistics t)
+
     (setq org-todo-keywords
-      '((sequence "TODO" "DELAY" "|" "DONE" "DELEGATED" "CANCELED")))
+      '((sequence "TODO" "|" "DONE" "DELEGATED" "CANCELED")))
     (setq org-adapt-indentation nil)
     (org-babel-do-load-languages 'org-babel-load-languages
 				 '(
@@ -205,3 +213,6 @@
 ;;    `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the command output as preview
 
 ;;(add-to-list 'dirvish-preview-dispatchers 'exa)
+
+;; https://github.com/Wilfred/deadgrep
+(use-package deadgrep)
