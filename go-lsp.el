@@ -84,10 +84,7 @@
   (lsp-headerline-breadcrumb-mode)
   (lsp-modeline-code-actions-mode)
   (lsp-treemacs-sync-mode)
-  (indent-guide-mode)
 
-  (setq display-line-numbers t)
-  (display-fill-column-indicator-mode 1)
   (local-set-key (kbd "M-?") 'lsp-find-references))
 
 

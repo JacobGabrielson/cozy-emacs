@@ -112,7 +112,8 @@
 (setq org-odt-preferred-output-format "docx")
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((plantuml . t)))
+ '((plantuml . t)
+   (gnuplot . t)))
 
 
 (use-package sudo-edit :ensure t)
@@ -193,9 +194,20 @@
 
 (use-package exec-path-from-shell)
 
+
+(use-package highlight-indent-guides)
+
+(setq highlight-indent-guides-method 'bitmap)
+
+(add-hook 'prog-mode-hook 'custom-prog-modes-hook)
+
+
+
+
 (defun custom-prog-modes-hook ()
   (highlight-indent-guides-mode 1)
-  (indent-guide-mode 1))
+  (setq display-line-numbers t)
+  (display-fill-column-indicator-mode 1))
 
 ;;(use-package dirvish)
 ;;(dirvish-override-dired-mode)
@@ -216,3 +228,4 @@
 
 ;; https://github.com/Wilfred/deadgrep
 (use-package deadgrep)
+
