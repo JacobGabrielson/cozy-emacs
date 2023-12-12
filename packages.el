@@ -47,7 +47,7 @@
 (pushnew '("\\.tf$" . hcl-mode) auto-mode-alist)
 
 
-(use-package markdown-mode)
+;;(use-package markdown-mode)
 
 
 ;; look into this at some point
@@ -56,7 +56,7 @@
 ;;  :config
 ;;  (load-theme 'ample t))
 
-(use-package magit
+(use-package magit :ensure t
   :bind ("C-x g" . magit-status))
 
 (use-package wgrep :init (require 'wgrep))

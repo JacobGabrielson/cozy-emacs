@@ -10,13 +10,14 @@
 (defun custom-dap-stopped-hook (ignore)
   (call-interactively #'dap-hydra))
 
-(use-package dap-mode
-  :config
-  (progn
-    (require 'dap-go)
-    ;; note, once ... manually call:
-    ;(dap-go-setup)
-    (add-hook 'dap-stopped-hook 'custom-dap-stopped-hook)))
+;; (use-package dap-mode
+;;   :ensure nil
+;;   :config
+;;   (progn
+;;     (require 'dap-go)
+;;     ;; note, once ... manually call:
+;;     ;(dap-go-setup)
+;;     (add-hook 'dap-stopped-hook 'custom-dap-stopped-hook)))
 
 
 
@@ -30,7 +31,7 @@
 	  lsp-modeline-diagnostics-scope :project
 	  lsp-auto-guess-root t)))
 
-(use-package lsp-ivy)
+;;(use-package lsp-ivy)
 
 
 ;;Set up before-save hooks to format buffer and add/delete imports.
@@ -76,8 +77,6 @@
   :ensure t
   :commands yas-minor-mode
   :hook (go-mode . yas-minor-mode))
-
-(use-package lsp-treemacs)
 
 (defun custom-go-mode ()
   (lsp-go-install-save-hooks)

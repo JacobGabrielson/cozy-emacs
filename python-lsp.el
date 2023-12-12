@@ -36,12 +36,6 @@
   :hook (python-mode . lsp-deferred)
   :commands (lsp lsp-deferred))
 
-; let's add the lsp company backend
-(use-package company-lsp
-  :ensure t
-  :config
-  (push 'company-lsp company-backends))
-
 ; also installs lsp as a dependency
 (use-package lsp-ui
   :ensure t
