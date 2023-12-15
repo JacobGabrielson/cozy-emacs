@@ -73,11 +73,9 @@
   (use-package git-gutter-fringe
     :config
     (progn
-      (dolist (p '((git-gutter:added    . "#0c0")
-		   (git-gutter:deleted  . "#c00")
-		   (git-gutter:modified . "#c0c")))
-	(set-face-foreground (car p) (cdr p))
-	(set-face-background (car p) (cdr p)))
+      (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+      (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+      (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
       (global-git-gutter-mode t))))
 
 ;; Setting this in custom.el doesn't work, because that gets loaded
@@ -192,8 +190,12 @@
 
 (use-package indent-guide)
 
-(use-package exec-path-from-shell)
-
+; setup Emacs path from our ~/.bashrc
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
 (use-package highlight-indent-guides)
 
@@ -229,3 +231,4 @@
 ;; https://github.com/Wilfred/deadgrep
 (use-package deadgrep)
 
+(use-package direnv :ensure t)
