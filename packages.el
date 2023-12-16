@@ -72,11 +72,10 @@
 (when window-system
   (use-package git-gutter-fringe
     :config
-    (progn
-      (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-      (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-      (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
-      (global-git-gutter-mode t))))
+    (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
+    (global-git-gutter-mode t)))
 
 ;; Setting this in custom.el doesn't work, because that gets loaded
 ;; _after_ comint gets loaded

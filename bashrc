@@ -30,14 +30,9 @@ export HISTIGNORE="ls:ps:history"
 
 export PATH=$HOME/.local/bin:$PATH
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-if hash pyenv 2>/dev/null; then 
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 if hash direnv 2>/dev/null; then
     eval "$(direnv hook bash)"
+    mkdir -p $HOME/.config/direnv
 fi
 
 # https://github.com/akermu/emacs-libvterm/blob/master/README.md#shell-side-configuration
