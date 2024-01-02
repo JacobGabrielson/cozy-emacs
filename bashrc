@@ -30,6 +30,7 @@ export HISTIGNORE="ls:ps:history"
 
 export PATH=$HOME/.local/bin:$PATH
 
+# https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/
 if hash direnv 2>/dev/null; then
     eval "$(direnv hook bash)"
     mkdir -p $HOME/.config/direnv
@@ -59,6 +60,7 @@ fi
 export MAKEFLAGS='-j 16'
 
 export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
+
 if [[ -f $HOME/.cargo/env ]]; then
     . $HOME/.cargo/env
 fi

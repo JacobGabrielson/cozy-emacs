@@ -230,4 +230,6 @@
 ;; https://github.com/Wilfred/deadgrep
 (use-package deadgrep)
 
-(use-package direnv :ensure t)
+(use-package direnv :ensure t
+  :config
+  (direnv-mode))
