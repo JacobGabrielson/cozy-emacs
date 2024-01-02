@@ -1,23 +1,5 @@
 ;; from http://www.kotaweaver.com/blog/emacs-python-lsp/
 
-;;(setq lsp-pyls-plugins-flake8-exclude '("E501"))
-(setq lsp-pylsp-plugins-flake8-exclude '("E501"))
-
-;;(setq lsp-pyls-plugins-flake8-exclude nil)
-;;(setq lsp-pylsp-plugins-flake8-exclude nil)
-
-;;(setq lsp-pyls-plugins-pycodestyle-ignore '("D100"))
-;;(setq lsp-pyls-plugins-pycodestyle-ignore '("D100" "E501"))
-(setq lsp-pylsp-plugins-pycodestyle-ignore '("D100" "D107" "E501"))
-
-(setq lsp-pylsp-plugins-pydocstyle-add-ignore '("D100" "D101" "D107" "E501"))
-
-(setq lsp-pyls-plugins-pycodestyle-enabled nil)
-
-;;(setq lsp-pylsp-plugins-pydocstyle-add-ignore nil)
-
-
-
 ;;(require 'dap-python)
 ;; if you installed debugpy, you need to set this
 ;; https://github.com/emacs-lsp/dap-mode/issues/306
@@ -26,11 +8,25 @@
 
 (add-hook 'python-mode-hook 'indent-guide-mode)
 
+(use-package auto-virtualenv
+  :ensure t
+  :init
+  (use-package pyvenv
+    :ensure t)
+  :config
+  (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+  (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv))
+
 (defun pm-display-line-numbers ()
+  (message (concat "PATH before" (getenv "PATH")))
   (direnv-update-directory-environment)
+  (message (concat "PATH after" (getenv "PATH")))
   (setq display-line-numbers t))
 
 (add-hook 'python-mode-hook 'pm-display-line-numbers)
 ;; See https://github.com/emacs-lsp/lsp-mode/pull/3975 for why this
 ;; might not always work?
 (add-hook 'python-mode-hook 'lsp-deferred)
+
+;; Create Python processes per-project, not global
+(setq python-shell-dedicated 'project)
