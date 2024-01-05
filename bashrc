@@ -1,7 +1,3 @@
-# -*- shell-script -*-
-
-[[ -z ${PS1} ]] && return
-
 if [[ ! -z $INSIDE_EMACS ]]; then
     # show full path for dirtrack
     # :e is signal it's emacs, for dirtrack-list in ~/.emacs
@@ -27,8 +23,6 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 PROMPT_COMMAND='history -a'
 export HISTIGNORE="ls:ps:history"
-
-export PATH=$HOME/.local/bin:$PATH
 
 # https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/
 if hash direnv 2>/dev/null; then
@@ -56,18 +50,6 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
 	tput clear;
     }
 fi
-
-export MAKEFLAGS='-j 16'
-
-export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
-
-if [[ -f $HOME/.cargo/env ]]; then
-    . $HOME/.cargo/env
-fi
-
-# https://geeksocket.in/posts/emacs-lsp-go/
-export GOPATH="$(go env GOPATH)"
-export PATH="${PATH}:${GOPATH}/bin"
 
 # From https://babushk.in/posts/renew-environment-tmux.html
 if [[ -n $TMUX ]]; then                                                                               
