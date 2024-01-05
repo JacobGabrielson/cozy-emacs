@@ -18,9 +18,6 @@
   (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv))
 
 (defun pm-display-line-numbers ()
-  (message (concat "PATH before" (getenv "PATH")))
-  (direnv-update-directory-environment)
-  (message (concat "PATH after" (getenv "PATH")))
   (setq display-line-numbers t))
 
 (add-hook 'python-mode-hook 'pm-display-line-numbers)
