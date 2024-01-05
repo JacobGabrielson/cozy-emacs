@@ -26,12 +26,6 @@
   ;;(add-hook 'before-save-hook #'lsp-organize-imports t t)
   )
 
-;; Optional - provides snippet support.
-(use-package yasnippet
-  :ensure t
-  :commands yas-minor-mode
-  :hook (go-mode . yas-minor-mode))
-
 (defun custom-go-mode ()
   (lsp-go-install-save-hooks)
   (lsp-headerline-breadcrumb-mode)
@@ -39,13 +33,14 @@
   (lsp-treemacs-sync-mode)
   (local-set-key (kbd "M-?") 'lsp-find-references))
 
-(use-package go-mode
+(use-package go-mode :after yasnippet
   :ensure t
   :mode ("\\.go\\'" . go-mode)
   :init
   (progn
     (setq compilation-read-command t)
-    (add-hook 'go-mode-hook 'custom-go-mode)))
+    (add-hook 'go-mode-hook 'custom-go-mode))
+  :hook (go-mode . yas-minor-mode))
 
 (use-package go-playground
   :ensure t)
