@@ -3,20 +3,27 @@
 (add-hook 'java-mode-hook #'lsp)
 ;;(remove-hook 'java-mode-hook #'lsp)
 
+(setq lsp-java-format-on-type-enabled nil)
+(setq lsp-enable-on-type-formatting nil)
+(electric-indent-mode 1)
+
 (defun my-java-mode-hook ()
   (flycheck-mode)
   (subword-mode)
   (yas-minor-mode)
+  (setq indent-tabs-mode nil)
   (when window-system
     (set-fringe-style '(8 . 0)))
 
   ;; Fix indentation for anonymous classes
-  (c-set-offset 'substatement-open 0)
-  (if (assoc 'inexpr-class c-offsets-alist)
-      (c-set-offset 'inexpr-class 0))
+  ;; (c-set-offset 'substatement-open 0)
+  ;; (if (assoc 'inexpr-class c-offsets-alist)
+  ;;     (c-set-offset 'inexpr-class 0))
 
-  ;; Indent arguments on the next line as indented body.
-  (c-set-offset 'arglist-intro '++))
+  ;; ;; Indent arguments on the next line as indented body.
+  ;; (c-set-offset 'arglist-intro '++)
+
+  )
 (add-hook 'java-mode-hook 'my-java-mode-hook)
 
 
@@ -33,4 +40,5 @@
 ;; https://pastebin.com/Pb9K8StS
 ;; https://github.com/neppramod/emacs-configuration/blob/master/configuration.org
 ;; https://github.com/neppramod/java_emacs/blob/master/emacs-configuration.org
+
 

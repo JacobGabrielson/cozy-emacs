@@ -26,6 +26,10 @@
 
 (use-package diminish)
 
+(use-package doom-modeline
+  :hook
+  (after-init . doom-modeline-mode))
+
 (use-package xclip
   :config
   ;; allow copy/paste from terminal on Mac OS X etc
@@ -41,7 +45,13 @@
 (pushnew '("\\.tf$" . hcl-mode) auto-mode-alist)
 
 (use-package magit
-  :bind ("C-x g" . magit-status))
+  :bind
+  ("C-x g" . magit-status)
+
+  :config
+  (setq magit-log-arguments '("-n256" "--graph" "--decorate" "--color")
+        ;; Show diffs per word, looks nicer!
+        magit-diff-refine-hunk t))
 
 (use-package wgrep :init (require 'wgrep))
 
@@ -180,10 +190,12 @@
 ;;(dirvish-override-dired-mode)
 
 (use-package pdf-tools)
-(use-package all-the-icons)
 (use-package vscode-icon)
 
 ;; https://github.com/Wilfred/deadgrep
 (use-package deadgrep)
 (use-package yasnippet)
+
+;; for live stream/screencasts
+;;(use-package command-log-mode)
 

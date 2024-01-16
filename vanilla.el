@@ -425,3 +425,4 @@ window.  Otherwise, goes to end of buffer."
    (buffer-face-mode))
 
 
+(setq-default indent-tabs-mode nil)
