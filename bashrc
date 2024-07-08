@@ -1,3 +1,4 @@
+# -*- sh -*- 
 if [[ ! -z $INSIDE_EMACS ]]; then
     # show full path for dirtrack
     # :e is signal it's emacs, for dirtrack-list in ~/.emacs
@@ -53,9 +54,13 @@ fi
 
 # From https://babushk.in/posts/renew-environment-tmux.html
 if [[ -n $TMUX ]]; then                                                                               
-  function rfrsh {                                                                                
-    export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
-    export $(tmux show-environment | grep "^DISPLAY")
+  function rfrsh {
+    if [[ -n $SSH_AUTH_SOCK ]]; then
+      export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
+    fi
+    if [[ -n $DISPLAY ]]; then
+        export $(tmux show-environment | grep "^DISPLAY")
+    fi
   }
 else                                                                                                  
   function rfrsh { :;  }

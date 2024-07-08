@@ -8,14 +8,14 @@
 
 (add-hook 'python-mode-hook 'indent-guide-mode)
 
-(use-package auto-virtualenv
-  :ensure t
-  :init
-  (use-package pyvenv
-    :ensure t)
-  :config
-  (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-  (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv))
+;; (use-package auto-virtualenv
+;;   :ensure t
+;;   :init
+;;   (use-package pyvenv
+;;     :ensure t)
+;;   :config
+;;   (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+;;   (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv))
 
 (defun pm-display-line-numbers ()
   (setq display-line-numbers t))

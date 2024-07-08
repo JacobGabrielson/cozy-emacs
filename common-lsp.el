@@ -5,33 +5,30 @@
 ;;completion-at-point also works out of the box but doesn't support snippets.
 
 (use-package company
-  :ensure t
   :config
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1))
 
 (use-package lsp-mode
-  :ensure t
   :commands (lsp lsp-deferred)
   :init
-  (progn
-    (setq
-     lsp-auto-guess-root t
-     lsp-eldoc-render-all t
-     lsp-enable-file-watchers nil ; too annoying/perf issues
-     lsp-keymap-prefix "s-z"	;; otherwise lock screen
-     lsp-lens-enable t
-     lsp-modeline-diagnostics-scope :project
-     lsp-signature-auto-activate nil
-     lsp-ui-sideline-delay 0.5
-     lsp-ui-sideline-enable t
-     lsp-ui-doc-enable t
-     lsp-ui-imenu-enable t
-     lsp-ui-peek-enable t
-     )))
+  (setq
+   lsp-auto-guess-root t
+   lsp-eldoc-render-all t
+   lsp-enable-file-watchers nil ; too annoying/perf issues
+   ;;lsp-keymap-prefix "<s-z>"	;; no longer working
+   lsp-lens-enable t
+   lsp-modeline-diagnostics-scope :project
+   lsp-signature-auto-activate nil
+   lsp-ui-sideline-delay 0.5
+   lsp-ui-sideline-enable t
+   lsp-ui-doc-enable t
+   lsp-ui-imenu-enable t
+   lsp-ui-peek-enable t
+   lsp-idle-delay 0.500
+   ))
 
 (use-package lsp-ui
-  :ensure t
   :commands lsp-ui-mode
   :init
   (progn
@@ -41,9 +38,9 @@
 	  )))
 
 (use-package lsp-ivy :ensure t)
-(use-package helm-lsp :ensure t)
-;; lsp-ivy-diagnostics
-
+(use-package helm-lsp :ensure t
+  :config
+  (setq helm-use-frame-when-more-than-two-windows nil))
 (use-package lsp-treemacs :ensure t)
 
 

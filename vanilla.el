@@ -105,7 +105,7 @@
 
 
 ;; makes things like lsp-mode performant
-(setq read-process-output-max (* 1024 1024))
+(setq read-process-output-max (* 4 1024 1024)) ; 4MB
 (setq gc-cons-threshold 500000000)
 (add-hook 'focus-out-hook 'garbage-collect)
 
@@ -424,5 +424,15 @@ window.  Otherwise, goes to end of buffer."
    (setq buffer-face-mode-face '(:family "PT Mono" :height 150 :width semi-condensed))
    (buffer-face-mode))
 
+(require 'pulse)
+(set-face-attribute 'pulse-highlight-start-face nil :background "#49505f")
+(add-hook 'window-selection-change-functions
+          (lambda (frame)
+            (when (eq frame (selected-frame))
+              (pulse-momentary-highlight-one-line))))
 
 (setq-default indent-tabs-mode nil)
+(setq save-silently t)
+;; Don't Balance window splits automatically
+(setf window-combination-resize nil)
+

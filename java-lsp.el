@@ -1,7 +1,8 @@
-
-(use-package lsp-java :ensure t :after lsp yasnippet)
+(use-package lsp-java)
 (add-hook 'java-mode-hook #'lsp)
 ;;(remove-hook 'java-mode-hook #'lsp)
+
+(setq lsp-java-autobuild-enabled t)
 
 (setq lsp-java-format-on-type-enabled nil)
 (setq lsp-enable-on-type-formatting nil)
@@ -11,6 +12,7 @@
   (flycheck-mode)
   (subword-mode)
   (yas-minor-mode)
+  (setq fill-column 140)
   (setq indent-tabs-mode nil)
   (when window-system
     (set-fringe-style '(8 . 0)))
