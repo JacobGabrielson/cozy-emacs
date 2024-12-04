@@ -27,3 +27,8 @@
 
 ;; Create Python processes per-project, not global
 (setq python-shell-dedicated 'project)
+
+(require 'python)
+(setq python-shell-interpreter "ipython") ; requires pip install ipython 
+(setq python-shell-interpreter-args "-i")
+
