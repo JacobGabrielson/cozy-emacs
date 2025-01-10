@@ -42,6 +42,3 @@
   :config
   (setq helm-use-frame-when-more-than-two-windows nil))
 (use-package lsp-treemacs :ensure t)
-
-
-
