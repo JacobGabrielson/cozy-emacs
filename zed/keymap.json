@@ -27,8 +27,8 @@
       "ctrl-,": "zed::OpenSettings",
       "f11": "zed::ToggleFullScreen",
       "ctrl-alt-z": "edit_prediction::RateCompletions",
-        "ctrl-shift-i": "edit_prediction::ToggleMenu",
-        "alt-x": "command_palette::Toggle"
+      "ctrl-shift-i": "edit_prediction::ToggleMenu",
+      "alt-x": "command_palette::Toggle"
     }
   },
   {
@@ -152,7 +152,6 @@
       "ctrl-c ctrl-r": "editor::Rename",
 
       // Assistants
-      "ctrl-c ctrl-u": "assistant::NewChat",
       "ctrl-c a": "assistant::InlineAssist",
       "ctrl-c ctrl-a": "assistant::InlineAssist",
       "ctrl->": "assistant::QuoteSelection",
@@ -260,10 +259,10 @@
       // "ctrl-shift-e": "project_panel::ToggleFocus",
       // "ctrl-g": "search::SelectNextMatch",
       // "ctrl-shift-g": "search::SelectPrevMatch",
-      "ctrl-alt-/": "assistant::ToggleModelSelector",
-      "ctrl-c h": "assistant::DeployHistory",
+      //"ctrl-alt-/": "assistant::ToggleModelSelector",
+      //"ctrl-c h": "assistant::DeployHistory",
       // "ctrl-c p": "assistant::OpenPromptLibrary",
-      "ctrl-c n": "assistant::NewChat",
+      //"ctrl-c n": "assistant::NewChat",
       "enter": "assistant::ConfirmCommand"
     }
   },
@@ -274,7 +273,7 @@
       "ctrl-shift-enter": "assistant::Edit",
       "ctrl->": "assistant::QuoteSelection",
       "ctrl-<": "assistant::InsertIntoEditor",
-      "ctrl-c m": "assistant::ToggleModelSelector",
+      //"ctrl-c m": "assistant::ToggleModelSelector",
       "shift-enter": "assistant::Split",
       "ctrl-r": "assistant::CycleMessageRole",
       "enter": "assistant::ConfirmCommand"
@@ -340,8 +339,8 @@
       // "foo-bar": ["task::Spawn", { "task_name": "MyTask", "reveal_target": "dock" }]
 
       // Side panels
-      "ctrl-z i": "assistant::ToggleFocus",
-      "ctrl-z ctrl-i": "assistant::ToggleFocus",
+      //"ctrl-z i": "assistant::ToggleFocus",
+      //"ctrl-z ctrl-i": "assistant::ToggleFocus",
       "ctrl-z p": "project_panel::ToggleFocus",
       "ctrl-z ctrl-p": "project_panel::ToggleFocus",
       "ctrl-z o": "outline_panel::ToggleFocus",
@@ -527,8 +526,6 @@
   {
     "context": "PromptEditor",
     "bindings": {
-      "ctrl-[": "assistant::CyclePreviousInlineAssist",
-      "ctrl-]": "assistant::CycleNextInlineAssist",
       "ctrl-alt-e": "agent::RemoveAllContext",
       // "enter": "agent::NewPromptEditor", broken in 182.9
       "enter": "agent::NewThread",
