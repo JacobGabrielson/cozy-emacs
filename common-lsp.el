@@ -26,7 +26,9 @@
    lsp-ui-imenu-enable t
    lsp-ui-peek-enable t
    lsp-idle-delay 0.500
-   ))
+   )
+
+  )
 
 (use-package lsp-ui
   :commands lsp-ui-mode

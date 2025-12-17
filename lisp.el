@@ -15,7 +15,6 @@
 (add-to-list 'slime-contribs 'slime-fuzzy)
 (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
-
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((lisp . t)))

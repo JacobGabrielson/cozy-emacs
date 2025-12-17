@@ -186,6 +186,8 @@
   (setq display-line-numbers t)
   (display-fill-column-indicator-mode 1))
 
+
+
 ;;(use-package dirvish)
 ;;(dirvish-override-dired-mode)
 
@@ -199,3 +201,6 @@
 ;; for live stream/screencasts
 ;;(use-package command-log-mode)
 
+(use-package sql-indent
+  :ensure t
+  :hook (sql-mode . sqlind-minor-mode))
