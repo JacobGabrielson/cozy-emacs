@@ -98,6 +98,21 @@
 				 (shell . t)
 				 )))
 
+(defun my/org-agenda-downgrade-all-priorities ()
+  "Downgrade priority of every item in the current Org Agenda buffer by one."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (save-excursion
+      (goto-char (point-min))
+      (while (not (eobp))
+        (when (org-get-at-bol 'org-hd-marker)
+          (org-agenda-priority-down))
+        (forward-line 1)))))
+
+(with-eval-after-load 'org-agenda
+  (define-key org-agenda-mode-map (kbd "D") #'my/org-agenda-downgrade-all-priorities))
+
+
 (require 'ox-odt)
 (setq org-odt-preferred-output-format "docx")
 (org-babel-do-load-languages
