@@ -1,0 +1,7 @@
+[cursor.style]
+shape = "Block"
+blinking = "Never"
+
+[colors.cursor]
+cursor = "#ff0000"
+text = "CellBackground"

@@ -42,7 +42,7 @@
 (use-package yaml-mode)
 
 (use-package hcl-mode)
-(pushnew '("\\.tf$" . hcl-mode) auto-mode-alist)
+(cl-pushnew '("\\.tf$" . hcl-mode) auto-mode-alist)
 
 (use-package magit
   :bind

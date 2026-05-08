@@ -7,18 +7,13 @@
 ;;; of the standard library to be loaded.
 
 ;;; Helpful notes:
-;;;  - Use at least Emacs 27 from now on
+;;;  - Use at least Emacs 31 from now on
 ;;;  - To tell if you've gotten 24 bit color, do (display-color-cells)
-;;;  - The only Windows terminal that I can find that supports 24-bit
-;;;    color and italic fonts and doesn't swallow keys like Control-Space
-;;;    is Kitty (with Consolas font)
-
-(setq comp-deferred-compilation t)
 
 (if (and (fboundp 'native-comp-available-p)
        (native-comp-available-p))
   (message "Native compilation is available")
-  (message "Native complation is *not* available"))
+  (message "Native compilation is *not* available"))
 
 (if (functionp 'json-serialize)
   (message "Native JSON is available")
@@ -26,7 +21,7 @@
 
 (setq custom-file "~/.emacs-custom.el")
 
-(require 'cl)
+(require 'cl-lib)
 (require 'dired-x)
 (require 'em-smart)
 (require 'uniquify)
@@ -41,19 +36,22 @@
 (when (fboundp 'tab-bar-mode)
   (tab-bar-mode -1))
 (blink-cursor-mode -1)
-       
+
+(setq display-time-load-average-threshold 0) ; always show load
+(setq display-time-mail-file t)		     ; go away!
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(setq display-time-interval 5)
+
 ;; Turn on good modes
 (global-font-lock-mode 1)
 (global-subword-mode 1)
-(global-auto-revert-mode t)
+(global-auto-revert-mode 1)
 (when window-system
   ;; Too slow over some slower connections
   (global-hl-line-mode 1)
   (column-number-mode 1)
-  (display-time)
-  (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t)
-  (setq display-time-interval (* 5 1))
+  (display-time-mode 1)
   (setq suggest-key-bindings t)
   (setq font-lock-maximum-decoration t)
   (size-indication-mode t)
@@ -77,12 +75,6 @@
 
 (save-place-mode 1)
 (savehist-mode 1)
-(when nil ;; trying Ivy
-  (ido-mode 1)
-  (ido-everywhere 1)
-  (setq ido-create-new-buffer 'always)
-  (setq ido-enable-flex-matching t)
-  (setq ido-use-faces nil))
 
 (show-paren-mode 1)
 (setq show-paren-style 'mixed)
@@ -96,7 +88,6 @@
 (add-hook 'ielm-mode-hook 'eldoc-mode)
 ;; ctrl-c left/right
 (winner-mode 1)
-(toggle-uniquify-buffer-names)
 
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
@@ -107,7 +98,9 @@
 ;; makes things like lsp-mode performant
 (setq read-process-output-max (* 4 1024 1024)) ; 4MB
 (setq gc-cons-threshold 500000000)
-(add-hook 'focus-out-hook 'garbage-collect)
+(add-function :after after-focus-change-function
+              (lambda ()
+                (unless (frame-focus-state) (garbage-collect))))
 
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq savehist-autosave-interval 60)
@@ -128,8 +121,6 @@
 (setq dired-auto-revert-buffer nil)
 (setq dired-dwim-target t)
 (setq dired-no-confirm '(create-top-dir))
-(setq display-time-load-average-threshold 0) ; always show load
-(setq display-time-mail-file t)		     ; go away!
 
 
 (setq echo-keystrokes 0.02)
@@ -194,10 +185,6 @@
 (set-default 'truncate-lines nil)
 
 (setq-default comint-input-ignoredups t)
-(setq-default display-line-numbers nil)
-
-
-
 (setq-default indicate-empty-lines t)
 (setq-default split-width-threshold 160 ; vertical by default
               split-height-threshold nil)
@@ -217,24 +204,21 @@
 (add-hook 'compilation-filter-hook 'comint-truncate-buffer)
 
 (fset 'yes-or-no-p 'y-or-n-p)
-(defalias #'view-hello-file #'ignore)
+(defalias 'view-hello-file 'ignore)
 
 (when (member system-type '(gnu/linux darwin))
   (setq dired-listing-switches "-alhF")) ; .h files before .cpp files
 
-(add-hook 'latex-mode-hook '(lambda () (turn-on-reftex)))
+(add-hook 'latex-mode-hook 'turn-on-reftex)
 
 (add-hook 'sql-interactive-mode-hook 'sql-rename-buffer)
 
-;; Die Apple key, die!
-(when (boundp 'mac-command-modifier)
-  (setq mac-command-modifier 'meta))	; back to meta
 (global-set-key "\C-r" 'isearch-backward-regexp)
 (global-set-key "\C-s" 'isearch-forward-regexp)
 (global-set-key "\C-xc" 'compile)
 (global-set-key "\C-xv-" 'ediff-revision)
 (global-set-key [remap just-one-space] 'cycle-spacing)
-(define-key global-map '[insert] nil)
+(global-unset-key [insert])
 
 (define-key emacs-lisp-mode-map (kbd "C-c C-z") 'ielm)
 (define-key emacs-lisp-mode-map (kbd "C-c C-l") 'eval-buffer)
@@ -246,28 +230,31 @@
 
 (global-set-key [remap suspend-frame] 'ignore)
 
-(lexical-let ((last-shell ""))
-  (defun toggle-shell ()
-    (interactive)
-    (cond ((string-match-p "^\\*shell<[1-9][0-9]*>\\*$" (buffer-name))
-           (goto-non-shell-buffer))
-          ((get-buffer last-shell) (switch-to-buffer last-shell))
-          (t (shell (setq last-shell "*shell<1>*")))))
+(defvar toggle-shell--last-shell ""
+  "Buffer name of the most recently used shell, used by `toggle-shell'.")
 
-  (defun switch-shell (n)
-    (let ((buffer-name (format "*shell<%d>*" n)))
-      (setq last-shell buffer-name)
-      (cond ((get-buffer buffer-name)
-             (switch-to-buffer buffer-name))
-            (t (shell buffer-name)
-               (rename-buffer buffer-name)))))
+(defun toggle-shell ()
+  (interactive)
+  (cond ((string-match-p "^\\*shell<[1-9][0-9]*>\\*$" (buffer-name))
+         (goto-non-shell-buffer))
+        ((get-buffer toggle-shell--last-shell)
+         (switch-to-buffer toggle-shell--last-shell))
+        (t (shell (setq toggle-shell--last-shell "*shell<1>*")))))
 
-  (defun goto-non-shell-buffer ()
-    (let* ((r "^\\*shell<[1-9][0-9]*>\\*$")
-           (shell-buffer-p (lambda (b) (string-match-p r (buffer-name b))))
-           (non-shells (cl-remove-if shell-buffer-p (buffer-list))))
-      (when non-shells
-        (switch-to-buffer (first non-shells))))))
+(defun switch-shell (n)
+  (let ((buffer-name (format "*shell<%d>*" n)))
+    (setq toggle-shell--last-shell buffer-name)
+    (cond ((get-buffer buffer-name)
+           (switch-to-buffer buffer-name))
+          (t (shell buffer-name)
+             (rename-buffer buffer-name)))))
+
+(defun goto-non-shell-buffer ()
+  (let* ((r "^\\*shell<[1-9][0-9]*>\\*$")
+         (shell-buffer-p (lambda (b) (string-match-p r (buffer-name b))))
+         (non-shells (cl-remove-if shell-buffer-p (buffer-list))))
+    (when non-shells
+      (switch-to-buffer (car non-shells)))))
 
 (dolist (n (number-sequence 1 9))
   (global-set-key (kbd (concat "M-" (int-to-string n)))
@@ -277,13 +264,13 @@
   (interactive)
   (let ((shell-dir default-directory))
     (shell) ;; start new one or use existing
-    (end-of-buffer) ;; make sure you are at command prompt
+    (goto-char (point-max)) ;; make sure you are at command prompt
     (insert (concat "cd " shell-dir))
     (comint-send-input)))
 
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
-(setq uniquify-after-kill-buffer-p t)    ; rename after killing uniquified
+(setq uniquify-after-kill-buffer-flag t) ; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 
@@ -293,11 +280,7 @@
 ;;(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 ;;(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
-;; http://stackoverflow.com/a/3072831/68127
-(defun colorize-compilation-buffer ()
-  (let ((inhibit-read-only t))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 (setenv "GIT_PAGER" "cat")
 (setenv "PAGER" "cat")
@@ -337,8 +320,8 @@ window.  Otherwise, goes to end of buffer."
   ;; Move lines first
   (when (/= arg 1)
     (let ((line-move-visual nil))
-      (backward-line (1- arg))))
-  
+      (forward-line (- 1 arg))))
+
   (let ((old-point (point)))
     (if (not (eolp))
 	(end-of-line)
@@ -363,7 +346,7 @@ window.  Otherwise, goes to end of buffer."
 
 (defun pushnew-exec-path ()
   (interactive)
-  (pushnew default-directory exec-path))
+  (add-to-list 'exec-path default-directory))
 
 
 (when (file-readable-p custom-file)
@@ -379,10 +362,8 @@ window.  Otherwise, goes to end of buffer."
 
 ;; https://200ok.ch/posts/2020-09-29_comprehensive_guide_on_handling_long_lines_in_emacs.html
 (setq-default bidi-paragraph-direction 'left-to-right)
-(if (version<= "27.1" emacs-version)
-    (progn
-      (setq bidi-inhibit-bpa t)
-      (global-so-long-mode 1)))
+(setq bidi-inhibit-bpa t)
+(global-so-long-mode 1)
 
 ;; https://www.reddit.com/r/emacs/comments/l42oep/suppress_nativecomp_warnings_buffer/
 (setq warning-minimum-level :error)
@@ -409,7 +390,7 @@ window.  Otherwise, goes to end of buffer."
 (setq switch-to-buffer-obey-display-actions t)
 
 ;; otherwise C-x 1 doesn't work on lsp-mode buffers?
-(setq ignore-window-parameters t)
+(setq-default ignore-window-parameters t)
 
 ;; https://www.emacswiki.org/emacs/FacesPerBuffer
 (defun my-buffer-face-mode-variable ()
@@ -434,5 +415,5 @@ window.  Otherwise, goes to end of buffer."
 (setq-default indent-tabs-mode nil)
 (setq save-silently t)
 ;; Don't Balance window splits automatically
-(setf window-combination-resize nil)
+(setq window-combination-resize nil)
 
