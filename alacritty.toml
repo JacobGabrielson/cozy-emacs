@@ -5,3 +5,30 @@ blinking = "Never"
 [colors.cursor]
 cursor = "#ff0000"
 text = "CellBackground"
+
+[window]
+# Both Option keys send Alt (= Meta in Emacs). Command stays as the normal
+# macOS Command key — Alacritty doesn't intercept it by default, so Cmd+Q,
+# Cmd+Tab, etc. continue to work as macOS shortcuts.
+option_as_alt = "Both"
+
+# Send 0x1F (= C-_) for Ctrl+/ so Emacs `undo' works. Alacritty doesn't
+# generate any byte for Ctrl+/ by default, so nothing reaches Emacs without
+# this binding.
+[[keyboard.bindings]]
+key = "Slash"
+mods = "Control"
+chars = "\u001F"
+
+# Silence Alacritty's own bell (visual flash on BEL byte). Note: the macOS
+# system UI sound for unhandled keys is *not* configurable here — disable
+# that via System Settings → Sound → "Play user interface sound effects",
+# or via `defaults write -g com.apple.sound.uiaudio.enabled -int 0`.
+[bell]
+duration = 0
+command = "None"
+
+[font]
+size = 13
+[font.normal]
+family = "JetBrainsMono Nerd Font"

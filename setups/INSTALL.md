@@ -21,6 +21,11 @@ and the tools it expects working. Edit as the setup drifts.
 
 ### Fonts / terminal
 
+- [x] JetBrainsMono Nerd Font (`brew install --cask font-jetbrains-mono-nerd-font`).
+      Used by Alacritty and Emacs default face; doom-modeline glyphs render
+      inline because the Nerd Font carries the icon range. After install, also
+      run `M-x nerd-icons-install-fonts` once in Emacs to drop the
+      `Symbols Nerd Font Mono.ttf` into `~/Library/Fonts` for completeness.
 - [ ] Consolas or another font with italic + 24-bit color support
 - [x] iTerm2 (`brew install --cask iterm2`)
 - [x] Alacritty (`brew install --cask alacritty`)

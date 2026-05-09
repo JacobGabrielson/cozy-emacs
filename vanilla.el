@@ -26,6 +26,14 @@
 (require 'em-smart)
 (require 'uniquify)
 
+;; Polyfill: `set-local' is a function in newer Emacs that recent magit
+;; (e.g. 20260506) calls but Emacs 31.0.50 lacks. Drop this once we're on
+;; an Emacs that defines it natively.
+(unless (fboundp 'set-local)
+  (defun set-local (variable value)
+    "Make VARIABLE buffer-local in the current buffer and set it to VALUE."
+    (set (make-local-variable variable) value)))
+
 ;;; Turn off bad modes
 (unless window-system
   (menu-bar-mode -1))
@@ -341,7 +349,12 @@ window.  Otherwise, goes to end of buffer."
   (defun text-scale-default () (interactive) (text-scale-set 0))
   (global-set-key (kbd "s-=") 'text-scale-increase)
   (global-set-key (kbd "s--") 'text-scale-decrease)
-  (global-set-key (kbd "s-0") 'text-scale-default))
+  (global-set-key (kbd "s-0") 'text-scale-default)
+
+  ;; Use a Nerd Font as the default so doom-modeline icons render inline
+  ;; everywhere. Falls through silently if the font isn't installed.
+  (when (member "JetBrainsMono Nerd Font" (font-family-list))
+    (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-13")))
 
 
 (defun pushnew-exec-path ()
