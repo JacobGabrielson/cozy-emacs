@@ -126,6 +126,24 @@ and the tools it expects working. Edit as the setup drifts.
       use case; reach for kind on top of Docker Desktop if you need
       multi-node.
 
+## AI / LLM tooling
+
+- [x] [Ollama](https://ollama.com/) (`brew install ollama`) — 0.23.2.
+      Metal-accelerated local LLM runtime on Apple Silicon. Run
+      `ollama serve` to start the daemon (or `brew services start ollama`).
+- [x] [opencode](https://opencode.ai/) (`brew install sst/tap/opencode`)
+      — 1.14.41. Terminal coding agent; speaks to Ollama, Anthropic, and
+      OpenAI providers.
+- [x] **Local coding model:** `qwen2.5-coder:32b` via
+      `ollama pull qwen2.5-coder:32b` (~20GB in 4-bit). Strong open-weights
+      coding model in the 32B class; runs fast on M-series with 128GB
+      unified memory.
+- [x] **Reasoning-heavy alternative:** `deepseek-r1:70b` via
+      `ollama pull deepseek-r1:70b` (~42GB). Llama-distilled DeepSeek-R1.
+      Good for tricky algorithmic / debugging problems where chain-of-thought
+      helps. Slower than qwen2.5-coder because it emits long reasoning
+      traces before answering.
+
 ## Emacs packages
 
 Most are auto-installed via `use-package` from MELPA on first launch. Notable

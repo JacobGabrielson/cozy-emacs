@@ -165,7 +165,11 @@
 
 (use-package highlight-indent-guides
   :config
-  (setq highlight-indent-guides-method 'bitmap))
+  ;; `bitmap' method runs `highlight-indent-guides-auto-set-faces' which
+  ;; errors when the `default' face has unspecified attributes (and then
+  ;; cascades into a jit-lock wholenump error during redisplay). The
+  ;; `character' method draws guides as plain glyphs and skips both.
+  (setq highlight-indent-guides-method 'character))
 
 (use-package pdf-tools
   :config
