@@ -8,4 +8,3 @@
 ;; cargo +nightly xtask install --server
 
 (use-package rustic)
-
