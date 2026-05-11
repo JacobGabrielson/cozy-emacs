@@ -46,6 +46,15 @@
   ("C-x g" . magit-status)
 
   :config
+  ;; magit-status-sections-hook's default value points at functions
+  ;; defined in these modules, but magit-status.el only `(require
+  ;; 'magit)' which doesn't pull them in. Without explicit requires
+  ;; opening a status buffer errors: `Symbol's function definition is
+  ;; void: magit-insert-merge-log' (and friends).
+  (require 'magit-merge)
+  (require 'magit-sequence)
+  (require 'magit-bisect)
+  (require 'magit-stash)
   ;; Show diffs per word, looks nicer!
   (setq magit-diff-refine-hunk t))
 

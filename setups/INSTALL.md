@@ -17,7 +17,8 @@ and the tools it expects working. Edit as the setup drifts.
 - [ ] shellcheck (`brew install shellcheck`) — used by flycheck for shell
 - [ ] gnupg
 - [ ] direnv / envrc (`brew install direnv`)
-- [ ] coreutils
+- [x] coreutils (`brew install coreutils`) — 9.11. Provides GNU `gls` so
+      dired can use `--dired`; vanilla.el wires this up automatically.
 
 ### Fonts / terminal
 

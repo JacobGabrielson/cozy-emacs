@@ -34,6 +34,13 @@
     "Make VARIABLE buffer-local in the current buffer and set it to VALUE."
     (set (make-local-variable variable) value)))
 
+;; Polyfill: same magit version calls `any' (an alias for `cl-some' from
+;; the obsolete cl.el) without requiring it. cl-lib doesn't provide the
+;; unprefixed name, so define it ourselves. Drop once magit upstream
+;; either requires cl or replaces the call with `cl-some'.
+(unless (fboundp 'any)
+  (defalias 'any #'cl-some))
+
 ;;; Turn off bad modes
 (unless window-system
   (menu-bar-mode -1))
@@ -44,6 +51,12 @@
 (when (fboundp 'tab-bar-mode)
   (tab-bar-mode -1))
 (blink-cursor-mode -1)
+
+;; In TTY frames (e.g. Emacs running inside tmux), interpret xterm SGR
+;; mouse sequences as actual mouse events instead of dumping them into
+;; the buffer as text. tmux.conf has `mouse on`, so without this any
+;; mouse motion over the pane fills it with `35;Y;X;M' garbage.
+(xterm-mouse-mode 1)
 
 (setq display-time-load-average-threshold 0) ; always show load
 (setq display-time-mail-file t)		     ; go away!
@@ -216,6 +229,14 @@
 
 (when (member system-type '(gnu/linux darwin))
   (setq dired-listing-switches "-alhF")) ; .h files before .cpp files
+
+;; macOS ships BSD ls, which doesn't support `--dired'. Prefer GNU ls
+;; (`gls' from coreutils) when it's installed; otherwise tell dired to
+;; stop passing --dired so it doesn't error.
+(when (eq system-type 'darwin)
+  (if-let ((gls (executable-find "gls")))
+      (setq insert-directory-program gls)
+    (setq dired-use-ls-dired nil)))
 
 (add-hook 'latex-mode-hook 'turn-on-reftex)
 
