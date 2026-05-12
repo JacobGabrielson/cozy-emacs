@@ -153,13 +153,17 @@
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (global-set-key (kbd "C-c J") 'counsel-file-jump))
 
+;; Only useful when the inferior shell is actually bash; under zsh it forces
+;; bash-style completion through a subprocess, which is misleading.
 (use-package bash-completion
+  :if (string-match-p "bash" (or explicit-shell-file-name shell-file-name ""))
   :config
   (bash-completion-setup))
 
 (use-package indent-guide)
 
-; setup Emacs path from our ~/.bashrc
+;; Inherit PATH (and other env) from the user's login shell — picks $SHELL,
+;; so it works for both bash and zsh.
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x))

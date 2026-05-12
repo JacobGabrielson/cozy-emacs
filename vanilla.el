@@ -394,6 +394,19 @@ window.  Otherwise, goes to end of buffer."
 ;;(desktop-save-mode 1)
 ;;(savehist-mode 1)
 
+;; A desktop saved from a tty frame stores (foreground-color . "unspecified-fg")
+;; and (background-color . "unspecified-bg"). Restoring those on a GUI frame
+;; triggers "Error (frameset): Unknown color". Drop them on restore.
+(with-eval-after-load 'frameset
+  (defun cozy/frameset-filter-unspecified-color (current _filtered _params _saving)
+    (let ((val (cdr current)))
+      (unless (and (stringp val)
+                   (string-match-p "\\`unspecified-[fb]g\\'" val))
+        current)))
+  (dolist (param '(foreground-color background-color))
+    (setf (alist-get param frameset-filter-alist)
+          #'cozy/frameset-filter-unspecified-color)))
+
 ;; https://200ok.ch/posts/2020-09-29_comprehensive_guide_on_handling_long_lines_in_emacs.html
 (setq-default bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t)
