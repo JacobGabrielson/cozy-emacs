@@ -119,7 +119,12 @@ and the tools it expects working. Edit as the setup drifts.
 - [ ] [kind](https://kind.sigs.k8s.io/) — for multi-node local clusters on
       top of Docker Desktop (`brew install kind` then `kind create cluster`)
 - [ ] terraform / opentofu (hcl-mode)
-- [ ] aws-cli
+- [x] aws-cli (`brew install awscli`) — 2.34.47. Run `aws configure` to set
+      access keys / region / output format.
+- [x] terminal-notifier (`brew install terminal-notifier`) — 2.0.0. Used by
+      Claude Code's Notification hook (`~/.claude/notify-mac.sh`) to surface
+      "agent needs attention" alerts on the macOS desktop with a 15s auto
+      dismiss and project subtitle.
 - [ ] gh (GitHub CLI)
 - [ ] ~~microk8s~~ — **skipped on macOS**: the `ubuntu/microk8s` Homebrew
       tap is broken on current Homebrew (uses removed `depends_on macos:`
@@ -144,6 +149,15 @@ and the tools it expects working. Edit as the setup drifts.
       Good for tricky algorithmic / debugging problems where chain-of-thought
       helps. Slower than qwen2.5-coder because it emits long reasoning
       traces before answering.
+- [x] [ds4](https://github.com/antirez/ds4) at `~/dev/third-party/ds4`.
+      Self-contained Metal inference engine for **DeepSeek V4 Flash** (284B
+      MoE / ~13B active, 1M ctx). Binaries built (`ds4`, `ds4-server`,
+      `ds4-bench`). Launcher: `~/dev/third-party/ds4/run-server.sh`.
+- [x] **DeepSeek V4 Flash weights** (q2-imatrix, ~81GB) at
+      `~/dev/third-party/ds4/gguf/`, downloaded via
+      `~/dev/third-party/ds4/download_model.sh q2-imatrix`. opencode is wired
+      to the resulting server via `~/.config/opencode/opencode.json`
+      (provider `ds4`, model `deepseek-v4-flash`).
 
 ## Emacs packages
 
