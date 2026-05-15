@@ -178,11 +178,15 @@
 
 (use-package highlight-indent-guides
   :config
-  ;; `bitmap' method runs `highlight-indent-guides-auto-set-faces' which
-  ;; errors when the `default' face has unspecified attributes (and then
-  ;; cascades into a jit-lock wholenump error during redisplay). The
-  ;; `character' method draws guides as plain glyphs and skips both.
-  (setq highlight-indent-guides-method 'character))
+  ;; `character' method draws guides as plain glyphs (avoids a `bitmap'
+  ;; codepath that cascades into a jit-lock wholenump error). The auto
+  ;; face derivation reads the `default' face's fg/bg, which on tty/tmux
+  ;; frames are `unspecified-fg' / `unspecified-bg' — not real colors —
+  ;; so it errors "cannot auto set faces". Disable it and set the faces
+  ;; ourselves with safe defaults.
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-auto-enabled nil)
+  (set-face-foreground 'highlight-indent-guides-character-face "gray40"))
 
 (use-package pdf-tools
   :config
