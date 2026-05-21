@@ -149,6 +149,12 @@ and the tools it expects working. Edit as the setup drifts.
       Good for tricky algorithmic / debugging problems where chain-of-thought
       helps. Slower than qwen2.5-coder because it emits long reasoning
       traces before answering.
+- [x] **Qwen3-Coder 30B-A3B Q8** via
+      `ollama pull qwen3-coder:30b-a3b-q8_0` (~32GB). MoE with 3B active —
+      Q8 quality without paying the dense-model price in latency. Derived
+      model `qwen3-coder-32k` (Modelfile: `PARAMETER num_ctx 65536`) raises
+      Ollama's 4096-token default to fit opencode's prompt + tools budget.
+      Wired in `~/.config/opencode/opencode.json` as agent `qwen`.
 - [x] [ds4](https://github.com/antirez/ds4) at `~/dev/third-party/ds4`.
       Self-contained Metal inference engine for **DeepSeek V4 Flash** (284B
       MoE / ~13B active, 1M ctx). Binaries built (`ds4`, `ds4-server`,

@@ -464,3 +464,5 @@ window.  Otherwise, goes to end of buffer."
 ;; Don't Balance window splits automatically
 (setq window-combination-resize nil)
 
+;;(fido-vertical-mode 1)
+
