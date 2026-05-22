@@ -48,8 +48,19 @@ if [[ -n $INSIDE_EMACS && $INSIDE_EMACS != *vterm* ]]; then
   PROMPT='%m:%~:%j:e%# '
   export EDITOR="emacsclient --alternate-editor=vi"
 else
+  # kube-ps1: show active kube context + namespace in the prompt.
+  # Source only if installed; degrades gracefully if not.
+  if [[ -r /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh ]]; then
+    source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
+    KUBE_PS1_SYMBOL_DEFAULT=$'⎈'   # ⎈ helm wheel
+    KUBE_PS1_NS_ENABLE=true
+    KUBE_PS1_PREFIX='('
+    KUBE_PS1_SUFFIX=')'
+    KUBE_PS1_SEPARATOR='|'
+  fi
+
   # %F{...}/%f = color on/off, %(?..X) = X when last exit != 0
-  PROMPT='%F{cyan}%n%f@%F{green}%m%f %F{yellow}%~%f%F{magenta}${vcs_info_msg_0_}%f%(1j. %F{blue}[%j]%f.)%(?.. %F{red}[%?]%f)
+  PROMPT='%F{cyan}%n%f@%F{green}%m%f %F{yellow}%~%f%F{magenta}${vcs_info_msg_0_}%f%(1j. %F{blue}[%j]%f.)%(?.. %F{red}[%?]%f) $(type kube_ps1 >/dev/null 2>&1 && kube_ps1)
 %# '
 fi
 
