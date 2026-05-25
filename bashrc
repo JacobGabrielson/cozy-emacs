@@ -1,11 +1,23 @@
-# -*- sh -*- 
+# -*- sh -*-
+
+# Current kubernetes context for the prompt. Stat-guard first so sessions
+# with no kube config never pay the cost of spawning kubectl per prompt.
+function kube_ctx {
+    [[ -n $KUBECONFIG || -r $HOME/.kube/config ]] || return
+    command -v kubectl >/dev/null 2>&1 || return
+    local ctx
+    ctx=$(kubectl config current-context 2>/dev/null) || return
+    [[ -n $ctx ]] && printf ' k8s:%s' "$ctx"
+}
+
 if [[ ! -z $INSIDE_EMACS ]]; then
     # show full path for dirtrack
     # :e is signal it's emacs, for dirtrack-list in ~/.emacs
-    export PS1='\h:\w:\j:e\$ '
+    # kube_ctx goes after :e so it can't disturb dirtrack's path capture
+    export PS1='\h:\w:\j:e$(kube_ctx)\$ '
     export EDITOR="emacsclient --alternate-editor=vi -s '$DISPLAY'"
 else
-    export PS1='\h:\W:\j\$ '
+    export PS1='\h:\W:\j$(kube_ctx)\$ '
 fi
 
 shopt -s cdspell
@@ -68,4 +80,32 @@ fi
 
 rfrsh
 
+# Tab completion for tmux. Ubuntu's tmux/bash-completion packages no longer
+# ship one, so this builds the subcommand list dynamically from tmux itself
+# and handles session/window targets for the commands that take them.
+_tmux_complete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local cmd="${COMP_WORDS[1]}"
+
+    if (( COMP_CWORD == 1 )); then
+        local cmds
+        cmds=$(tmux list-commands 2>/dev/null | awk '{print $1}')
+        COMPREPLY=($(compgen -W "$cmds" -- "$cur"))
+        return
+    fi
+
+    case "$cmd" in
+        attach|attach-session|kill-session|switch-client|has-session|rename-session)
+            local sessions
+            sessions=$(tmux list-sessions -F '#{session_name}' 2>/dev/null)
+            COMPREPLY=($(compgen -W "$sessions" -- "$cur"))
+            ;;
+        kill-window|select-window|rename-window|move-window|link-window|swap-window|select-pane|kill-pane)
+            local windows
+            windows=$(tmux list-windows -aF '#{session_name}:#{window_index}' 2>/dev/null)
+            COMPREPLY=($(compgen -W "$windows" -- "$cur"))
+            ;;
+    esac
+}
+complete -F _tmux_complete tmux
 
