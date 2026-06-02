@@ -31,6 +31,13 @@ if [[ $(uname) = 'Darwin' ]]; then
   export HOMEBREW_VERBOSE=1
 fi
 
+# Go: put $GOPATH/bin on PATH so `go install ...@latest' binaries (gopls,
+# etc.) are findable. Mirrors bash_profile. https://geeksocket.in/posts/emacs-lsp-go/
+if hash go 2>/dev/null; then
+  export GOPATH="$(go env GOPATH)"
+  export PATH="$HOME/.local/go/bin:$GOPATH/bin:$PATH"
+fi
+
 # vcs_info: lightweight git status for the prompt
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git

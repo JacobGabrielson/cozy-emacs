@@ -7,9 +7,12 @@
 ;; Bootstrap once per machine:
 ;;   M-x mcp-server-lib-install         ;; drops ~/.emacs.d/emacs-mcp-stdio.sh
 ;;
-;; Register with Claude Code (or any MCP-aware client):
+;; Register with Claude Code (or any MCP-aware client). NOTE: --server-id
+;; must match the id the provider registers its tools under, NOT "default".
+;; elisp-dev-mcp (below) registers under "elisp-dev-mcp"; pointing a client
+;; at "default" connects fine but exposes zero tools.
 ;;   claude mcp add -s user -t stdio emacs -- \
-;;     ~/.emacs.d/emacs-mcp-stdio.sh --server-id=default
+;;     ~/.emacs.d/emacs-mcp-stdio.sh --server-id=elisp-dev-mcp
 ;;
 ;; Useful commands:
 ;;   M-x mcp-server-lib-start           ;; start the server
@@ -33,9 +36,9 @@
              mcp-server-lib-describe-setup
              mcp-server-lib-show-metrics))
 
-;; (use-package elisp-dev-mcp
-;;   :after mcp-server-lib
-;;   :config (elisp-dev-mcp-enable))
+(use-package elisp-dev-mcp
+  :after mcp-server-lib
+  :config (elisp-dev-mcp-enable))
 
 ;; (use-package org-mcp
 ;;   :after mcp-server-lib
