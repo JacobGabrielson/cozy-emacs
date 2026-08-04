@@ -30,14 +30,27 @@
 ;; To enable them, uncomment the corresponding use-package blocks below.
 
 (use-package mcp-server-lib
-  :commands (mcp-server-lib-start
-             mcp-server-lib-stop
-             mcp-server-lib-install
-             mcp-server-lib-describe-setup
-             mcp-server-lib-show-metrics))
+  ;; Load eagerly. External clients connect on their own schedule, so the
+  ;; server must be up from startup — there's no in-Emacs command they can
+  ;; trigger to fault in an autoload.
+  :demand t
+  :config
+  ;; The stdio bridge (emacs-mcp-stdio.sh) talks to us through `emacsclient',
+  ;; so the Emacs server has to be listening or every request fails with
+  ;; "can't find socket".
+  (require 'server)
+  (unless (server-running-p)
+    (server-start))
+  ;; `mcp-server-lib-process-jsonrpc' (called per request by the bridge)
+  ;; refuses to serve until the server is "started" (it just flips an internal
+  ;; running flag and resets metrics). It errors if started twice, so guard
+  ;; for config reloads.
+  (unless (bound-and-true-p mcp-server-lib--running)
+    (mcp-server-lib-start)))
 
 (use-package elisp-dev-mcp
   :after mcp-server-lib
+  :demand t
   :config (elisp-dev-mcp-enable))
 
 ;; (use-package org-mcp

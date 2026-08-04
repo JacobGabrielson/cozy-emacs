@@ -419,6 +419,14 @@ window.  Otherwise, goes to end of buffer."
 ;; chord). Can use "C-x 5 1" (delete-other-frames) instead
 (global-unset-key  (kbd "C-x 5 0"))
 
+;; Never spawn extra GUI windows. On the macOS (ns) build this defaults to
+;; `fresh', so any file handed to Emacs.app from outside — Finder "Open
+;; With", `open -a Emacs', a CLI tool, drag-and-drop — pops a brand-new
+;; frame. nil makes those reuse the existing frame. (`pop-up-frames' is
+;; already nil, so normal buffer display stays in-frame too.)
+(when (boundp 'ns-pop-up-frames)
+  (setq ns-pop-up-frames nil))
+
 ;; Note: only for version < 29
 ;; https://emacs-tree-sitter.github.io/installation/
 
