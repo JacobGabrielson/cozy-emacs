@@ -434,11 +434,22 @@ window.  Otherwise, goes to end of buffer."
 ;;(require 'tree-sitter-langs)
 
 (when (member system-type '(darwin))
-  ;; set keys for Apple keyboard, for emacs in OS X
-  (setq mac-command-modifier 'super) ; make cmd key do Super
-  (setq mac-option-modifier 'meta) ; make opt key do Meta (because my kbd is swapped)
-  (setq mac-control-modifier 'control) ; make Control key do Control
-  (setq ns-function-modifier 'hyper))  ; make Fn key do Hyper
+  ;; Set keys for Apple keyboard, for emacs in OS X.
+  ;;
+  ;; Command is Meta, not Super. Option is Meta too, so either key works —
+  ;; the terminal side matches: Alacritty sends ESC+key for both (Command via
+  ;; explicit bindings, Option via option_as_alt = "Both").
+  ;;
+  ;; mac-* are the Mac port's names, ns-* the NS build's. Set both so this
+  ;; behaves the same whichever Emacs is running.
+  (setq mac-command-modifier 'meta)     ; cmd -> Meta
+  (setq mac-option-modifier 'meta)      ; opt -> Meta (kbd is swapped)
+  (setq mac-control-modifier 'control)  ; control -> Control
+  (setq ns-command-modifier 'meta)      ; cmd -> Meta (NS build)
+  (setq ns-alternate-modifier 'meta)    ; opt -> Meta (NS build)
+  (setq ns-right-command-modifier 'meta)
+  (setq ns-right-alternate-modifier 'meta)
+  (setq ns-function-modifier 'hyper))   ; Fn -> Hyper
 
 ;; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
 ;; Requires Emacs 27+

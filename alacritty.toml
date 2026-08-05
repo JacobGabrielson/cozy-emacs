@@ -7,9 +7,11 @@ cursor = "#ff0000"
 text = "CellBackground"
 
 [window]
-# Both Option keys send Alt (= Meta in Emacs). Command stays as the normal
-# macOS Command key — Alacritty doesn't intercept it by default, so Cmd+Q,
-# Cmd+Tab, etc. continue to work as macOS shortcuts.
+# Both Option keys send Alt (= Meta in Emacs). Command is *also* Meta now, via
+# the explicit bindings at the bottom of this file — Alacritty has no
+# "command_as_alt" knob, so every chord has to be spelled out. Net effect: two
+# Meta keys, and Cmd+Q / Cmd+W / Cmd+C / Cmd+V no longer reach macOS. Copy and
+# paste moved to Cmd+Shift+C / Cmd+Shift+V.
 option_as_alt = "Both"
 
 # Send 0x1F (= C-_) for Ctrl+/ so Emacs `undo' works. Alacritty doesn't
@@ -32,3 +34,444 @@ command = "None"
 size = 13
 [font.normal]
 family = "JetBrainsMono Nerd Font"
+
+# ===========================================================================
+# Command as Meta
+# ===========================================================================
+# --- Clipboard: the only Cmd chords NOT turned into Meta. ---
+# Cmd+Shift+C copies, Cmd+Shift+V pastes. Chosen because M-C and M-V
+# (shifted) are near-unused in Emacs, unlike M-c / M-v.
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Command|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Command|Shift"
+action = "Paste"
+
+# --- Cmd = Meta: every chord below emits ESC + key. ---
+
+[[keyboard.bindings]]
+key = "A"
+mods = "Command"
+chars = "\u001Ba"
+
+[[keyboard.bindings]]
+key = "B"
+mods = "Command"
+chars = "\u001Bb"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Command"
+chars = "\u001Bc"
+
+[[keyboard.bindings]]
+key = "D"
+mods = "Command"
+chars = "\u001Bd"
+
+[[keyboard.bindings]]
+key = "E"
+mods = "Command"
+chars = "\u001Be"
+
+[[keyboard.bindings]]
+key = "F"
+mods = "Command"
+chars = "\u001Bf"
+
+[[keyboard.bindings]]
+key = "G"
+mods = "Command"
+chars = "\u001Bg"
+
+[[keyboard.bindings]]
+key = "H"
+mods = "Command"
+chars = "\u001Bh"
+
+[[keyboard.bindings]]
+key = "I"
+mods = "Command"
+chars = "\u001Bi"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Command"
+chars = "\u001Bj"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+chars = "\u001Bk"
+
+[[keyboard.bindings]]
+key = "L"
+mods = "Command"
+chars = "\u001Bl"
+
+[[keyboard.bindings]]
+key = "M"
+mods = "Command"
+chars = "\u001Bm"
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Command"
+chars = "\u001Bn"
+
+[[keyboard.bindings]]
+key = "O"
+mods = "Command"
+chars = "\u001Bo"
+
+[[keyboard.bindings]]
+key = "P"
+mods = "Command"
+chars = "\u001Bp"
+
+[[keyboard.bindings]]
+key = "Q"
+mods = "Command"
+chars = "\u001Bq"
+
+[[keyboard.bindings]]
+key = "R"
+mods = "Command"
+chars = "\u001Br"
+
+[[keyboard.bindings]]
+key = "S"
+mods = "Command"
+chars = "\u001Bs"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+chars = "\u001Bt"
+
+[[keyboard.bindings]]
+key = "U"
+mods = "Command"
+chars = "\u001Bu"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Command"
+chars = "\u001Bv"
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Command"
+chars = "\u001Bw"
+
+[[keyboard.bindings]]
+key = "X"
+mods = "Command"
+chars = "\u001Bx"
+
+[[keyboard.bindings]]
+key = "Y"
+mods = "Command"
+chars = "\u001By"
+
+[[keyboard.bindings]]
+key = "Z"
+mods = "Command"
+chars = "\u001Bz"
+
+[[keyboard.bindings]]
+key = "A"
+mods = "Command|Shift"
+chars = "\u001BA"
+
+[[keyboard.bindings]]
+key = "B"
+mods = "Command|Shift"
+chars = "\u001BB"
+
+[[keyboard.bindings]]
+key = "D"
+mods = "Command|Shift"
+chars = "\u001BD"
+
+[[keyboard.bindings]]
+key = "E"
+mods = "Command|Shift"
+chars = "\u001BE"
+
+[[keyboard.bindings]]
+key = "F"
+mods = "Command|Shift"
+chars = "\u001BF"
+
+[[keyboard.bindings]]
+key = "G"
+mods = "Command|Shift"
+chars = "\u001BG"
+
+[[keyboard.bindings]]
+key = "H"
+mods = "Command|Shift"
+chars = "\u001BH"
+
+[[keyboard.bindings]]
+key = "I"
+mods = "Command|Shift"
+chars = "\u001BI"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Command|Shift"
+chars = "\u001BJ"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command|Shift"
+chars = "\u001BK"
+
+[[keyboard.bindings]]
+key = "L"
+mods = "Command|Shift"
+chars = "\u001BL"
+
+[[keyboard.bindings]]
+key = "M"
+mods = "Command|Shift"
+chars = "\u001BM"
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Command|Shift"
+chars = "\u001BN"
+
+[[keyboard.bindings]]
+key = "O"
+mods = "Command|Shift"
+chars = "\u001BO"
+
+[[keyboard.bindings]]
+key = "P"
+mods = "Command|Shift"
+chars = "\u001BP"
+
+[[keyboard.bindings]]
+key = "Q"
+mods = "Command|Shift"
+chars = "\u001BQ"
+
+[[keyboard.bindings]]
+key = "R"
+mods = "Command|Shift"
+chars = "\u001BR"
+
+[[keyboard.bindings]]
+key = "S"
+mods = "Command|Shift"
+chars = "\u001BS"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command|Shift"
+chars = "\u001BT"
+
+[[keyboard.bindings]]
+key = "U"
+mods = "Command|Shift"
+chars = "\u001BU"
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Command|Shift"
+chars = "\u001BW"
+
+[[keyboard.bindings]]
+key = "X"
+mods = "Command|Shift"
+chars = "\u001BX"
+
+[[keyboard.bindings]]
+key = "Y"
+mods = "Command|Shift"
+chars = "\u001BY"
+
+[[keyboard.bindings]]
+key = "Z"
+mods = "Command|Shift"
+chars = "\u001BZ"
+
+[[keyboard.bindings]]
+key = "0"
+mods = "Command"
+chars = "\u001B0"
+
+[[keyboard.bindings]]
+key = "1"
+mods = "Command"
+chars = "\u001B1"
+
+[[keyboard.bindings]]
+key = "2"
+mods = "Command"
+chars = "\u001B2"
+
+[[keyboard.bindings]]
+key = "3"
+mods = "Command"
+chars = "\u001B3"
+
+[[keyboard.bindings]]
+key = "4"
+mods = "Command"
+chars = "\u001B4"
+
+[[keyboard.bindings]]
+key = "5"
+mods = "Command"
+chars = "\u001B5"
+
+[[keyboard.bindings]]
+key = "6"
+mods = "Command"
+chars = "\u001B6"
+
+[[keyboard.bindings]]
+key = "7"
+mods = "Command"
+chars = "\u001B7"
+
+[[keyboard.bindings]]
+key = "8"
+mods = "Command"
+chars = "\u001B8"
+
+[[keyboard.bindings]]
+key = "9"
+mods = "Command"
+chars = "\u001B9"
+
+[[keyboard.bindings]]
+key = "/"
+mods = "Command"
+chars = "\u001B/"
+
+[[keyboard.bindings]]
+key = ","
+mods = "Command"
+chars = "\u001B,"
+
+[[keyboard.bindings]]
+key = "."
+mods = "Command"
+chars = "\u001B."
+
+[[keyboard.bindings]]
+key = ";"
+mods = "Command"
+chars = "\u001B;"
+
+[[keyboard.bindings]]
+key = "'"
+mods = "Command"
+chars = "\u001B'"
+
+[[keyboard.bindings]]
+key = "["
+mods = "Command"
+chars = "\u001B["
+
+[[keyboard.bindings]]
+key = "]"
+mods = "Command"
+chars = "\u001B]"
+
+[[keyboard.bindings]]
+key = "\\"
+mods = "Command"
+chars = "\u001B\\"
+
+[[keyboard.bindings]]
+key = "-"
+mods = "Command"
+chars = "\u001B-"
+
+[[keyboard.bindings]]
+key = "="
+mods = "Command"
+chars = "\u001B="
+
+[[keyboard.bindings]]
+key = "`"
+mods = "Command"
+chars = "\u001B`"
+
+# M-< beginning-of-buffer
+[[keyboard.bindings]]
+key = ","
+mods = "Command|Shift"
+chars = "\u001B<"
+
+# M-> end-of-buffer
+[[keyboard.bindings]]
+key = "."
+mods = "Command|Shift"
+chars = "\u001B>"
+
+# M-?
+[[keyboard.bindings]]
+key = "/"
+mods = "Command|Shift"
+chars = "\u001B?"
+
+# M-: eval-expression
+[[keyboard.bindings]]
+key = ";"
+mods = "Command|Shift"
+chars = "\u001B:"
+
+# M-! shell-command
+[[keyboard.bindings]]
+key = "1"
+mods = "Command|Shift"
+chars = "\u001B!"
+
+# M-$ ispell-word
+[[keyboard.bindings]]
+key = "4"
+mods = "Command|Shift"
+chars = "\u001B$"
+
+# M-% query-replace
+[[keyboard.bindings]]
+key = "5"
+mods = "Command|Shift"
+chars = "\u001B%"
+
+# M-_
+[[keyboard.bindings]]
+key = "-"
+mods = "Command|Shift"
+chars = "\u001B_"
+
+# M-+
+[[keyboard.bindings]]
+key = "="
+mods = "Command|Shift"
+chars = "\u001B+"
+
+# M-~
+[[keyboard.bindings]]
+key = "`"
+mods = "Command|Shift"
+chars = "\u001B~"
+
+# M-DEL backward-kill-word
+[[keyboard.bindings]]
+key = "Backspace"
+mods = "Command"
+chars = "\u001B\u007F"
+
