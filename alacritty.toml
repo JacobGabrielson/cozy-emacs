@@ -307,7 +307,7 @@ chars = "\u001BZ"
 [[keyboard.bindings]]
 key = "0"
 mods = "Command"
-chars = "\u001B0"
+action = "ResetFontSize"
 
 [[keyboard.bindings]]
 key = "1"
@@ -394,15 +394,18 @@ key = "\\"
 mods = "Command"
 chars = "\u001B\\"
 
+# Font size: Cmd+- / Cmd+= / Cmd+0 are Alacritty's own defaults, carved back
+# out of the Cmd-as-Meta bindings below. Nothing is lost: Option is Meta too
+# (option_as_alt = "Both"), so Opt+- and Opt+= still send M-- and M-=.
 [[keyboard.bindings]]
 key = "-"
 mods = "Command"
-chars = "\u001B-"
+action = "DecreaseFontSize"
 
 [[keyboard.bindings]]
 key = "="
 mods = "Command"
-chars = "\u001B="
+action = "IncreaseFontSize"
 
 [[keyboard.bindings]]
 key = "`"
