@@ -1,0 +1,16 @@
+#!/bin/sh
+# rx/tx rate on the primary interface, sampled over 1s. Linux only
+# (reads /sys); prints nothing elsewhere so the status bar just omits it.
+[ -d /sys/class/net ] || exit 0
+iface=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $5; exit}')
+rx1=$(cat /sys/class/net/$iface/statistics/rx_bytes 2>/dev/null || echo 0)
+tx1=$(cat /sys/class/net/$iface/statistics/tx_bytes 2>/dev/null || echo 0)
+sleep 1
+rx2=$(cat /sys/class/net/$iface/statistics/rx_bytes 2>/dev/null || echo 0)
+tx2=$(cat /sys/class/net/$iface/statistics/tx_bytes 2>/dev/null || echo 0)
+awk -v rx1=$rx1 -v rx2=$rx2 -v tx1=$tx1 -v tx2=$tx2 'BEGIN{
+    rx=(rx2-rx1)/1024; tx=(tx2-tx1)/1024
+    if(rx>=1024){rxs=sprintf("%.1fM",rx/1024)}else{rxs=sprintf("%.0fK",rx)}
+    if(tx>=1024){txs=sprintf("%.1fM",tx/1024)}else{txs=sprintf("%.0fK",tx)}
+    printf "rx:%s tx:%s", rxs, txs
+}'

@@ -1,0 +1,12 @@
+#!/bin/sh
+# cpu% and mem used/total, sampled over 1s. Linux only (reads /proc);
+# prints nothing elsewhere so the status bar just omits it.
+[ -f /proc/stat ] || exit 0
+cpu1=$(awk '/^cpu /{print $2+$4, $2+$3+$4+$5; exit}' /proc/stat)
+sleep 1
+cpu2=$(awk '/^cpu /{print $2+$4, $2+$3+$4+$5; exit}' /proc/stat)
+mem=$(awk '/MemTotal/{t=$2}/MemAvailable/{a=$2}END{printf "%d/%dG",(t-a)/1048576,t/1048576}' /proc/meminfo)
+awk -v cpu1="$cpu1" -v cpu2="$cpu2" -v mem="$mem" 'BEGIN{
+    split(cpu1,a); split(cpu2,b)
+    printf "cpu:%d%% mem:%s", int((b[1]-a[1])/(b[2]-a[2])*100), mem
+}'
