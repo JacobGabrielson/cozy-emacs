@@ -414,6 +414,9 @@ window.  Otherwise, goes to end of buffer."
 
 ;; https://www.reddit.com/r/emacs/comments/l42oep/suppress_nativecomp_warnings_buffer/
 (setq warning-minimum-level :error)
+;; Suppress native-compiler warnings (e.g. yaml-mode's imenu reference) —
+;; these bypass warning-minimum-level and have their own variable.
+(setq native-comp-async-report-warnings-errors 'silent)
 
 ;; This is too easy to do by mistake (esp. w/ "C-x 5 o" being a common
 ;; chord). Can use "C-x 5 1" (delete-other-frames) instead

@@ -28,6 +28,7 @@
   (after-init . doom-modeline-mode))
 
 (use-package xclip
+  :if (executable-find "xclip")
   :config
   ;; allow copy/paste from terminal on Mac OS X etc
   (xclip-mode 1))
@@ -170,13 +171,13 @@
     (exec-path-from-shell-initialize)))
 
 (defun custom-prog-modes-hook ()
-  (highlight-indent-guides-mode 1)
   (display-line-numbers-mode 1)
   (display-fill-column-indicator-mode 1))
 
 (add-hook 'prog-mode-hook 'custom-prog-modes-hook)
 
 (use-package highlight-indent-guides
+  :demand t
   :config
   ;; `character' method draws guides as plain glyphs (avoids a `bitmap'
   ;; codepath that cascades into a jit-lock wholenump error). The auto
@@ -186,7 +187,10 @@
   ;; ourselves with safe defaults.
   (setq highlight-indent-guides-method 'character)
   (setq highlight-indent-guides-auto-enabled nil)
-  (set-face-foreground 'highlight-indent-guides-character-face "gray40"))
+  (set-face-foreground 'highlight-indent-guides-character-face "gray40")
+  ;; Add to prog-mode-hook here, after the package is fully loaded, so
+  ;; subsequent package installations can't trigger it prematurely.
+  (add-hook 'prog-mode-hook #'highlight-indent-guides-mode))
 
 (use-package pdf-tools
   :config
